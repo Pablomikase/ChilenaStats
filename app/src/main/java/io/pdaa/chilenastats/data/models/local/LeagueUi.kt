@@ -1,6 +1,6 @@
-package io.pdaa.chilenastats.data
+package io.pdaa.chilenastats.data.models.local
 
-data class League(
+data class LeagueUi(
     val id:Int,
     val name: String,
     val type: String,
@@ -8,8 +8,8 @@ data class League(
 )
 
 
-val mockLeagues = List(10) { index ->
-    League(
+val mockLeagues = List(50) { index ->
+    LeagueUi(
         id = index,
         name = "League $index",
         type = "Type $index",
