@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ChilenaStats</string>
+    <string name="leagues_title">Leagues</string>
+    <string name="back">go back</string>
+</resources>
