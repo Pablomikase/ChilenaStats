@@ -7,7 +7,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import io.pdaa.chilenastats.data.models.local.mockLeagues
 import io.pdaa.chilenastats.ui.screens.leagueDetail.LeagueDetailViewModel
 import io.pdaa.chilenastats.ui.screens.leagueDetail.LeagueScreen
 import io.pdaa.chilenastats.ui.screens.leagues.LeaguesScreen
