@@ -2,4 +2,6 @@
     <string name="app_name">ChilenaStats</string>
     <string name="leagues_title">Leagues</string>
     <string name="back">go back</string>
+    <string name="continue_to_onboarding">Continue to Onboarding</string>
+    <string name="select_leagues">Select leagues</string>
 </resources>

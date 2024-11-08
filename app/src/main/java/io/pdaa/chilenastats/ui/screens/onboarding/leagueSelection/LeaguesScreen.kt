@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.ui.screens.leagues
+package io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection
 
 import android.Manifest
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -23,6 +23,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -76,7 +78,7 @@ fun LeaguesScreen(
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing
         ) { contentPadding ->
-            val screenState = vm.state
+            val screenState by vm.state.collectAsState()
 
             if (screenState.isLoading) {
                 LoadingIndicator()

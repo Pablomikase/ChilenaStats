@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.ui.screens.leagues
+package io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -8,31 +8,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.pdaa.chilenastats.data.LeaguesRepository
 import io.pdaa.chilenastats.data.models.local.LeagueUi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class LeaguesViewModel: ViewModel() {
 
     private val leaguesRepository = LeaguesRepository()
 
-    var state by mutableStateOf(UiState())
-        private set
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> get() = _state.asStateFlow()
 
-    init {
-        Log.i("LeaguesViewModel", "init")
-    }
 
     fun onUiReady(countryCode: String){
         viewModelScope.launch {
-            state = UiState(isLoading = true)
-            state = UiState(isLoading = false, leagues = leaguesRepository.fetchLeaguesByCountry(countryCode = countryCode))
+            _state.value = UiState(isLoading = true)
+            _state.value = UiState(isLoading = false, leagues = leaguesRepository.fetchLeaguesByCountry(countryCode = countryCode))
         }
     }
 
 
     data class UiState(
         val leagues: List<LeagueUi> = emptyList(),
-        val isLoading: Boolean = false,
-        val errorMessage: String? = null,
+        val isLoading: Boolean = false
     )
 
 }
