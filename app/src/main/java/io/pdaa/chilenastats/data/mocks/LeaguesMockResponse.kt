@@ -1,6 +1,6 @@
-package io.pdaa.chilenastats.data
+package io.pdaa.chilenastats.data.mocks
 
-object MockData {
+object LeaguesMockResponse {
 
     const val LEAGUES_RESPONSE = """
         {

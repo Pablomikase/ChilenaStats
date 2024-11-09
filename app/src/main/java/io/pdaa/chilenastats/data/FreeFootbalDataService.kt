@@ -1,5 +1,6 @@
 package io.pdaa.chilenastats.data
 
+import io.pdaa.chilenastats.data.models.remote.CountriesRemoteResponse
 import io.pdaa.chilenastats.data.models.remote.LeaguesRemoteResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -12,5 +13,8 @@ interface FreeFootballDataService {
 
     @GET("football-league-detail")
     suspend fun fetchLeagueById(@Path("leagueId") leagueId: String): LeaguesRemoteResponse
+
+    @GET("countries")
+    suspend fun fetchCountries(): CountriesRemoteResponse
 
 }

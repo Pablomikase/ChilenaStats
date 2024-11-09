@@ -1,19 +1,16 @@
 package io.pdaa.chilenastats.data.models.remote
-
-
-
 import io.pdaa.chilenastats.data.models.local.ResponseUi
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseRemote(
+data class LeagueRemoteResponse(
     val country: CountryRemote,
     val league: LeagueRemote,
     val seasons: List<SeasonRemote>
 )
 
-fun ResponseRemote.asUiModel(): ResponseUi = ResponseUi(
+fun LeagueRemoteResponse.asUiModel(): ResponseUi = ResponseUi(
     league = league.asUiModel(),
 )
 
-fun List<ResponseRemote>.asUiModel(): List<ResponseUi> = map { it.asUiModel() }
+fun List<LeagueRemoteResponse>.asUiModel(): List<ResponseUi> = map { it.asUiModel() }

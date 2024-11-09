@@ -49,7 +49,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LeaguesScreen(
+fun LeagueSelectionScreen(
     onLeagueClick: (LeagueUi) -> Unit,
     vm: LeaguesViewModel = viewModel()
 ) {
