@@ -32,10 +32,6 @@ class CountrySelectionViewModel : ViewModel() {
                 isLoading = false,
                 countries = countriesRepository.fetchCountries()
             )
-            Log.d(
-                "CountrySelectionViewModel",
-                "onUiReady finished, _state updated to countries size ${_state.value.countries.size}"
-            )
         }
     }
 

@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.play.services.location)
     implementation(libs.retrofit)
