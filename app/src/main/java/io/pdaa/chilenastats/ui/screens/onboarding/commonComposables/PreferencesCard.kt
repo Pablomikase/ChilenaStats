@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,6 +25,10 @@ fun PreferencesCard(
     name: String,
     imgUrl: String
 ) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp
+    val isTablet = screenWidth >= 600
+
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         AsyncImage(
             model = if (!imgUrl.endsWith("svg")) {
@@ -39,7 +44,7 @@ fun PreferencesCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(3/2f)
-                .clip(MaterialTheme.shapes.extraLarge)
+                .clip(MaterialTheme.shapes.small)
         )
         Text(
             text = name,
