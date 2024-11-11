@@ -5,4 +5,5 @@
     <string name="continue_to_onboarding">Continue to Onboarding</string>
     <string name="select_leagues">Select leagues</string>
     <string name="country_selector_main_title">Select Countries of Interest</string>
+    <string name="country_selector_suggested_country">Suggested country</string>
 </resources>

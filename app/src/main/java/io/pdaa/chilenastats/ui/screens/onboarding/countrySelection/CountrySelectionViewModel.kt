@@ -1,6 +1,5 @@
 package io.pdaa.chilenastats.ui.screens.onboarding.countrySelection
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.pdaa.chilenastats.data.countries.CountriesRepository
@@ -15,22 +14,25 @@ class CountrySelectionViewModel : ViewModel() {
 
     data class UiState(
         val isLoading: Boolean = false,
-        val countries: List<CountryUi> = emptyList()
+        val countries: List<CountryUi> = emptyList(),
     )
 
     private val _state = MutableStateFlow(UiState())
     val state get() = _state.asStateFlow()
 
-    init {
-        Log.d("CountrySelectionViewModel", "init")
-    }
-
     fun onUiReady(countryCode: String) {
         viewModelScope.launch {
             _state.value = UiState(isLoading = true)
+            val countriesList = countriesRepository.fetchCountries().toMutableList().apply {
+                find { it.code == countryCode }?.let {
+                    it.isSelected = true
+                    remove(it)
+                    add(0, it)
+                }
+            }.toList()
             _state.value = UiState(
                 isLoading = false,
-                countries = countriesRepository.fetchCountries()
+                countries = countriesList
             )
         }
     }
