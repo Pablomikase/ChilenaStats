@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.ui.text.google.fonts)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
