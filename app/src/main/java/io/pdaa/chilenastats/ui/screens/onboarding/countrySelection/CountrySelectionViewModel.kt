@@ -37,4 +37,32 @@ class CountrySelectionViewModel : ViewModel() {
         }
     }
 
+    fun onCountrySelected(selectedCountry: CountryUi) {
+
+        /*val countryList = this.state.value.countries.toMutableList().apply {
+            find { currentCountry -> currentCountry.code == selectedCountry.code }?.let { foundCountry ->
+                foundCountry.isSelected = true
+            }
+        }.toList()*/
+        /*val updatedCountries = state.value.countries.map { country ->
+            if (country.code == selectedCountry.code) {
+                country.copy(isSelected = !country.isSelected)  // Alterna el estado de selección
+            } else {
+                country
+            }
+        }
+        _state.value = _state.value.copy(countries = updatedCountries)
+        */
+        val index = _state.value.countries.indexOfFirst { it.code == selectedCountry.code }
+        if (index != -1) {
+            val updatedCountry = _state.value.countries[index].copy(isSelected = !_state.value.countries[index].isSelected)
+            val updatedCountries = _state.value.countries.toMutableList().apply {
+                this[index] = updatedCountry
+            }
+            _state.value = _state.value.copy(countries = updatedCountries)
+        }
+
+
+    }
+
 }
