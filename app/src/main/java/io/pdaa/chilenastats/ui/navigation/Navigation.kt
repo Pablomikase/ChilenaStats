@@ -30,8 +30,11 @@ fun Navigation() {
 
         composable<CountrySelector>{
             CountrySelectionScreen(
-                onContinueToLeagues = {
-                    navController.navigate(LeaguesSelector(countryCodes = emptyList()))
+                onContinueToLeagues = { countryCodes ->
+                    navController.navigate(LeaguesSelector(countryCodes = countryCodes))
+                },
+                onSkipAndGoToDashboard = {
+                    navController.navigate(Dashboard)
                 }
             )
         }

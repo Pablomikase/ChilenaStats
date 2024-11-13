@@ -18,3 +18,11 @@ data class TeamsSelector(
     val countries: List<String> = emptyList(),
     val leagueIds: List<Int> = emptyList()
 )
+
+@Serializable
+data class Dashboard(
+    val countries: List<String> = emptyList(),
+    val leagueIds: List<Int> = emptyList(),
+    val teamIds: List<Int> = emptyList()
+)
+

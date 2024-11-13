@@ -6,4 +6,6 @@
     <string name="select_leagues">Select leagues</string>
     <string name="country_selector_main_title">Select Countries of Interest</string>
     <string name="country_selector_suggested_country">Suggested country</string>
+    <string name="country_selector_continue_to_leagues_button">Continue to Leagues</string>
+    <string name="onboarding_skip_button">Go to Dashboard</string>
 </resources>

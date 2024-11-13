@@ -52,7 +52,13 @@ class CountrySelectionViewModel : ViewModel() {
                 currentState
             }
         }
+    }
 
+    fun filterSelectedCountries(): List<String> {
+        _state.update { currentState ->
+            currentState.copy(isLoading = true)
+        }
+        return _state.value.countries.filter { it.isSelected }.mapNotNull { it.code }
     }
 
 }

@@ -1,7 +1,5 @@
 package io.pdaa.chilenastats.ui.screens.onboarding.countrySelection
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,56 +10,36 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.Button
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.ui.screens.Screen
-import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CountrySelectionScreen(
     vm: CountrySelectionViewModel = viewModel(),
-    onContinueToLeagues: () -> Unit
+    onContinueToLeagues: (List<String>) -> Unit,
+    onSkipAndGoToDashboard: () -> Unit
 ) {
     val countrySelectionState = rememberCountrySelectionState()
     countrySelectionState.AskRegionEffect { vm.onUiReady(it) }
 
-    val sheetState = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
-    var showBottomSheet by remember { mutableStateOf(false) }
 
-    val systemBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        val context = LocalContext.current
-        val window = (context as Activity).window
-        window.navigationBarColor
-    } else {
-        Color.Black.toArgb() // Fallback color for older versions
-    }
 
     Screen {
         Scaffold(
@@ -96,25 +74,29 @@ fun CountrySelectionScreen(
                         .padding(contentPadding)
                         .fillMaxWidth()
                         .align(Alignment.BottomCenter)
-                        .background(brush = Brush.verticalGradient(
-                            colors = listOf(
-                                Color.Transparent,
-                                Color(systemBarColor)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color(countrySelectionState.getSystemBarColor())
+                                )
                             )
-                        ))
+                        )
                 ) {
-                    Button(
+                    ElevatedButton(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         onClick = {
-                            showBottomSheet = true
+                            onContinueToLeagues(vm.filterSelectedCountries())
                         }) {
-                        Text("Show Bottom Sheet")
+                        Text(text = stringResource(R.string.country_selector_continue_to_leagues_button))
                     }
-                    Button(
-                        modifier = Modifier.align(Alignment.CenterHorizontally), onClick = {
-                            showBottomSheet = true
+                    ElevatedButton(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(bottom = 8.dp), onClick = {
+                            onSkipAndGoToDashboard()
                         }) {
-                        Text("Show Bottom Sheet2")
+                        Text(text = stringResource(R.string.onboarding_skip_button))
                     }
                 }
             }
