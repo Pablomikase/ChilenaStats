@@ -78,7 +78,7 @@ fun LeagueSelectionScreen(
                 modifier = Modifier.padding(4.dp)
             ) {
                 items(screenState.leagues) { item ->
-                    OnboardingCardSelector(league = item, onSelectorClick = onLeagueClick)
+                    OnboardingCardSelector(elementUi = item, onSelectorClicked = onLeagueClick)
                 }
             }
         }
