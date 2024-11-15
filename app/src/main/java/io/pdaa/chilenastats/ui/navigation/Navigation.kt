@@ -43,8 +43,11 @@ fun Navigation() {
         composable<LeaguesSelector> {backStackEntry ->
             val countries = backStackEntry.toRoute<LeaguesSelector>()
             LeagueSelectionScreen(
-                onLeagueClick = { league ->
-                    navController.navigate(TeamsSelector( countries = countries.countryCodes ))
+                onContinueToCountrySelection = {
+                    navController.navigate(CountrySelector)
+                },
+                onSkipAndGoToDashboard = {
+                    navController.navigate(Dashboard)
                 }
             )
         }

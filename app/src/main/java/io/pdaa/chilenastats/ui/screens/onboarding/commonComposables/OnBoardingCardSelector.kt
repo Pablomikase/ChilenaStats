@@ -7,6 +7,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -32,13 +33,22 @@ fun <T> OnboardingCardSelector(
     modifier: Modifier = Modifier,
     elementUi: T,
     onSelectorClicked: (T) -> Unit,
-    isSelected: Boolean = false,
+    isSelected: Boolean,
 ) {
-    Box() {
+    Box(modifier = modifier.width(132.dp)
+        .aspectRatio(2/3f)
+        .clip(MaterialTheme.shapes.small)
+    ) {
+
         Column(
             modifier = modifier
-                .width(120.dp).align(Alignment.TopEnd),
-            horizontalAlignment = CenterHorizontally
+                .fillMaxSize()
+                .combinedClickable(enabled = true) {
+                    onSelectorClicked(elementUi)
+                }
+                .padding(8.dp)
+                .align(Alignment.TopEnd),
+            horizontalAlignment = CenterHorizontally,
         ) {
             AsyncImage(
                 model = when (elementUi) {
@@ -51,9 +61,6 @@ fun <T> OnboardingCardSelector(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .combinedClickable(enabled = true) {
-                        onSelectorClicked(elementUi)
-                    }
                     .padding(2.dp)
                     .aspectRatio(1f)
                     .clip(CircleShape)
@@ -75,6 +82,7 @@ fun <T> OnboardingCardSelector(
                 style = MaterialTheme.typography.titleSmall,
                 modifier = Modifier.padding(horizontal = 8.dp),
                 textAlign = TextAlign.Center,
+                maxLines = 2
             )
             Text(
                 text = when (elementUi) {
@@ -83,14 +91,37 @@ fun <T> OnboardingCardSelector(
                 },
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                maxLines = 1
             )
         }
+
+        if(isSelected) Box(
+            Modifier
+                .fillMaxSize()
+                .clip(MaterialTheme.shapes.small)
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
+                .border(
+                    width = 2.dp,
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = MaterialTheme.shapes.small
+                )
+        )
     }
 }
 
 @Preview
 @Composable
 private fun OnboardingCardSelectorPrev() {
-
+    OnboardingCardSelector(
+        elementUi = LeagueUi(
+            id = 2,
+            name = "Premier League - super Leage assdf",
+            type = "League",
+            logo = "https://media.api-sports.io/football/leagues/39.png",
+            isSelected = true
+        ),
+        onSelectorClicked = {},
+        isSelected = true
+    )
 }

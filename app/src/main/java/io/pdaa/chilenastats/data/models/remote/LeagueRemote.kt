@@ -15,5 +15,6 @@ fun LeagueRemote.asUiModel(): LeagueUi = LeagueUi(
     id = id,
     logo = logo,
     name = name,
-    type = type
+    type = type,
+    isSelected = false
 )

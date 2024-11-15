@@ -24,7 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.pdaa.chilenastats.R
-import io.pdaa.chilenastats.data.models.local.LeagueUi
 import io.pdaa.chilenastats.ui.common.Constants
 import io.pdaa.chilenastats.ui.common.LoadingIndicator
 import io.pdaa.chilenastats.ui.common.PermissionRequestEffect
@@ -36,7 +35,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LeagueSelectionScreen(
-    onLeagueClick: (LeagueUi) -> Unit,
+    onContinueToCountrySelection: () -> Unit,
+    onSkipAndGoToDashboard: () -> Unit,
     vm: LeaguesViewModel = viewModel()
 ) {
 
@@ -78,7 +78,7 @@ fun LeagueSelectionScreen(
                 modifier = Modifier.padding(4.dp)
             ) {
                 items(screenState.leagues) { item ->
-                    OnboardingCardSelector(elementUi = item, onSelectorClicked = onLeagueClick)
+                    OnboardingCardSelector(elementUi = item, onSelectorClicked = {vm.onLeagueSelected(it)}, isSelected = item.isSelected)
                 }
             }
         }
