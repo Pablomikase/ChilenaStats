@@ -1,6 +1,5 @@
 package io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection
 
-import android.Manifest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,28 +16,21 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.pdaa.chilenastats.R
-import io.pdaa.chilenastats.ui.common.Constants
 import io.pdaa.chilenastats.ui.common.LoadingIndicator
-import io.pdaa.chilenastats.ui.common.PermissionRequestEffect
-import io.pdaa.chilenastats.ui.common.getRegion
 import io.pdaa.chilenastats.ui.screens.Screen
 import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCardSelector
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +41,7 @@ fun LeagueSelectionScreen(
 ) {
 
     val leagueSelectionState = rememberLeagueSelectionState()
-
+    leagueSelectionState.UiReadyToFetchData(onRegion = { vm.onUiReady(it) }, regionCode = "")
     Screen {
         Scaffold(
             topBar = {

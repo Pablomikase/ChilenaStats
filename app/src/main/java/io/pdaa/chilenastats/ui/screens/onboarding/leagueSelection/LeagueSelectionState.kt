@@ -28,6 +28,11 @@ class LeagueSelectionState(
         return window.navigationBarColor
     }
 
+    @Composable
+    fun UiReadyToFetchData(onRegion: (String)-> Unit, regionCode: String) {
+        onRegion(regionCode)
+    }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
