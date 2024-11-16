@@ -13,6 +13,7 @@ import io.pdaa.chilenastats.ui.screens.leagueDetail.LeagueScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.countrySelection.CountrySelectionScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection.LeagueSelectionScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.login.LoginScreen
+import io.pdaa.chilenastats.ui.screens.onboarding.teamSelection.TeamSelectionScreen
 
 @Composable
 fun Navigation() {
@@ -54,7 +55,7 @@ fun Navigation() {
 
         composable<TeamsSelector>{ backStackEntry ->
             val teamsSelector = backStackEntry.toRoute<TeamsSelector>()
-
+            TeamSelectionScreen()
         }
 
 

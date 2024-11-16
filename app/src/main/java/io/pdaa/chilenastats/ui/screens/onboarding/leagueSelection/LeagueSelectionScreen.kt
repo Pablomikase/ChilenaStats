@@ -1,13 +1,18 @@
 package io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection
 
 import android.Manifest
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -17,7 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -40,47 +48,73 @@ fun LeagueSelectionScreen(
     vm: LeaguesViewModel = viewModel()
 ) {
 
-    val localContext = LocalContext.current.applicationContext
-    val coroutineScope = rememberCoroutineScope()
-
-    var region = Constants.DEFAULT_REGION
-
-    PermissionRequestEffect(permission = Manifest.permission.ACCESS_COARSE_LOCATION) { granted ->
-        coroutineScope.launch {
-            region = if (granted) localContext.getRegion() else Constants.DEFAULT_REGION
-            vm.onUiReady(region)
-        }
-    }
+    val leagueSelectionState = rememberLeagueSelectionState()
 
     Screen {
-        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(text = "${stringResource(R.string.leagues_title)} - $region") },
-                    scrollBehavior = scrollBehavior
+                    title = { Text(text = stringResource(R.string.leagues_selection_main_title)) },
+                    scrollBehavior = leagueSelectionState.scrollBehavior
                 )
             },
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            modifier = Modifier.nestedScroll(leagueSelectionState.scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing
         ) { contentPadding ->
             val screenState by vm.state.collectAsState()
+            val isTablet = leagueSelectionState.isTablet()
 
-            if (screenState.isLoading) {
-                LoadingIndicator()
-            }
-
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(120.dp),
-                contentPadding = contentPadding,
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                modifier = Modifier.padding(4.dp)
-            ) {
-                items(screenState.leagues) { item ->
-                    OnboardingCardSelector(elementUi = item, onSelectorClicked = {vm.onLeagueSelected(it)}, isSelected = item.isSelected)
+            Box{
+                if (screenState.isLoading) {
+                    LoadingIndicator()
                 }
+
+                LazyVerticalGrid(
+                    modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
+                    columns = GridCells.Adaptive(minSize = if (isTablet) 150.dp else 120.dp),
+                    horizontalArrangement = Arrangement.spacedBy(if (isTablet) 16.dp else 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = contentPadding
+                ) {
+                    items(screenState.leagues) { item ->
+                        OnboardingCardSelector(elementUi = item, onSelectorClicked = {vm.onLeagueSelected(it)}, isSelected = item.isSelected)
+                    }
+                }
+
+                Column(
+                    modifier = Modifier
+                        .padding(contentPadding)
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color(leagueSelectionState.getSystemBarColor())
+                                )
+                            )
+                        )
+                ) {
+                    ElevatedButton(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        onClick = {
+                            onContinueToCountrySelection()
+                        }) {
+                        Text(text = stringResource(R.string.leagues_selector_continue_to_teams_button))
+                    }
+                    ElevatedButton(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(bottom = 8.dp), onClick = {
+                            onSkipAndGoToDashboard()
+                        }) {
+                        Text(text = stringResource(R.string.onboarding_skip_button))
+                    }
+                }
+
+
             }
+
         }
     }
 }

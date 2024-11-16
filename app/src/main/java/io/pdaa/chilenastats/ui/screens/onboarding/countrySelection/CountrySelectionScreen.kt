@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.pdaa.chilenastats.R
+import io.pdaa.chilenastats.ui.common.LoadingIndicator
 import io.pdaa.chilenastats.ui.screens.Screen
 
 
@@ -55,6 +56,11 @@ fun CountrySelectionScreen(
             val isTablet = countrySelectionState.isTablet()
 
             Box(modifier = Modifier.fillMaxSize()) {
+
+                if (state.value.isLoading) {
+                    LoadingIndicator()
+                }
+
                 LazyVerticalGrid(
                     modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
                     columns = GridCells.Adaptive(minSize = if (isTablet) 150.dp else 120.dp),

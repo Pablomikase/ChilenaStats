@@ -8,4 +8,7 @@
     <string name="country_selector_suggested_country">Suggested country</string>
     <string name="country_selector_continue_to_leagues_button">Continue to Leagues</string>
     <string name="onboarding_skip_button">Go to Dashboard</string>
+    <string name="team_selector_main_title">Select teams of your interest</string>
+    <string name="leagues_selection_main_title">Select the leagues of your interes</string>
+    <string name="leagues_selector_continue_to_teams_button">Continue to teams</string>
 </resources>
