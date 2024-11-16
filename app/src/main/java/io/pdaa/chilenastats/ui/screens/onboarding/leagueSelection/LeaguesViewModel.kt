@@ -22,29 +22,18 @@ class LeaguesViewModel : ViewModel() {
         Log.d("LeaguesViewModel", "init")
     }
 
-    fun onUiReady(countryCode: String) {
+    fun onUiReady(countryCode: List<String>) {
         viewModelScope.launch {
             _state.value = UiState(isLoading = true)
             _state.value = UiState(
                 isLoading = false,
-                leagues = leaguesRepository.fetchLeaguesByCountry(countryCode = countryCode)
+                leagues = leaguesRepository.fetchLeaguesByCountry(countryCode = "ES")
             )
         }
     }
 
     fun onLeagueSelected(selectedLeague: LeagueUi) {
         _state.update { currentState ->
-            /*val index = _state.value.leagues.indexOfFirst { it.id == selectedLeague.id }
-            if (index != -1) {
-                val updatedLeague =
-                    _state.value.leagues[index].copy(isSelected = !_state.value.leagues[index].isSelected)
-                val updatedLeagues = _state.value.leagues.toMutableList().apply {
-                    this[index] = updatedLeague
-                }
-                currentState.copy(leagues = updatedLeagues, version = currentState.version + 1)
-            } else {
-                currentState.copy(leagues = currentState.leagues)
-            }*/
             Log.d("LeaguesViewModel", "Before update: $currentState")
             val newState = currentState.copy(leagues = currentState.leagues.map {
                 if (it.id == selectedLeague.id) {
@@ -52,7 +41,7 @@ class LeaguesViewModel : ViewModel() {
                 } else {
                     it
                 }
-            }, version = currentState.version + 1)
+            })
             Log.d("LeaguesViewModel", "After update: $newState")
             newState
         }
@@ -62,7 +51,6 @@ class LeaguesViewModel : ViewModel() {
     data class UiState(
         val leagues: List<LeagueUi> = emptyList(),
         val isLoading: Boolean = false,
-        val version: Int = 0
     )
 
 }

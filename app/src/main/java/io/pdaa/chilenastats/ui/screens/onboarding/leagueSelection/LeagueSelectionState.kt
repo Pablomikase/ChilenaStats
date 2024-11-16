@@ -29,8 +29,8 @@ class LeagueSelectionState(
     }
 
     @Composable
-    fun UiReadyToFetchData(onRegion: (String)-> Unit, regionCode: String) {
-        onRegion(regionCode)
+    fun UiReadyToFetchData(execute: (List<String>)-> Unit, regionCodes: List<String>) {
+        execute(regionCodes)
     }
 
 }

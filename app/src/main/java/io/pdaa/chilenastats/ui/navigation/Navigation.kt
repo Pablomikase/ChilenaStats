@@ -25,7 +25,9 @@ fun Navigation() {
                 continueToOnBoarding = {
                     navController.navigate(CountrySelector)
                 },
-                continueToDashboard = {}
+                continueToDashboard = {
+                    navController.navigate(Dashboard)
+                }
             )
         }
 
@@ -44,12 +46,13 @@ fun Navigation() {
         composable<LeaguesSelector> {backStackEntry ->
             val countries = backStackEntry.toRoute<LeaguesSelector>()
             LeagueSelectionScreen(
-                onContinueToCountrySelection = {
-                    navController.navigate(CountrySelector)
+                onContinueToTeamSelection = {
+                    navController.navigate(TeamsSelector)
                 },
                 onSkipAndGoToDashboard = {
                     navController.navigate(Dashboard)
-                }
+                },
+                selectedCountries = countries.countryCodes
             )
         }
 
