@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.pdaa.chilenastats.data.LeaguesRepository
+import io.pdaa.chilenastats.data.repositories.LeaguesRepository
 import io.pdaa.chilenastats.data.models.local.LeagueUi
 import kotlinx.coroutines.launch
 

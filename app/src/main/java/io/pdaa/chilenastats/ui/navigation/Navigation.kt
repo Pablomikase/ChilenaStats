@@ -20,8 +20,8 @@ fun Navigation() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Login) {
-        composable<Login>{
-            LoginScreen (
+        composable<Login> {
+            LoginScreen(
                 continueToOnBoarding = {
                     navController.navigate(CountrySelector)
                 },
@@ -31,10 +31,10 @@ fun Navigation() {
             )
         }
 
-        composable<CountrySelector>{
+        composable<CountrySelector> {
             CountrySelectionScreen(
-                onContinueToLeagues = { countryCodes ->
-                    navController.navigate(LeaguesSelector(countryCodes = countryCodes))
+                onContinueToLeagues = { countryNames ->
+                    navController.navigate(LeaguesSelector(countryNames = countryNames))
                 },
                 onSkipAndGoToDashboard = {
                     navController.navigate(Dashboard)
@@ -43,22 +43,33 @@ fun Navigation() {
         }
 
 
-        composable<LeaguesSelector> {backStackEntry ->
+        composable<LeaguesSelector> { backStackEntry ->
             val countries = backStackEntry.toRoute<LeaguesSelector>()
             LeagueSelectionScreen(
-                onContinueToTeamSelection = {
-                    navController.navigate(TeamsSelector)
+                onContinueToTeamSelection = { leagues ->
+                    navController.navigate(
+                        TeamsSelector(
+                            countries = countries.countryNames,
+                            leagueIds = leagues
+                        )
+                    )
                 },
                 onSkipAndGoToDashboard = {
                     navController.navigate(Dashboard)
                 },
-                selectedCountries = countries.countryCodes
+                selectedCountries = countries.countryNames
             )
         }
 
-        composable<TeamsSelector>{ backStackEntry ->
+        composable<TeamsSelector> { backStackEntry ->
             val teamsSelector = backStackEntry.toRoute<TeamsSelector>()
-            TeamSelectionScreen()
+            TeamSelectionScreen(
+                countries = teamsSelector.countries,
+                leagueIds = teamsSelector.leagueIds,
+                onSkipAndGoToDashboard = {
+                    navController.navigate(Dashboard)
+                }
+            )
         }
 
 

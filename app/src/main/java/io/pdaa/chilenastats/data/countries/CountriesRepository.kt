@@ -10,7 +10,6 @@ import kotlinx.coroutines.withContext
 class CountriesRepository {
 
     suspend fun fetchCountries(): List<CountryUi> = withContext(Dispatchers.IO){
-        delay(1000)
         FreeFootballDataClient.instance.fetchCountries()
             .response
             .map {

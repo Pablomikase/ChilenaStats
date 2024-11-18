@@ -28,10 +28,10 @@ android {
         properties.load(project.rootProject.file("local.properties").readText().byteInputStream())
 
         val footballApiKey = properties.getProperty("FOOTBAL_API_KEY")
-        buildConfigField("String", "FOOTBAL_API_KEY", "\"$footballApiKey\"")
+        buildConfigField("String", "FOOTBAL_API_KEY", footballApiKey)
 
         val footballApiHost = properties.getProperty("FOOTBAL_API_HOST")
-        buildConfigField("String", "FOOTBAL_API_HOST", "\"$footballApiHost\"")
+        buildConfigField("String", "FOOTBAL_API_HOST", footballApiHost)
 
     }
 
@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.logging.interceptor)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -5,6 +5,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -30,7 +31,10 @@ class LeagueSelectionState(
 
     @Composable
     fun UiReadyToFetchData(execute: (List<String>)-> Unit, regionCodes: List<String>) {
-        execute(regionCodes)
+        LaunchedEffect (Unit){
+            execute(regionCodes)
+        }
+
     }
 
 }

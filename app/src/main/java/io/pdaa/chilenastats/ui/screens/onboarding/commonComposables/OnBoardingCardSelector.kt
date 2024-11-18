@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import io.pdaa.chilenastats.data.models.local.LeagueUi
+import io.pdaa.chilenastats.data.models.local.TeamUi
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -53,10 +54,12 @@ fun <T> OnboardingCardSelector(
             AsyncImage(
                 model = when (elementUi) {
                     is LeagueUi -> elementUi.logo
+                    is TeamUi -> elementUi.logo
                     else -> ""
                 },
                 contentDescription = when (elementUi) {
                     is LeagueUi -> elementUi.name
+                    is TeamUi -> elementUi.logo
                     else -> ""
                 },
                 modifier = Modifier
@@ -77,6 +80,7 @@ fun <T> OnboardingCardSelector(
             Text(
                 text = when (elementUi) {
                     is LeagueUi -> elementUi.name
+                    is TeamUi -> elementUi.name
                     else -> ""
                 },
                 style = MaterialTheme.typography.titleSmall,
@@ -87,6 +91,7 @@ fun <T> OnboardingCardSelector(
             Text(
                 text = when (elementUi) {
                     is LeagueUi -> elementUi.type
+                    is TeamUi -> elementUi.country
                     else -> ""
                 },
                 style = MaterialTheme.typography.bodySmall,

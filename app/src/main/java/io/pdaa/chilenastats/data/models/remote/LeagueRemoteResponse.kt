@@ -11,6 +11,7 @@ data class LeagueRemoteResponse(
 
 fun LeagueRemoteResponse.asUiModel(): ResponseUi = ResponseUi(
     league = league.asUiModel(),
+    country = country.asUiModel()
 )
 
 fun List<LeagueRemoteResponse>.asUiModel(): List<ResponseUi> = map { it.asUiModel() }

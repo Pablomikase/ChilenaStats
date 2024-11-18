@@ -55,10 +55,7 @@ class CountrySelectionViewModel : ViewModel() {
     }
 
     fun filterSelectedCountries(): List<String> {
-        _state.update { currentState ->
-            currentState.copy(isLoading = true)
-        }
-        return _state.value.countries.filter { it.isSelected }.mapNotNull { it.code }
+        return _state.value.countries.filter { it.isSelected }.map { it.name }
     }
 
 }

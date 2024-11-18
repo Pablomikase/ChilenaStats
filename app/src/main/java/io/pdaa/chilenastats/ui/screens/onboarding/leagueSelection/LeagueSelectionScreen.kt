@@ -35,14 +35,19 @@ import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCa
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LeagueSelectionScreen(
-    onContinueToTeamSelection: () -> Unit,
+    onContinueToTeamSelection: (
+        leagues: List<Int>
+    ) -> Unit,
     onSkipAndGoToDashboard: () -> Unit,
     selectedCountries: List<String>,
     vm: LeaguesViewModel = viewModel()
 ) {
 
     val leagueSelectionState = rememberLeagueSelectionState()
-    leagueSelectionState.UiReadyToFetchData(execute = { vm.onUiReady(it) }, regionCodes = selectedCountries)
+    leagueSelectionState.UiReadyToFetchData(
+        execute = { vm.onUiReady(it) },
+        regionCodes = selectedCountries
+    )
     Screen {
         Scaffold(
             topBar = {
@@ -57,7 +62,7 @@ fun LeagueSelectionScreen(
             val screenState by vm.state.collectAsState()
             val isTablet = leagueSelectionState.isTablet()
 
-            Box{
+            Box {
                 if (screenState.isLoading) {
                     LoadingIndicator()
                 }
@@ -70,7 +75,11 @@ fun LeagueSelectionScreen(
                     contentPadding = contentPadding
                 ) {
                     items(screenState.leagues) { item ->
-                        OnboardingCardSelector(elementUi = item, onSelectorClicked = {vm.onLeagueSelected(it)}, isSelected = item.isSelected)
+                        OnboardingCardSelector(
+                            elementUi = item,
+                            onSelectorClicked = { vm.onLeagueSelected(it) },
+                            isSelected = item.isSelected
+                        )
                     }
                 }
 
@@ -91,7 +100,9 @@ fun LeagueSelectionScreen(
                     ElevatedButton(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         onClick = {
-                            onContinueToTeamSelection()
+                            onContinueToTeamSelection(
+                                vm.filterSelectedLeagues()
+                            )
                         }) {
                         Text(text = stringResource(R.string.leagues_selector_continue_to_teams_button))
                     }

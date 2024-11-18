@@ -10,7 +10,7 @@ object CountrySelector
 
 @Serializable
 data class LeaguesSelector(
-    val countryCodes: List<String>
+    val countryNames: List<String>
 )
 
 @Serializable

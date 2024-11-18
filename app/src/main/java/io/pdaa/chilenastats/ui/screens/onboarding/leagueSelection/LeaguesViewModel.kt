@@ -3,7 +3,7 @@ package io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.pdaa.chilenastats.data.LeaguesRepository
+import io.pdaa.chilenastats.data.repositories.LeaguesRepository
 import io.pdaa.chilenastats.data.models.local.LeagueUi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,16 +18,22 @@ class LeaguesViewModel : ViewModel() {
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> get() = _state.asStateFlow()
 
-    init {
-        Log.d("LeaguesViewModel", "init")
-    }
-
-    fun onUiReady(countryCode: List<String>) {
+    fun onUiReady(countryNames: List<String>) {
         viewModelScope.launch {
             _state.value = UiState(isLoading = true)
+            val allLeagues = leaguesRepository.fetchLeagues().toMutableList()
+            allLeagues.apply {
+                countryNames.forEach { selectedCountryNames ->
+                    this.find {it.country?.name == selectedCountryNames}?.let {
+                        remove(it)
+                        add(0, it)
+                    }
+                }
+            }.toList()
+
             _state.value = UiState(
                 isLoading = false,
-                leagues = leaguesRepository.fetchLeaguesByCountry(countryCode = "ES")
+                leagues = allLeagues.map { it.league }
             )
         }
     }
@@ -45,6 +51,10 @@ class LeaguesViewModel : ViewModel() {
             Log.d("LeaguesViewModel", "After update: $newState")
             newState
         }
+    }
+
+    fun filterSelectedLeagues(): List<Int> {
+        return _state.value.leagues.filter { it.isSelected }.map { it.id }
     }
 
 
