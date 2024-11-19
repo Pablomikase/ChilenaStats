@@ -34,8 +34,7 @@ import io.pdaa.chilenastats.ui.screens.Screen
 @Composable
 fun CountrySelectionScreen(
     vm: CountrySelectionViewModel = viewModel(),
-    onContinueToLeagues: (List<String>) -> Unit,
-    onSkipAndGoToDashboard: () -> Unit
+    onContinueToLeagues: (List<String>) -> Unit
 ) {
     val countrySelectionState = rememberCountrySelectionState()
     countrySelectionState.AskRegionEffect { vm.onUiReady(it) }

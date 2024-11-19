@@ -30,9 +30,6 @@ fun Navigation() {
             CountrySelectionScreen(
                 onContinueToLeagues = { countryNames ->
                     navController.navigate(LeaguesSelector(countryNames = countryNames))
-                },
-                onSkipAndGoToDashboard = {
-                    navController.navigate(Dashboard)
                 }
             )
         }
@@ -48,9 +45,6 @@ fun Navigation() {
                             leagueIds = leagues
                         )
                     )
-                },
-                onSkipAndGoToDashboard = {
-                    navController.navigate(Dashboard)
                 },
                 selectedCountries = countries.countryNames
             )

@@ -35,10 +35,7 @@ import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCa
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LeagueSelectionScreen(
-    onContinueToTeamSelection: (
-        leagues: List<Int>
-    ) -> Unit,
-    onSkipAndGoToDashboard: () -> Unit,
+    onContinueToTeamSelection: (leagues: List<Int>) -> Unit,
     selectedCountries: List<String>,
     vm: LeaguesViewModel = viewModel()
 ) {
@@ -83,7 +80,7 @@ fun LeagueSelectionScreen(
                     }
                 }
 
-                if(vm.isAnyLeaguesSelected()) Column(
+                if (vm.isAnyLeaguesSelected()) Column(
                     modifier = Modifier
                         .padding(contentPadding)
                         .fillMaxWidth()

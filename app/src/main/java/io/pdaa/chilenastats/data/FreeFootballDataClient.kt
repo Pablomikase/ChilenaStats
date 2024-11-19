@@ -18,7 +18,7 @@ object FreeFootballDataClient {
     private val okHttpClient = okhttp3.OkHttpClient.Builder()
         .addInterceptor(::buildHeaders)
         /*.addInterceptor(MockInterceptor())*/
-        .addInterceptor(loggingInterceptor)
+        /*.addInterceptor(loggingInterceptor)*/
         .build()
 
     private val json = Json {
@@ -33,33 +33,6 @@ object FreeFootballDataClient {
         .create<FreeFootballDataService>()
 
 }
-
-fun apiKeyAsQuery(chain: Interceptor.Chain) = chain.proceed(
-    chain.request().newBuilder()
-        .url(
-            chain
-                .request()
-                .url
-                .newBuilder()
-                .addQueryParameter("x-rapidapi-key", BuildConfig.FOOTBAL_API_KEY)
-                .build()
-        ).url(
-            chain
-                .request()
-                .url
-                .newBuilder()
-                .addQueryParameter("x-apisports-key", BuildConfig.FOOTBAL_API_KEY)
-                .build()
-        ).url(
-            chain
-                .request()
-                .url
-                .newBuilder()
-                .addQueryParameter("x-rapidapi-host", BuildConfig.FOOTBAL_API_HOST)
-                .build()
-        ).build()
-)
-
 fun buildHeaders(chain: Interceptor.Chain): okhttp3.Response {
     val originalRequest = chain.request()
     val newRequest = originalRequest.newBuilder()

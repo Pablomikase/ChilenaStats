@@ -20,15 +20,12 @@ class TeamSelectionViewModel : ViewModel() {
     fun onUiReady(countries: List<String>, leagueIds: List<Int>) {
         viewModelScope.launch {
             _state.value = UiState(isLoading = true)
-            teamsRepository.fetchTeamsByCountryName(countries.first()).let { teams ->
-                _state.value = UiState(
-                    isLoading = false,
-                    teams = teams
-                )
+            val teams = countries.flatMap { country ->
+                teamsRepository.fetchTeamsByCountryName(country)
             }
+            _state.value = UiState(isLoading = false, teams = teams)
         }
     }
-
     fun onLeagueSelected(selectedTeam: TeamUi) {
         _state.update { currentState ->
             val index = _state.value.teams.indexOfFirst { it.id == selectedTeam.id }
