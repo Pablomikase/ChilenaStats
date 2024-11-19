@@ -1,10 +1,9 @@
 package io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.pdaa.chilenastats.data.repositories.LeaguesRepository
 import io.pdaa.chilenastats.data.models.local.LeagueUi
+import io.pdaa.chilenastats.data.repositories.LeaguesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -40,7 +39,6 @@ class LeaguesViewModel : ViewModel() {
 
     fun onLeagueSelected(selectedLeague: LeagueUi) {
         _state.update { currentState ->
-            Log.d("LeaguesViewModel", "Before update: $currentState")
             val newState = currentState.copy(leagues = currentState.leagues.map {
                 if (it.id == selectedLeague.id) {
                     it.copy(isSelected = !it.isSelected)
@@ -48,13 +46,16 @@ class LeaguesViewModel : ViewModel() {
                     it
                 }
             })
-            Log.d("LeaguesViewModel", "After update: $newState")
             newState
         }
     }
 
     fun filterSelectedLeagues(): List<Int> {
         return _state.value.leagues.filter { it.isSelected }.map { it.id }
+    }
+
+    fun isAnyLeaguesSelected(): Boolean {
+        return _state.value.leagues.any { it.isSelected }
     }
 
 

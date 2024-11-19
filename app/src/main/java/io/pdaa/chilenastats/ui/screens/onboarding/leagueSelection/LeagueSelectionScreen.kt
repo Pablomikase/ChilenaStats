@@ -83,7 +83,7 @@ fun LeagueSelectionScreen(
                     }
                 }
 
-                Column(
+                if(vm.isAnyLeaguesSelected()) Column(
                     modifier = Modifier
                         .padding(contentPadding)
                         .fillMaxWidth()
@@ -105,14 +105,6 @@ fun LeagueSelectionScreen(
                             )
                         }) {
                         Text(text = stringResource(R.string.leagues_selector_continue_to_teams_button))
-                    }
-                    ElevatedButton(
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(bottom = 8.dp), onClick = {
-                            onSkipAndGoToDashboard()
-                        }) {
-                        Text(text = stringResource(R.string.onboarding_skip_button))
                     }
                 }
 

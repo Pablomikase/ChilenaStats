@@ -28,7 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.ui.common.LoadingIndicator
 import io.pdaa.chilenastats.ui.screens.Screen
-import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCardSelector
+import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.TeamSelector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +41,12 @@ fun TeamSelectionScreen(
 
     val teamSelectionState = rememberTeamSelectionState()
     teamSelectionState.UiReadyToFetchData(
-        execute = { selectedCountries, selectedLeagueIds ->  vm.onUiReady(selectedCountries, selectedLeagueIds) },
+        execute = { selectedCountries, selectedLeagueIds ->
+            vm.onUiReady(
+                selectedCountries,
+                selectedLeagueIds
+            )
+        },
         countries = countries,
         leagueIds = leagueIds
     )
@@ -72,15 +77,16 @@ fun TeamSelectionScreen(
                         contentPadding = contentPadding
                     ) {
                         items(screenState.teams) { item ->
-                            OnboardingCardSelector(
-                                elementUi = item,
+                            TeamSelector(
+                                team = item,
                                 onSelectorClicked = { vm.onLeagueSelected(it) },
                                 isSelected = item.isSelected
                             )
+
                         }
                     }
 
-                    Column(
+                    if (vm.isAnyTeamsSelected()) Column(
                         modifier = Modifier
                             .padding(contentPadding)
                             .fillMaxWidth()

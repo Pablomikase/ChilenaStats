@@ -7,9 +7,10 @@ import io.pdaa.chilenastats.data.repositories.TeamRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class TeamSelectionViewModel: ViewModel() {
+class TeamSelectionViewModel : ViewModel() {
 
     private val teamsRepository = TeamRepository()
 
@@ -29,7 +30,23 @@ class TeamSelectionViewModel: ViewModel() {
     }
 
     fun onLeagueSelected(selectedTeam: TeamUi) {
-        TODO("Not yet implemented")
+        _state.update { currentState ->
+            val index = _state.value.teams.indexOfFirst { it.id == selectedTeam.id }
+            if (index != -1) {
+                val updatedTeam =
+                    _state.value.teams[index].copy(isSelected = !_state.value.teams[index].isSelected)
+                val updatedTeams = _state.value.teams.toMutableList().apply {
+                    this[index] = updatedTeam
+                }
+                currentState.copy(teams = updatedTeams)
+            } else {
+                currentState
+            }
+        }
+    }
+
+    fun isAnyTeamsSelected(): Boolean {
+        return _state.value.teams.any { it.isSelected }
     }
 
     data class UiState(

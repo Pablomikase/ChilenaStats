@@ -1,15 +1,11 @@
 package io.pdaa.chilenastats.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import androidx.navigation.toRoute
-import io.pdaa.chilenastats.ui.screens.leagueDetail.LeagueDetailViewModel
-import io.pdaa.chilenastats.ui.screens.leagueDetail.LeagueScreen
+import io.pdaa.chilenastats.ui.screens.dashboard.DashboardScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.countrySelection.CountrySelectionScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection.LeagueSelectionScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.login.LoginScreen
@@ -23,11 +19,10 @@ fun Navigation() {
         composable<Login> {
             LoginScreen(
                 continueToOnBoarding = {
-                    navController.navigate(CountrySelector)
+                    navController.navigate(CountrySelector) {
+                        popUpTo(Login) { inclusive = true }
+                    }
                 },
-                continueToDashboard = {
-                    navController.navigate(Dashboard)
-                }
             )
         }
 
@@ -67,21 +62,19 @@ fun Navigation() {
                 countries = teamsSelector.countries,
                 leagueIds = teamsSelector.leagueIds,
                 onSkipAndGoToDashboard = {
-                    navController.navigate(Dashboard)
+                    navController.navigate(
+                        Dashboard()
+                    ) {
+                        popUpTo(0) { inclusive = true }
+                    }
                 }
             )
         }
 
-
-        composable(
-            route = "leagues/{leagueId}",
-            arguments = listOf(navArgument("leagueId") { type = NavType.IntType })
-        ) { backStackEntry ->
-            val leagueId = requireNotNull(backStackEntry.arguments?.getInt("leagueId"))
-            LeagueScreen(
-                vm = viewModel { LeagueDetailViewModel(leagueId) },
-                onBackPressed = { navController.popBackStack() }
-            )
+        composable<Dashboard> { backStackEntry ->
+            val dashboardData = backStackEntry.toRoute<Dashboard>()
+            DashboardScreen()
         }
+
     }
 }

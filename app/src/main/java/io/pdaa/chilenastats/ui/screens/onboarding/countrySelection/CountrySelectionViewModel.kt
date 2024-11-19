@@ -58,4 +58,8 @@ class CountrySelectionViewModel : ViewModel() {
         return _state.value.countries.filter { it.isSelected }.map { it.name }
     }
 
+    fun isAnyCountrySelected(): Boolean {
+        return _state.value.countries.any { it.isSelected }
+    }
+
 }

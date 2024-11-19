@@ -75,7 +75,7 @@ fun CountrySelectionScreen(
                     }
                 }
 
-                Column(
+                if (vm.isAnyCountrySelected()) Column(
                     modifier = Modifier
                         .padding(contentPadding)
                         .fillMaxWidth()
@@ -90,19 +90,11 @@ fun CountrySelectionScreen(
                         )
                 ) {
                     ElevatedButton(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        modifier = Modifier.align(Alignment.CenterHorizontally).padding(16.dp),
                         onClick = {
                             onContinueToLeagues(vm.filterSelectedCountries())
                         }) {
                         Text(text = stringResource(R.string.country_selector_continue_to_leagues_button))
-                    }
-                    ElevatedButton(
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(bottom = 8.dp), onClick = {
-                            onSkipAndGoToDashboard()
-                        }) {
-                        Text(text = stringResource(R.string.onboarding_skip_button))
                     }
                 }
             }
