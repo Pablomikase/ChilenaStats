@@ -39,8 +39,6 @@ fun CountrySelectionScreen(
     val countrySelectionState = rememberCountrySelectionState()
     countrySelectionState.AskRegionEffect { vm.onUiReady(it) }
 
-
-
     Screen {
         Scaffold(
             modifier = Modifier.nestedScroll(countrySelectionState.scrollBehavior.nestedScrollConnection),

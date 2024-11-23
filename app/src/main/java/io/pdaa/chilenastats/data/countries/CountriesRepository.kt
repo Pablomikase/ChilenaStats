@@ -4,7 +4,6 @@ import io.pdaa.chilenastats.data.FreeFootballDataClient
 import io.pdaa.chilenastats.data.models.local.CountryUi
 import io.pdaa.chilenastats.data.models.remote.asUiModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 class CountriesRepository {
