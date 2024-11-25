@@ -15,7 +15,7 @@ import io.pdaa.chilenastats.ui.screens.onboarding.teamSelection.TeamSelectionScr
 fun Navigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Login) {
+    NavHost(navController = navController, startDestination = Dashboard()) {
         composable<Login> {
             LoginScreen(
                 continueToOnBoarding = {

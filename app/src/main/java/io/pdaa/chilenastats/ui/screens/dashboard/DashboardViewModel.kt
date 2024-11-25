@@ -2,6 +2,7 @@ package io.pdaa.chilenastats.ui.screens.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.pdaa.chilenastats.data.models.local.fixture.FixtureResponseUi
 import io.pdaa.chilenastats.data.models.local.fixture.FixtureUi
 import io.pdaa.chilenastats.data.repositories.FixturesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,7 @@ class DashboardViewModel: ViewModel() {
 
     data class UiState (
         val isLoading: Boolean = false,
-        val fixtures: List<FixtureUi> = emptyList()
+        val fixtures: List<FixtureResponseUi> = emptyList()
     )
 
     private val _state = MutableStateFlow(UiState())
@@ -26,7 +27,7 @@ class DashboardViewModel: ViewModel() {
             fixturesRepository.fetchFixturesByTeam(teamId).let { fixtures ->
                 _state.value = UiState(
                     isLoading = false,
-                    fixtures = fixtures.map { it.fixture }
+                    fixtures = fixtures
                 )
             }
 
