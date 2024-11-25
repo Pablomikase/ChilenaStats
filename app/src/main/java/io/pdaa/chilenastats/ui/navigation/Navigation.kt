@@ -67,7 +67,11 @@ fun Navigation() {
 
         composable<Dashboard> { backStackEntry ->
             val dashboardData = backStackEntry.toRoute<Dashboard>()
-            DashboardScreen()
+            DashboardScreen(
+                countries = dashboardData.countries,
+                leagueIds = dashboardData.leagueIds,
+                teamIds = dashboardData.teamIds
+            )
         }
 
     }

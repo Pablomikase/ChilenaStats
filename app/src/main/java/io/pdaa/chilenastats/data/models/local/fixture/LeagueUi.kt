@@ -1,6 +1,6 @@
-package io.pdaa.chilenastats.data.models.remote.fixture
+package io.pdaa.chilenastats.data.models.local.fixture
 
-data class League(
+data class LeagueUi (
     val country: String,
     val flag: String,
     val id: Int,
