@@ -8,7 +8,7 @@ data class FixtureRemote(
     val date: String,
     val id: Int,
     val periods: PeriodsRemote,
-    val referee: String,
+    val referee: String?,
     val status: StatusRemote,
     val timestamp: Int,
     val timezone: String,

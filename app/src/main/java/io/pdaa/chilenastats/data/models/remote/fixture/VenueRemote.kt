@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class VenueRemote(
     val city: String,
-    val id: Int,
+    val id: Int?,
     val name: String
 )
 

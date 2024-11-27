@@ -1,5 +1,6 @@
 package io.pdaa.chilenastats.ui.screens.onboarding.countrySelection
 
+import android.Manifest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,20 +25,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.ui.common.LoadingIndicator
+import io.pdaa.chilenastats.ui.common.PermissionRequestEffect
 import io.pdaa.chilenastats.ui.screens.Screen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CountrySelectionScreen(
-    vm: CountrySelectionViewModel = viewModel(),
+    vm: CountrySelectionViewModel,
     onContinueToLeagues: (List<String>) -> Unit
 ) {
     val countrySelectionState = rememberCountrySelectionState()
-    countrySelectionState.AskRegionEffect { vm.onUiReady(it) }
+    PermissionRequestEffect(permission = Manifest.permission.ACCESS_COARSE_LOCATION) {
+        vm.onUiReady()
+    }
 
     Screen {
         Scaffold(

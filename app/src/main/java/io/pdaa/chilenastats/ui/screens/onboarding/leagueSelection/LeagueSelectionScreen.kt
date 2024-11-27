@@ -26,7 +26,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.ui.common.LoadingIndicator
 import io.pdaa.chilenastats.ui.screens.Screen
@@ -37,7 +36,7 @@ import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCa
 fun LeagueSelectionScreen(
     onContinueToTeamSelection: (leagues: List<Int>) -> Unit,
     selectedCountries: List<String>,
-    vm: LeaguesViewModel = viewModel()
+    vm: LeaguesViewModel
 ) {
 
     val leagueSelectionState = rememberLeagueSelectionState()

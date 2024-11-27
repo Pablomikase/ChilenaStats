@@ -3,17 +3,17 @@ package io.pdaa.chilenastats.ui.screens.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.pdaa.chilenastats.data.models.local.fixture.FixtureResponseUi
-import io.pdaa.chilenastats.data.models.local.fixture.FixtureUi
 import io.pdaa.chilenastats.data.repositories.FixturesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class DashboardViewModel: ViewModel() {
+class DashboardViewModel(
+    private val fixturesRepository: FixturesRepository
+) : ViewModel() {
 
-    private val fixturesRepository = FixturesRepository()
 
-    data class UiState (
+    data class UiState(
         val isLoading: Boolean = false,
         val fixtures: List<FixtureResponseUi> = emptyList()
     )

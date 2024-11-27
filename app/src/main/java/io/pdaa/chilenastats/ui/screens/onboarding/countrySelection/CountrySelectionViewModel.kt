@@ -2,16 +2,16 @@ package io.pdaa.chilenastats.ui.screens.onboarding.countrySelection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.pdaa.chilenastats.data.countries.CountriesRepository
+import io.pdaa.chilenastats.data.repositories.CountriesRepository
 import io.pdaa.chilenastats.data.models.local.CountryUi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CountrySelectionViewModel : ViewModel() {
-
-    private val countriesRepository = CountriesRepository()
+class CountrySelectionViewModel(
+    private val countriesRepository: CountriesRepository
+) : ViewModel() {
 
     data class UiState(
         val isLoading: Boolean = false,
@@ -21,9 +21,10 @@ class CountrySelectionViewModel : ViewModel() {
     private val _state = MutableStateFlow(UiState())
     val state get() = _state.asStateFlow()
 
-    fun onUiReady(countryCode: String) {
+    fun onUiReady() {
         viewModelScope.launch {
             _state.value = UiState(isLoading = true)
+            val countryCode = countriesRepository.findLastRegion()
             val countriesList = countriesRepository.fetchCountries().toMutableList().apply {
                 find { it.code == countryCode }?.let {
                     it.isSelected = true

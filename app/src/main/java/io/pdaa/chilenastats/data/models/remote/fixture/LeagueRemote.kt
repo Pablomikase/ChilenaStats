@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LeagueRemote(
     val country: String,
-    val flag: String,
+    val flag: String?,
     val id: Int,
     val logo: String,
     val name: String,

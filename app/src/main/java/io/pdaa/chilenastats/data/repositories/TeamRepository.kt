@@ -1,20 +1,14 @@
 package io.pdaa.chilenastats.data.repositories
 
-import io.pdaa.chilenastats.data.FreeFootballDataClient
+import io.pdaa.chilenastats.data.datasources.TeamsRemoteDataSource
 import io.pdaa.chilenastats.data.models.local.TeamUi
-import io.pdaa.chilenastats.data.models.remote.asUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class TeamRepository {
-
-    suspend fun fetchTeamsByLeague(leagueId: Int): List<TeamUi> = withContext(Dispatchers.IO){
-        emptyList()
-    }
+class TeamRepository( private val remoteDataSource: TeamsRemoteDataSource) {
 
     suspend fun fetchTeamsByCountryName(countryName: String): List<TeamUi> = withContext(Dispatchers.IO){
-        FreeFootballDataClient.instance.fetchTeamsByCountryName(countryName)
-            .response.map { it.team.asUiModel() }
+        remoteDataSource.fetchTeamsByCountryName(countryName)
     }
 
 }

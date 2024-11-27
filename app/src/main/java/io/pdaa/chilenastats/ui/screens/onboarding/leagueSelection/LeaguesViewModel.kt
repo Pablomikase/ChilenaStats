@@ -10,9 +10,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LeaguesViewModel : ViewModel() {
+class LeaguesViewModel(private val leaguesRepository: LeaguesRepository) : ViewModel() {
 
-    private val leaguesRepository = LeaguesRepository()
 
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> get() = _state.asStateFlow()
@@ -23,7 +22,7 @@ class LeaguesViewModel : ViewModel() {
             val allLeagues = leaguesRepository.fetchLeagues().toMutableList()
             allLeagues.apply {
                 countryNames.forEach { selectedCountryNames ->
-                    this.find {it.country?.name == selectedCountryNames}?.let {
+                    this.find { it.country?.name == selectedCountryNames }?.let {
                         remove(it)
                         add(0, it)
                     }

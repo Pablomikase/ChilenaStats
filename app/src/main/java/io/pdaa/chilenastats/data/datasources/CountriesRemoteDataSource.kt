@@ -1,18 +1,16 @@
-package io.pdaa.chilenastats.data.countries
+package io.pdaa.chilenastats.data.datasources
 
 import io.pdaa.chilenastats.data.FreeFootballDataClient
 import io.pdaa.chilenastats.data.models.local.CountryUi
 import io.pdaa.chilenastats.data.models.remote.asUiModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
-class CountriesRepository {
+class CountriesRemoteDataSource {
 
-    suspend fun fetchCountries(): List<CountryUi> = withContext(Dispatchers.IO){
+    suspend fun fetchCountries(): List<CountryUi> =
         FreeFootballDataClient.instance.fetchCountries()
             .response
             .map {
-                it.asUiModel() }
-    }
+                it.asUiModel()
+            }
 
 }
