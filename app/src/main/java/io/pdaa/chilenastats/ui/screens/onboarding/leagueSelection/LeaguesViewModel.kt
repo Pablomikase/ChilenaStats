@@ -22,7 +22,7 @@ class LeaguesViewModel(private val leaguesRepository: LeaguesRepository) : ViewM
             val allLeagues = leaguesRepository.fetchLeagues().toMutableList()
             allLeagues.apply {
                 countryNames.forEach { selectedCountryNames ->
-                    this.find { it.country?.name == selectedCountryNames }?.let {
+                    this.find { it.country.name == selectedCountryNames }?.let {
                         remove(it)
                         add(0, it)
                     }
@@ -31,7 +31,7 @@ class LeaguesViewModel(private val leaguesRepository: LeaguesRepository) : ViewM
 
             _state.value = UiState(
                 isLoading = false,
-                leagues = allLeagues.map { it.league }
+                leagues = allLeagues
             )
         }
     }

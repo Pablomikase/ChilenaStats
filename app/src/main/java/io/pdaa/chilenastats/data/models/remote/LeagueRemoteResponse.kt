@@ -1,5 +1,5 @@
 package io.pdaa.chilenastats.data.models.remote
-import io.pdaa.chilenastats.data.models.local.ResponseUi
+import io.pdaa.chilenastats.data.models.database.LeagueDB
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,9 +9,12 @@ data class LeagueRemoteResponse(
     val seasons: List<SeasonRemote>
 )
 
-fun LeagueRemoteResponse.asUiModel(): ResponseUi = ResponseUi(
-    league = league.asUiModel(),
-    country = country.asUiModel()
+fun LeagueRemoteResponse.asDbModel(): LeagueDB = LeagueDB(
+    id = league.id,
+    logo = league.logo,
+    name = league.name,
+    type = league.type,
+    country = country.asDbModel(),
+    season = null
 )
 
-fun List<LeagueRemoteResponse>.asUiModel(): List<ResponseUi> = map { it.asUiModel() }

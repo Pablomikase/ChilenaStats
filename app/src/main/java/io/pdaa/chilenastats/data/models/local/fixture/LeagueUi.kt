@@ -9,3 +9,4 @@ data class LeagueUi (
     val round: String,
     val season: Int
 )
+

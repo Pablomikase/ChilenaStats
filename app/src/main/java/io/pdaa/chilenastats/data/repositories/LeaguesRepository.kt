@@ -1,20 +1,22 @@
 package io.pdaa.chilenastats.data.repositories
 
-import io.pdaa.chilenastats.data.datasources.LeaguesRemoteDataSource
+import io.pdaa.chilenastats.data.datasources.local.LeaguesLocalDataSource
+import io.pdaa.chilenastats.data.datasources.remote.LeaguesRemoteDataSource
+import io.pdaa.chilenastats.data.models.database.asUiModel
 import io.pdaa.chilenastats.data.models.local.LeagueUi
-import io.pdaa.chilenastats.data.models.local.ResponseUi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class LeaguesRepository(
-    private val remoteDataSource: LeaguesRemoteDataSource
+    private val remoteDataSource: LeaguesRemoteDataSource,
+    private val localDataSource: LeaguesLocalDataSource
 ) {
 
-    suspend fun fetchLeagueById(leagueId: Int): LeagueUi = withContext(Dispatchers.IO){
-        remoteDataSource.fetchLeagueById(leagueId)
-    }
-
-    suspend fun fetchLeagues(): List<ResponseUi> = withContext(Dispatchers.IO){
-        remoteDataSource.fetchLeagues()
+    suspend fun fetchLeagues(): List<LeagueUi> {
+        if(localDataSource.isLeaguesEmpty()){
+            remoteDataSource.fetchLeagues().let { leagueDBs ->
+                localDataSource.insertLeagues(leagueDBs)
+                return leagueDBs.map { it.asUiModel() }
+            }
+        }
+        return remoteDataSource.fetchLeagues().map { it.asUiModel() }
     }
 }

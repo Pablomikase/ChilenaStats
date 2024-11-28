@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.data.datasources
+package io.pdaa.chilenastats.data.datasources.remote
 
 import io.pdaa.chilenastats.data.FreeFootballDataClient
 import io.pdaa.chilenastats.data.models.local.CountryUi
@@ -11,6 +11,6 @@ class CountriesRemoteDataSource {
             .response
             .map {
                 it.asUiModel()
-            }
+            }.filter { it.code != null }
 
 }

@@ -1,6 +1,6 @@
 package io.pdaa.chilenastats.data.repositories
 
-import io.pdaa.chilenastats.data.datasources.TeamsRemoteDataSource
+import io.pdaa.chilenastats.data.datasources.remote.TeamsRemoteDataSource
 import io.pdaa.chilenastats.data.models.local.TeamUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

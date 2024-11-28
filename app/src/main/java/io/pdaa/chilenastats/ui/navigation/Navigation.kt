@@ -1,6 +1,5 @@
 package io.pdaa.chilenastats.ui.navigation
 
-import android.app.Application
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -9,12 +8,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import io.pdaa.chilenastats.data.datasources.CountriesRemoteDataSource
-import io.pdaa.chilenastats.data.datasources.FixturesRemoteDataSource
-import io.pdaa.chilenastats.data.datasources.LeaguesRemoteDataSource
-import io.pdaa.chilenastats.data.datasources.LocationDataSource
-import io.pdaa.chilenastats.data.datasources.RegionDataSource
-import io.pdaa.chilenastats.data.datasources.TeamsRemoteDataSource
+import io.pdaa.chilenastats.App
+import io.pdaa.chilenastats.data.datasources.local.CountriesLocalDataSource
+import io.pdaa.chilenastats.data.datasources.local.LeaguesLocalDataSource
+import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
+import io.pdaa.chilenastats.data.datasources.remote.FixturesRemoteDataSource
+import io.pdaa.chilenastats.data.datasources.remote.LeaguesRemoteDataSource
+import io.pdaa.chilenastats.data.datasources.remote.LocationDataSource
+import io.pdaa.chilenastats.data.datasources.remote.RegionDataSource
+import io.pdaa.chilenastats.data.datasources.remote.TeamsRemoteDataSource
 import io.pdaa.chilenastats.data.repositories.CountriesRepository
 import io.pdaa.chilenastats.data.repositories.FixturesRepository
 import io.pdaa.chilenastats.data.repositories.LeaguesRepository
@@ -32,20 +34,22 @@ import io.pdaa.chilenastats.ui.screens.onboarding.teamSelection.TeamSelectionVie
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    val application = LocalContext.current.applicationContext as Application
+    val application = LocalContext.current.applicationContext as App
     val countriesRepository = remember {
         CountriesRepository(
             regionDataSource = RegionDataSource(
                 app = application,
                 locationDataSource = LocationDataSource(application)
             ),
-            remoteDataSource = CountriesRemoteDataSource()
+            remoteDataSource = CountriesRemoteDataSource(),
+            localDataSource = CountriesLocalDataSource(application.db.countriesDao())
         )
     }
 
     val leaguesRepository = remember {
         LeaguesRepository(
-            remoteDataSource = LeaguesRemoteDataSource()
+            remoteDataSource = LeaguesRemoteDataSource(),
+            localDataSource = LeaguesLocalDataSource(application.db.leaguesDao())
         )
     }
 

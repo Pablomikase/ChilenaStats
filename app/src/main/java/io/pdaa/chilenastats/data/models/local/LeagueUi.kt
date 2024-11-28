@@ -5,5 +5,7 @@ data class LeagueUi(
     val name: String,
     val type: String,
     val logo: String,
-    val isSelected: Boolean
+    val isSelected: Boolean,
+    val country: CountryUi,
+    val season: String?
 )

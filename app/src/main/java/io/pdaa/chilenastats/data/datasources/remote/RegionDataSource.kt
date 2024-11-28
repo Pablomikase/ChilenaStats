@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.data.datasources
+package io.pdaa.chilenastats.data.datasources.remote
 
 import android.app.Application
 import android.location.Geocoder
