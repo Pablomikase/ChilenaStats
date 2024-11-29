@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class FulltimeRemote(
-    val away: Int,
-    val home: Int
+    val away: Int?,
+    val home: Int?
 )
 
 fun FulltimeRemote.asUiModel(): FulltimeUi = FulltimeUi(

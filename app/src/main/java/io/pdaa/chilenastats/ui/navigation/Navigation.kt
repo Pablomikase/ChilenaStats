@@ -11,6 +11,7 @@ import androidx.navigation.toRoute
 import io.pdaa.chilenastats.App
 import io.pdaa.chilenastats.data.datasources.local.CountriesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.local.LeaguesLocalDataSource
+import io.pdaa.chilenastats.data.datasources.local.TeamsLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
 import io.pdaa.chilenastats.data.datasources.remote.FixturesRemoteDataSource
 import io.pdaa.chilenastats.data.datasources.remote.LeaguesRemoteDataSource
@@ -55,7 +56,8 @@ fun Navigation() {
 
     val teamsRepository = remember {
         TeamRepository(
-            remoteDataSource = TeamsRemoteDataSource()
+            remoteDataSource = TeamsRemoteDataSource(),
+            localDataSource = TeamsLocalDataSource(application.db.teamsDao())
         )
     }
     val fixturesRepository = remember {
@@ -106,9 +108,13 @@ fun Navigation() {
             TeamSelectionScreen(
                 countries = teamsSelector.countries,
                 leagueIds = teamsSelector.leagueIds,
-                onSkipAndGoToDashboard = {
+                onSkipAndGoToDashboard = { selectedTeamId: Int ->
                     navController.navigate(
-                        Dashboard()
+                        Dashboard(
+                            countryCode = teamsSelector.countries.first(),
+                            leagueIds = teamsSelector.leagueIds,
+                            teamId = selectedTeamId
+                        )
                     ) {
                         popUpTo(0) { inclusive = true }
                     }
@@ -120,9 +126,9 @@ fun Navigation() {
         composable<Dashboard> { backStackEntry ->
             val dashboardData = backStackEntry.toRoute<Dashboard>()
             DashboardScreen(
-                countries = dashboardData.countries,
+                countryCode = dashboardData.countryCode,
                 leagueIds = dashboardData.leagueIds,
-                teamIds = dashboardData.teamIds,
+                teamId = dashboardData.teamId,
                 vm = viewModel { DashboardViewModel(fixturesRepository) }
             )
         }

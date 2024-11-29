@@ -6,6 +6,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -14,8 +15,10 @@ class DashboardState(
     val screenScrollState: ScrollState,
 ) {
 
-    fun uiReadyEffect(function: () -> Unit) {
+    @Composable
+    fun UiReadyToFetchData(function: () -> Unit) = LaunchedEffect(Unit) {
         function()
+
     }
 }
 

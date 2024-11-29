@@ -31,13 +31,13 @@ import io.pdaa.chilenastats.ui.screens.dashboard.components.FixtureCarouselItem
 @Composable
 fun DashboardScreen(
     vm: DashboardViewModel,
-    countries: List<String>,
+    countryCode: String,
     leagueIds: List<Int>,
-    teamIds: List<Int>
+    teamId: Int
 ) {
 
     val dashboardState = rememberDashboardState()
-    dashboardState.uiReadyEffect { vm.onUiReady(529) }
+    dashboardState.UiReadyToFetchData { vm.onUiReady(teamId) }
 
     Screen {
         Scaffold(

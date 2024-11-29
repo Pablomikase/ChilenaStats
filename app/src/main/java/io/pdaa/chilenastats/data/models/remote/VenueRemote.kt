@@ -1,6 +1,6 @@
 package io.pdaa.chilenastats.data.models.remote
 
-import io.pdaa.chilenastats.data.models.local.VenueUi
+import io.pdaa.chilenastats.data.models.database.VenueDB
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,12 +14,18 @@ class VenueRemote {
     var image: String? = ""
 }
 
-fun VenueRemote.asUiModel(): VenueUi = VenueUi(
-    id = id,
-    name = name ?: "",
-    address = address ?: "",
-    city = city ?: "",
-    capacity = capacity ?: 0,
-    surface = surface ?: "",
-    image = image ?: ""
-)
+fun VenueRemote.asDBModel(): VenueDB? {
+    return if (id != null) {
+        VenueDB(
+            venueId = id,
+            venueName =  name,
+            venueAddress = address,
+            venueCity = city,
+            venueCapacity = capacity,
+            venueSurface = surface,
+            venueImage = image
+        )
+    } else {
+        null
+    }
+}

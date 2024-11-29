@@ -5,9 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class VenueRemote(
-    val city: String,
+    val city: String?,
     val id: Int?,
-    val name: String
+    val name: String?
 )
 
 fun VenueRemote.asUiModel(): VenueUi = VenueUi(

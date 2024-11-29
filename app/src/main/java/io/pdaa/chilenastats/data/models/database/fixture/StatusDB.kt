@@ -1,6 +1,6 @@
-package io.pdaa.chilenastats.data.models.local.fixture
+package io.pdaa.chilenastats.data.models.database.fixture
 
-data class StatusUi (
+data class StatusDB (
     val long: String,
     val short: String,
     val elapsed: Int?,

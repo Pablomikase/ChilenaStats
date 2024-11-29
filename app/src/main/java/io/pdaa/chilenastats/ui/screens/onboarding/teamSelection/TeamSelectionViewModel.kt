@@ -14,8 +14,6 @@ class TeamSelectionViewModel(
     private val teamsRepository : TeamRepository
 ) : ViewModel() {
 
-
-
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> get() = _state.asStateFlow()
 
@@ -50,6 +48,14 @@ class TeamSelectionViewModel(
 
     fun isAnyTeamsSelected(): Boolean {
         return _state.value.teams.any { it.isSelected }
+    }
+
+    fun getSelectedTeamId(): Int {
+        return try {
+            state.value.teams[_state.value.indexSelectedTeam].id
+        }catch (e: Exception){
+            -1
+        }
     }
 
     data class UiState(

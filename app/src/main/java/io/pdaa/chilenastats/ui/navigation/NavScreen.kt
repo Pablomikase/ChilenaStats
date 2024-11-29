@@ -21,8 +21,8 @@ data class TeamsSelector(
 
 @Serializable
 data class Dashboard(
-    val countries: List<String> = emptyList(),
+    val countryCode: String,
     val leagueIds: List<Int> = emptyList(),
-    val teamIds: List<Int> = emptyList()
+    val teamId: Int
 )
 

@@ -35,7 +35,7 @@ fun TeamSelectionScreen(
     countries: List<String>,
     leagueIds: List<Int>,
     vm: TeamSelectionViewModel,
-    onSkipAndGoToDashboard: () -> Unit
+    onSkipAndGoToDashboard: (Int) -> Unit
 ) {
 
     val teamSelectionState = rememberTeamSelectionState()
@@ -103,7 +103,7 @@ fun TeamSelectionScreen(
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
                                 .padding(bottom = 8.dp), onClick = {
-                                onSkipAndGoToDashboard()
+                                onSkipAndGoToDashboard(vm.getSelectedTeamId())
                             }) {
                             Text(text = stringResource(R.string.onboarding_skip_button))
                         }

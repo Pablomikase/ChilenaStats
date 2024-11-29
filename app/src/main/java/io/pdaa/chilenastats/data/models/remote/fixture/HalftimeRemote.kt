@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HalftimeRemote(
-    val away: Int,
-    val home: Int
+    val away: Int?,
+    val home: Int?
 )
 
 fun HalftimeRemote.asUiModel(): HalftimeUi = HalftimeUi(

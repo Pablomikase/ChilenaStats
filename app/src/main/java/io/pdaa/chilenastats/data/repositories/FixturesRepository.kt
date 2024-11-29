@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class FixturesRepository(
-    private val remoteDataSource: FixturesRemoteDataSource
+    private val remoteDataSource: FixturesRemoteDataSource,
 ) {
 
     suspend fun fetchFixturesByTeam(teamId: Int): List<FixtureResponseUi> =
