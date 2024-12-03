@@ -6,23 +6,34 @@ import io.pdaa.chilenastats.data.datasources.remote.RegionDataSource
 import io.pdaa.chilenastats.data.models.database.asUiModel
 import io.pdaa.chilenastats.data.models.local.CountryUi
 import io.pdaa.chilenastats.data.models.local.asDbModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
 class CountriesRepository(
     private val regionDataSource: RegionDataSource,
     private val remoteDataSource: CountriesRemoteDataSource,
     private val localDataSource: CountriesLocalDataSource
-    ) {
+) {
 
-    suspend fun fetchCountries(): List<CountryUi> {
-        if(localDataSource.isCountriesEmpty()){
-            remoteDataSource.fetchCountries().let { countryUis ->
-                localDataSource.insertCountries(countryUis.map { it.asDbModel() })
-                return countryUis
-            }
+    val countries: Flow<List<CountryUi>> = localDataSource.countries.onEach { localCountries ->
+        if (localCountries.isEmpty()) {
+            val lastRegion = regionDataSource.findLastRegion()
+            val remoteCountries = remoteDataSource.fetchCountries()
+                .sortedByDescending { it.countryCode == lastRegion }
+                .map { it.copy(countryIsSelected = it.countryCode == lastRegion) }
+            localDataSource.insertCountries(remoteCountries)
         }
-        return localDataSource.getCountries().map { it.asUiModel() }
-    }
+    }.filterNotNull()
+        .map { countries -> countries.map { it.asUiModel() }.sortedByDescending { it.isSelected } }
 
-    suspend fun findLastRegion(): String = regionDataSource.findLastRegion()
+    suspend fun selectCountry(selectedCountry: CountryUi) {
+        localDataSource.insertCountries(
+            listOf(
+                selectedCountry.copy(isSelected = selectedCountry.isSelected.not()).asDbModel()
+            )
+        )
+    }
 
 }

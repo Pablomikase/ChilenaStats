@@ -10,6 +10,7 @@ data class CountryDB (
     val countryName: String,
     val countryCode: String?,
     val countryFlag: String?,
+    val countryIsSelected: Boolean
 
 )
 
@@ -17,5 +18,5 @@ fun CountryDB.asUiModel() = CountryUi(
     code = countryCode,
     flag = countryFlag,
     name = countryName,
-    isSelected = false
+    isSelected = countryIsSelected
 )

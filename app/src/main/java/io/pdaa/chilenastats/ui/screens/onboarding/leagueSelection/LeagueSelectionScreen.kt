@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -27,7 +26,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.pdaa.chilenastats.R
-import io.pdaa.chilenastats.ui.common.LoadingIndicator
+import io.pdaa.chilenastats.ui.common.BaseScaffold
 import io.pdaa.chilenastats.ui.screens.Screen
 import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCardSelector
 
@@ -45,7 +44,10 @@ fun LeagueSelectionScreen(
         regionCodes = selectedCountries
     )
     Screen {
-        Scaffold(
+        val screenState by vm.state.collectAsState()
+        val isTablet = leagueSelectionState.isTablet()
+        BaseScaffold(
+            state = screenState,
             topBar = {
                 TopAppBar(
                     title = { Text(text = stringResource(R.string.leagues_selection_main_title)) },
@@ -54,15 +56,9 @@ fun LeagueSelectionScreen(
             },
             modifier = Modifier.nestedScroll(leagueSelectionState.scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing
-        ) { contentPadding ->
-            val screenState by vm.state.collectAsState()
-            val isTablet = leagueSelectionState.isTablet()
+        ) { contentPadding, leagues ->
 
             Box {
-                if (screenState.isLoading) {
-                    LoadingIndicator()
-                }
-
                 LazyVerticalGrid(
                     modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
                     columns = GridCells.Adaptive(minSize = if (isTablet) 150.dp else 120.dp),
@@ -70,7 +66,7 @@ fun LeagueSelectionScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     contentPadding = contentPadding
                 ) {
-                    items(screenState.leagues) { item ->
+                    items(leagues) { item ->
                         OnboardingCardSelector(
                             elementUi = item,
                             onSelectorClicked = { vm.onLeagueSelected(it) },

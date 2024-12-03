@@ -2,65 +2,46 @@ package io.pdaa.chilenastats.ui.screens.onboarding.countrySelection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.pdaa.chilenastats.data.repositories.CountriesRepository
+import io.pdaa.chilenastats.Result
 import io.pdaa.chilenastats.data.models.local.CountryUi
+import io.pdaa.chilenastats.data.repositories.CountriesRepository
+import io.pdaa.chilenastats.stateAsResultIn
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 class CountrySelectionViewModel(
     private val countriesRepository: CountriesRepository
 ) : ViewModel() {
 
-    data class UiState(
-        val isLoading: Boolean = false,
-        val countries: List<CountryUi> = emptyList(),
-    )
+    private val uiReady = MutableStateFlow(false)
 
-    private val _state = MutableStateFlow(UiState())
-    val state get() = _state.asStateFlow()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val state: StateFlow<Result<List<CountryUi>>> = uiReady
+        .filter { it }
+        .flatMapLatest { countriesRepository.countries }
+        .stateAsResultIn(viewModelScope)
+
 
     fun onUiReady() {
-        viewModelScope.launch {
-            _state.value = UiState(isLoading = true)
-            val countryCode = countriesRepository.findLastRegion()
-            val countriesList = countriesRepository.fetchCountries().toMutableList().apply {
-                find { it.code == countryCode }?.let {
-                    it.isSelected = true
-                    remove(it)
-                    add(0, it)
-                }
-            }.toList()
-            _state.value = UiState(
-                isLoading = false,
-                countries = countriesList
-            )
-        }
+        uiReady.value = true
     }
 
     fun onCountrySelected(selectedCountry: CountryUi) {
-        _state.update { currentState ->
-            val index = _state.value.countries.indexOfFirst { it.code == selectedCountry.code }
-            if (index != -1) {
-                val updatedCountry =
-                    _state.value.countries[index].copy(isSelected = !_state.value.countries[index].isSelected)
-                val updatedCountries = _state.value.countries.toMutableList().apply {
-                    this[index] = updatedCountry
-                }
-                currentState.copy(countries = updatedCountries)
-            } else {
-                currentState
-            }
+        viewModelScope.launch {
+            countriesRepository.selectCountry(selectedCountry)
         }
     }
 
     fun filterSelectedCountries(): List<String> {
-        return _state.value.countries.filter { it.isSelected }.map { it.name }
+        return (state.value as Result.Success<List<CountryUi>>).data.filter { it.isSelected }.map { it.name }
     }
 
     fun isAnyCountrySelected(): Boolean {
-        return _state.value.countries.any { it.isSelected }
+        return (state.value as Result.Success<List<CountryUi>>).data.any { it.isSelected }
     }
 
 }

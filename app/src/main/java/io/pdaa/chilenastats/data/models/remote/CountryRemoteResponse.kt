@@ -1,6 +1,6 @@
 package io.pdaa.chilenastats.data.models.remote
 
-import io.pdaa.chilenastats.data.models.local.CountryUi
+import io.pdaa.chilenastats.data.models.database.CountryDB
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,8 +10,9 @@ data class CountryRemoteResponse(
     val name: String
 )
 
-fun CountryRemoteResponse.asUiModel(): CountryUi = CountryUi(
-    code = code,
-    flag = flag,
-    name = name
+fun CountryRemoteResponse.asDbModel(): CountryDB = CountryDB(
+    countryCode = code,
+    countryFlag = flag,
+    countryName = name,
+    countryIsSelected = false
 )

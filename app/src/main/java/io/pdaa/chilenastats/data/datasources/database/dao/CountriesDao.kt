@@ -5,18 +5,19 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.pdaa.chilenastats.data.models.database.CountryDB
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CountriesDao {
 
     @Query("SELECT * FROM CountryDB")
-    suspend fun getCountries(): List<CountryDB>
+    fun getCountries(): Flow<List<CountryDB>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCountries(countries: List<CountryDB>)
 
     @Query("SELECT COUNT(countryName) FROM CountryDB")
-    suspend fun countCountries(): Int
+    fun countCountries(): Flow<Int>
 
     // @Query("UPDATE CountryDB SET isSelected = :isSelected WHERE code = :code")
     // suspend fun updateCountry(code: String, isSelected: Boolean)

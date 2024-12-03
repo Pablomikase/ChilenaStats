@@ -5,15 +5,16 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.pdaa.chilenastats.data.models.database.LeagueDB
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LeaguesDao {
 
     @Query("SELECT * FROM LeagueDB")
-    suspend fun getLeagues(): List<LeagueDB>
+    fun getLeagues(): Flow<List<LeagueDB>>
 
     @Query("SELECT COUNT(id) FROM LeagueDB")
-    suspend fun countLeagues(): Int
+    fun countLeagues(): Flow<Int>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLeagues(leagues: List<LeagueDB>)

@@ -15,6 +15,7 @@ data class LeagueDB(
     @Embedded()
     val country: CountryDB,
     val season: String? = null,
+    val isSelected: Boolean
 )
 
 fun LeagueDB.asUiModel() = LeagueUi(
@@ -22,7 +23,7 @@ fun LeagueDB.asUiModel() = LeagueUi(
     logo = logo,
     name = name,
     type = type,
-    isSelected = false,
+    isSelected = isSelected,
     country = country.asUiModel(),
     season = season
 )

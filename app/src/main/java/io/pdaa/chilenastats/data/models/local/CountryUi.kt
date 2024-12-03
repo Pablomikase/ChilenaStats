@@ -12,5 +12,6 @@ data class CountryUi(
 fun CountryUi.asDbModel() = CountryDB(
     countryCode = code,
     countryFlag = flag,
-    countryName = name
+    countryName = name,
+    countryIsSelected = isSelected
 )

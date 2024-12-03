@@ -12,4 +12,5 @@
     <string name="leagues_selection_main_title">Select the leagues of your interes</string>
     <string name="leagues_selector_continue_to_teams_button">Continue to teams</string>
     <string name="dashboard_main_title">ChilenaStats</string>
+    <string name="error">En error occurred</string>
 </resources>

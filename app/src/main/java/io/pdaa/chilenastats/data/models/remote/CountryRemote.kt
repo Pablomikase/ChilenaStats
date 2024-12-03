@@ -14,7 +14,8 @@ data class CountryRemote(
 fun CountryRemote.asDbModel(): CountryDB = CountryDB(
     countryCode = code,
     countryFlag = flag,
-    countryName = name
+    countryName = name,
+    countryIsSelected = false
 )
 
 fun CountryRemote.asUiModel(): CountryUi = CountryUi(

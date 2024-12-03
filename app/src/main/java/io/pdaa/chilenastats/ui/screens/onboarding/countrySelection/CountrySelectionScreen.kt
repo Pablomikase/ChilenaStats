@@ -13,11 +13,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -26,7 +26,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.pdaa.chilenastats.R
-import io.pdaa.chilenastats.ui.common.LoadingIndicator
+import io.pdaa.chilenastats.ui.common.BaseScaffold
 import io.pdaa.chilenastats.ui.common.PermissionRequestEffect
 import io.pdaa.chilenastats.ui.screens.Screen
 
@@ -43,7 +43,10 @@ fun CountrySelectionScreen(
     }
 
     Screen {
-        Scaffold(
+        val state by vm.state.collectAsState()
+        val isTablet = countrySelectionState.isTablet()
+        BaseScaffold(
+            state = state,
             modifier = Modifier.nestedScroll(countrySelectionState.scrollBehavior.nestedScrollConnection),
             topBar = {
                 TopAppBar(
@@ -51,15 +54,9 @@ fun CountrySelectionScreen(
                     scrollBehavior = countrySelectionState.scrollBehavior
                 )
             }
-        ) { contentPadding ->
-            val state = vm.state.collectAsState()
-            val isTablet = countrySelectionState.isTablet()
+        ) { contentPadding , countriesList->
 
             Box(modifier = Modifier.fillMaxSize()) {
-
-                if (state.value.isLoading) {
-                    LoadingIndicator()
-                }
 
                 LazyVerticalGrid(
                     modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
@@ -68,7 +65,7 @@ fun CountrySelectionScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     contentPadding = contentPadding
                 ) {
-                    items(state.value.countries) { country ->
+                    items(countriesList) { country ->
                         CountryCard(country = country, onCountrySelected = {
                             vm.onCountrySelected(it)
                         })
