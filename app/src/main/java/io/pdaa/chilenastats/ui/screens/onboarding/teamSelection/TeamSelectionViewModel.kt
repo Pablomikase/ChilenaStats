@@ -19,9 +19,6 @@ class TeamSelectionViewModel(
 
     private val uiReady = MutableStateFlow(false)
 
-    /*private val _state = MutableStateFlow(UiState())
-    val state: StateFlow<UiState> get() = _state.asStateFlow()*/
-
     @OptIn(ExperimentalCoroutinesApi::class)
     val state: StateFlow<Result<List<TeamUi>>> = uiReady
         .filter { it }
