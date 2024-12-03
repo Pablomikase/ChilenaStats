@@ -24,5 +24,8 @@ fun TeamDB.asUiModel() = TeamUi(
     name = name,
     logo = logo,
     isSelected = isSelected,
-    country = country
+    country = country,
+    founded = founded,
+    national = national,
+    venue = venue?.asUiModel()
 )

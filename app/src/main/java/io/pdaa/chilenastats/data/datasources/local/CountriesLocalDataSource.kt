@@ -8,6 +8,8 @@ class CountriesLocalDataSource(private val countriesDao: CountriesDao) {
 
     val countries : Flow<List<CountryDB>> = countriesDao.getCountries()
 
+    val userCountry: Flow<CountryDB> = countriesDao.getUserCountry()
+
     suspend fun insertCountries(countries: List<CountryDB>) = countriesDao.insertCountries(countries)
 
 }

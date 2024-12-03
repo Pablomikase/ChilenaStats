@@ -19,6 +19,9 @@ interface CountriesDao {
     @Query("SELECT COUNT(countryName) FROM CountryDB")
     fun countCountries(): Flow<Int>
 
+    @Query("SELECT * FROM CountryDB WHERE countryIsSelected = 1")
+    fun getUserCountry(): Flow<CountryDB>
+
     // @Query("UPDATE CountryDB SET isSelected = :isSelected WHERE code = :code")
     // suspend fun updateCountry(code: String, isSelected: Boolean)
 

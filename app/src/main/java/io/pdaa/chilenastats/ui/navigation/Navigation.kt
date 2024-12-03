@@ -57,7 +57,8 @@ fun Navigation() {
     val teamsRepository = remember {
         TeamRepository(
             remoteDataSource = TeamsRemoteDataSource(),
-            localDataSource = TeamsLocalDataSource(application.db.teamsDao())
+            localDataSource = TeamsLocalDataSource(application.db.teamsDao()),
+            countryRepository = CountriesLocalDataSource(application.db.countriesDao())
         )
     }
     val fixturesRepository = remember {

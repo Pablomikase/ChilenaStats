@@ -2,6 +2,7 @@ package io.pdaa.chilenastats.data.models.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import io.pdaa.chilenastats.data.models.local.VenueUi
 
 @Entity
 data class VenueDB(
@@ -13,4 +14,14 @@ data class VenueDB(
     val venueCapacity: Int?,
     val venueSurface: String?,
     var venueImage: String?
+)
+
+fun VenueDB.asUiModel() = VenueUi(
+    id = venueId,
+    name = venueName ?: "",
+    city = venueCity ?: "",
+    capacity = venueCapacity ?: 0,
+    surface = venueSurface ?: "",
+    image = venueImage ?: "",
+    address = venueAddress ?: ""
 )

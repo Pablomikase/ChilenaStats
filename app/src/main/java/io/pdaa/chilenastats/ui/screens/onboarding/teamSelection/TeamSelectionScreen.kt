@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -25,7 +24,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.pdaa.chilenastats.R
-import io.pdaa.chilenastats.ui.common.LoadingIndicator
+import io.pdaa.chilenastats.ui.common.BaseScaffold
 import io.pdaa.chilenastats.ui.screens.Screen
 import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.TeamSelector
 
@@ -41,17 +40,17 @@ fun TeamSelectionScreen(
     val teamSelectionState = rememberTeamSelectionState()
     teamSelectionState.UiReadyToFetchData(
         execute = { selectedCountries, selectedLeagueIds ->
-            vm.onUiReady(
-                selectedCountries,
-                selectedLeagueIds
-            )
+            vm.onUiReady()
         },
         countries = countries,
         leagueIds = leagueIds
     )
     Screen {
         Screen {
-            Scaffold(
+            val screenState by vm.state.collectAsState()
+            val isTablet = teamSelectionState.isTablet()
+            BaseScaffold(
+                state = screenState,
                 modifier = Modifier.nestedScroll(teamSelectionState.scrollBehavior.nestedScrollConnection),
                 topBar = {
                     TopAppBar(
@@ -59,14 +58,9 @@ fun TeamSelectionScreen(
                         scrollBehavior = teamSelectionState.scrollBehavior
                     )
                 }
-            ) { contentPadding ->
-                val screenState by vm.state.collectAsState()
-                val isTablet = teamSelectionState.isTablet()
+            ) { contentPadding, teamsList->
 
                 Box {
-                    if (screenState.isLoading) {
-                        LoadingIndicator()
-                    }
 
                     LazyVerticalGrid(
                         modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
@@ -75,7 +69,7 @@ fun TeamSelectionScreen(
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                         contentPadding = contentPadding
                     ) {
-                        items(screenState.teams) { item ->
+                        items(teamsList) { item ->
                             TeamSelector(
                                 team = item,
                                 onSelectorClicked = { vm.onTeamSelected(it) },

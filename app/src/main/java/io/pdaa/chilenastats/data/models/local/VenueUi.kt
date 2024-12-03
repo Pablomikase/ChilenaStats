@@ -1,5 +1,7 @@
 package io.pdaa.chilenastats.data.models.local
 
+import io.pdaa.chilenastats.data.models.database.VenueDB
+
 data class VenueUi(
     val id: Int?,
     val name: String,
@@ -9,3 +11,15 @@ data class VenueUi(
     val image: String,
     val address: String
 )
+
+fun VenueUi.asDBModel(): VenueDB {
+    return VenueDB(
+        venueId = this.id?:0,
+        venueName = this.name,
+        venueCity = this.city,
+        venueCapacity = this.capacity,
+        venueSurface = this.surface,
+        venueImage = this.image,
+        venueAddress = this.address
+    )
+}
