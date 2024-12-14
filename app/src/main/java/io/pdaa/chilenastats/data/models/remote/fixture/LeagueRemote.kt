@@ -1,6 +1,6 @@
 package io.pdaa.chilenastats.data.models.remote.fixture
 
-import io.pdaa.chilenastats.data.models.local.fixture.LeagueUi
+import io.pdaa.chilenastats.domain.fixture.LeagueUi
 import kotlinx.serialization.Serializable
 
 @Serializable

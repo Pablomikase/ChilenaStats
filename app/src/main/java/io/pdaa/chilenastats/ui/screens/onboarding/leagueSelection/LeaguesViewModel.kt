@@ -3,7 +3,6 @@ package io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.pdaa.chilenastats.Result
-import io.pdaa.chilenastats.data.models.local.LeagueUi
 import io.pdaa.chilenastats.data.repositories.LeaguesRepository
 import io.pdaa.chilenastats.stateAsResultIn
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,7 +18,7 @@ class LeaguesViewModel(private val leaguesRepository: LeaguesRepository) : ViewM
     private val uiReady = MutableStateFlow(false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val state: StateFlow<Result<List<LeagueUi>>> = uiReady
+    val state: StateFlow<Result<List<io.pdaa.chilenastats.domain.LeagueUi>>> = uiReady
         .filter { it }
         .flatMapLatest { leaguesRepository.leagues }
         .stateAsResultIn(viewModelScope)
@@ -30,7 +29,7 @@ class LeaguesViewModel(private val leaguesRepository: LeaguesRepository) : ViewM
 
     }
 
-    fun onLeagueSelected(selectedLeague: LeagueUi) {
+    fun onLeagueSelected(selectedLeague: io.pdaa.chilenastats.domain.LeagueUi) {
 
         viewModelScope.launch {
             leaguesRepository.selectLeague(selectedLeague)

@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import io.pdaa.chilenastats.data.models.local.TeamUi
+import io.pdaa.chilenastats.domain.TeamUi
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

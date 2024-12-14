@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.data.models.local
+package io.pdaa.chilenastats.domain
 
 import io.pdaa.chilenastats.data.models.database.LeagueDB
 
@@ -8,11 +8,11 @@ data class LeagueUi(
     val type: String,
     val logo: String,
     val isSelected: Boolean,
-    val country: CountryUi,
+    val country: io.pdaa.chilenastats.domain.CountryUi,
     val season: String?
 )
 
-fun LeagueUi.asDBModel(): LeagueDB {
+fun io.pdaa.chilenastats.domain.LeagueUi.asDBModel(): LeagueDB {
     return LeagueDB(
         id = this.id,
         name = this.name,

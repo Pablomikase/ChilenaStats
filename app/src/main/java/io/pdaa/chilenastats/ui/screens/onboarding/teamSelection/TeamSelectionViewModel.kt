@@ -3,8 +3,8 @@ package io.pdaa.chilenastats.ui.screens.onboarding.teamSelection
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.pdaa.chilenastats.Result
-import io.pdaa.chilenastats.data.models.local.TeamUi
 import io.pdaa.chilenastats.data.repositories.TeamRepository
+import io.pdaa.chilenastats.domain.TeamUi
 import io.pdaa.chilenastats.stateAsResultIn
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow

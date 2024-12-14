@@ -1,6 +1,5 @@
 package io.pdaa.chilenastats.data.models.remote.fixture
 
-import io.pdaa.chilenastats.data.models.local.fixture.HomeUi
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -11,9 +10,10 @@ data class HomeRemote(
     val winner: Boolean?
 )
 
-fun HomeRemote.asUiModel(): HomeUi = HomeUi(
-    id = id,
-    logo = logo,
-    name = name,
-    winner = winner
-)
+fun HomeRemote.asUiModel(): io.pdaa.chilenastats.domain.fixture.HomeUi =
+    io.pdaa.chilenastats.domain.fixture.HomeUi(
+        id = id,
+        logo = logo,
+        name = name,
+        winner = winner
+    )

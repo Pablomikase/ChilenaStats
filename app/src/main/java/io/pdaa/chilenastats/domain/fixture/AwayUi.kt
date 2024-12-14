@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.data.models.local.fixture
+package io.pdaa.chilenastats.domain.fixture
 
 data class AwayUi (
     val id: Int,

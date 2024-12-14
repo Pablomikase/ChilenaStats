@@ -1,6 +1,6 @@
 package io.pdaa.chilenastats.data.models.remote.fixture
 
-import io.pdaa.chilenastats.data.models.local.fixture.HalftimeUi
+import io.pdaa.chilenastats.domain.fixture.HalftimeUi
 import kotlinx.serialization.Serializable
 
 @Serializable

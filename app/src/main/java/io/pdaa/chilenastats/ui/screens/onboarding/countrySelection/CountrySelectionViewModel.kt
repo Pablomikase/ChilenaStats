@@ -3,8 +3,8 @@ package io.pdaa.chilenastats.ui.screens.onboarding.countrySelection
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.pdaa.chilenastats.Result
-import io.pdaa.chilenastats.data.models.local.CountryUi
 import io.pdaa.chilenastats.data.repositories.CountriesRepository
+import io.pdaa.chilenastats.domain.CountryUi
 import io.pdaa.chilenastats.stateAsResultIn
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow

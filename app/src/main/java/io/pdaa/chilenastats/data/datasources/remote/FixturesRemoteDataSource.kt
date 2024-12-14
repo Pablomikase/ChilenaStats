@@ -1,8 +1,8 @@
 package io.pdaa.chilenastats.data.datasources.remote
 
 import io.pdaa.chilenastats.data.FreeFootballDataClient
-import io.pdaa.chilenastats.data.models.local.fixture.FixtureResponseUi
 import io.pdaa.chilenastats.data.models.remote.fixture.asUiModel
+import io.pdaa.chilenastats.domain.fixture.FixtureResponseUi
 
 class FixturesRemoteDataSource {
     suspend fun fetchFixturesByTeam(teamId: Int): List<FixtureResponseUi> =

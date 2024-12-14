@@ -1,6 +1,5 @@
 package io.pdaa.chilenastats.data.models.remote.fixture
 
-import io.pdaa.chilenastats.data.models.local.fixture.FulltimeUi
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,7 +8,8 @@ data class FulltimeRemote(
     val home: Int?
 )
 
-fun FulltimeRemote.asUiModel(): FulltimeUi = FulltimeUi(
-    away = away,
-    home = home
-)
+fun FulltimeRemote.asUiModel(): io.pdaa.chilenastats.domain.fixture.FulltimeUi =
+    io.pdaa.chilenastats.domain.fixture.FulltimeUi(
+        away = away,
+        home = home
+    )

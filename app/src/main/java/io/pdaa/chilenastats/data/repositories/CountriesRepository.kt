@@ -4,8 +4,8 @@ import io.pdaa.chilenastats.data.datasources.local.CountriesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
 import io.pdaa.chilenastats.data.datasources.remote.RegionDataSource
 import io.pdaa.chilenastats.data.models.database.asUiModel
-import io.pdaa.chilenastats.data.models.local.CountryUi
-import io.pdaa.chilenastats.data.models.local.asDbModel
+import io.pdaa.chilenastats.domain.CountryUi
+import io.pdaa.chilenastats.domain.asDbModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map

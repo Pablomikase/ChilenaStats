@@ -2,7 +2,7 @@ package io.pdaa.chilenastats.data.models.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import io.pdaa.chilenastats.data.models.local.VenueUi
+import io.pdaa.chilenastats.domain.VenueUi
 
 @Entity
 data class VenueDB(

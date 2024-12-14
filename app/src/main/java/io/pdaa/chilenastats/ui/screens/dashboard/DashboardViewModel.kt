@@ -2,8 +2,8 @@ package io.pdaa.chilenastats.ui.screens.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.pdaa.chilenastats.data.models.local.fixture.FixtureResponseUi
 import io.pdaa.chilenastats.data.repositories.FixturesRepository
+import io.pdaa.chilenastats.domain.fixture.FixtureResponseUi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

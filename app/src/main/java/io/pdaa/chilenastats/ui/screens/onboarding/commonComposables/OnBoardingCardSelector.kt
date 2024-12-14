@@ -24,8 +24,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import io.pdaa.chilenastats.data.models.local.LeagueUi
-import io.pdaa.chilenastats.data.models.local.TeamUi
+import io.pdaa.chilenastats.domain.TeamUi
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -52,12 +51,12 @@ fun <T> OnboardingCardSelector(
         ) {
             AsyncImage(
                 model = when (elementUi) {
-                    is LeagueUi -> elementUi.logo
+                    is io.pdaa.chilenastats.domain.LeagueUi -> elementUi.logo
                     is TeamUi -> elementUi.logo
                     else -> ""
                 },
                 contentDescription = when (elementUi) {
-                    is LeagueUi -> elementUi.name
+                    is io.pdaa.chilenastats.domain.LeagueUi -> elementUi.name
                     is TeamUi -> elementUi.logo
                     else -> ""
                 },
@@ -78,7 +77,7 @@ fun <T> OnboardingCardSelector(
             )
             Text(
                 text = when (elementUi) {
-                    is LeagueUi -> elementUi.name
+                    is io.pdaa.chilenastats.domain.LeagueUi -> elementUi.name
                     is TeamUi -> elementUi.name
                     else -> ""
                 },
@@ -89,7 +88,7 @@ fun <T> OnboardingCardSelector(
             )
             Text(
                 text = when (elementUi) {
-                    is LeagueUi -> elementUi.type
+                    is io.pdaa.chilenastats.domain.LeagueUi -> elementUi.type
                     is TeamUi -> elementUi.country
                     else -> ""
                 },

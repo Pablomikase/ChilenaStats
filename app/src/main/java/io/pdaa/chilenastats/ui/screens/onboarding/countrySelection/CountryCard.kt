@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
-import io.pdaa.chilenastats.data.models.local.CountryUi
+import io.pdaa.chilenastats.domain.CountryUi
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

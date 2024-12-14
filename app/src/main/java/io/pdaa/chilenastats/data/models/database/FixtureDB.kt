@@ -2,9 +2,10 @@ package io.pdaa.chilenastats.data.models.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import io.pdaa.chilenastats.data.models.local.fixture.PeriodsUi
-import io.pdaa.chilenastats.data.models.local.fixture.StatusUi
-import io.pdaa.chilenastats.data.models.local.fixture.VenueUi
+import io.pdaa.chilenastats.domain.fixture.PeriodsUi
+import io.pdaa.chilenastats.domain.fixture.StatusUi
+import io.pdaa.chilenastats.domain.fixture.VenueUi
+
 
 @Entity
 data class FixtureDB(

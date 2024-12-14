@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.data.models.local
+package io.pdaa.chilenastats.domain
 
 import io.pdaa.chilenastats.data.models.database.TeamDB
 

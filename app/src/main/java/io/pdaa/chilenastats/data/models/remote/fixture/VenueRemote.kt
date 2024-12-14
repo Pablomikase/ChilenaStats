@@ -1,6 +1,7 @@
 package io.pdaa.chilenastats.data.models.remote.fixture
 
-import io.pdaa.chilenastats.data.models.local.fixture.VenueUi
+
+import io.pdaa.chilenastats.domain.fixture.VenueUi
 import kotlinx.serialization.Serializable
 
 @Serializable

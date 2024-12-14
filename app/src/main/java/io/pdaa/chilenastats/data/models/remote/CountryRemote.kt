@@ -1,7 +1,7 @@
 package io.pdaa.chilenastats.data.models.remote
 
 import io.pdaa.chilenastats.data.models.database.CountryDB
-import io.pdaa.chilenastats.data.models.local.CountryUi
+import io.pdaa.chilenastats.domain.CountryUi
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -1,7 +1,7 @@
 package io.pdaa.chilenastats.data.repositories
 
 import io.pdaa.chilenastats.data.datasources.remote.FixturesRemoteDataSource
-import io.pdaa.chilenastats.data.models.local.fixture.FixtureResponseUi
+import io.pdaa.chilenastats.domain.fixture.FixtureResponseUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

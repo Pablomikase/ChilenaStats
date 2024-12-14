@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import io.pdaa.chilenastats.data.models.local.fixture.FixtureResponseUi
+import io.pdaa.chilenastats.domain.fixture.FixtureResponseUi
 
 @Composable
 fun FixtureCarouselItem(
