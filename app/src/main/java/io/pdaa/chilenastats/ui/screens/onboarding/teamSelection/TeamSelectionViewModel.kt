@@ -3,9 +3,10 @@ package io.pdaa.chilenastats.ui.screens.onboarding.teamSelection
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.pdaa.chilenastats.Result
-import io.pdaa.chilenastats.data.repositories.TeamRepository
 import io.pdaa.chilenastats.domain.TeamUi
 import io.pdaa.chilenastats.stateAsResultIn
+import io.pdaa.chilenastats.usecases.FetchTeamsUseCase
+import io.pdaa.chilenastats.usecases.SelectTeamUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 class TeamSelectionViewModel(
-    private val teamsRepository: TeamRepository
+    private val fetchTeamsUseCase: FetchTeamsUseCase,
+    private val selectTeamUseCase: SelectTeamUseCase,
 ) : ViewModel() {
 
     private val uiReady = MutableStateFlow(false)
@@ -22,7 +24,7 @@ class TeamSelectionViewModel(
     @OptIn(ExperimentalCoroutinesApi::class)
     val state: StateFlow<Result<List<TeamUi>>> = uiReady
         .filter { it }
-        .flatMapLatest { teamsRepository.teams }
+        .flatMapLatest { fetchTeamsUseCase() }
         .stateAsResultIn(viewModelScope)
 
     fun onUiReady() {
@@ -31,7 +33,7 @@ class TeamSelectionViewModel(
 
     fun onTeamSelected(selectedTeam: TeamUi) {
         viewModelScope.launch {
-            teamsRepository.selectTeam(selectedTeam)
+            selectTeamUseCase(selectedTeam)
         }
     }
 

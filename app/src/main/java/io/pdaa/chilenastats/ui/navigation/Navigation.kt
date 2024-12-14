@@ -31,6 +31,10 @@ import io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection.LeaguesViewMod
 import io.pdaa.chilenastats.ui.screens.onboarding.login.LoginScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.teamSelection.TeamSelectionScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.teamSelection.TeamSelectionViewModel
+import io.pdaa.chilenastats.usecases.FetchLeaguesUseCase
+import io.pdaa.chilenastats.usecases.FetchTeamsUseCase
+import io.pdaa.chilenastats.usecases.SelectLeagueUseCase
+import io.pdaa.chilenastats.usecases.SelectTeamUseCase
 
 @Composable
 fun Navigation() {
@@ -100,7 +104,12 @@ fun Navigation() {
                     )
                 },
                 selectedCountries = countries.countryNames,
-                vm = viewModel { LeaguesViewModel(leaguesRepository) }
+                vm = viewModel {
+                    LeaguesViewModel(
+                        fetchLeaguesUseCase = FetchLeaguesUseCase(leaguesRepository),
+                        selectLeagueUseCase = SelectLeagueUseCase(leaguesRepository)
+                    )
+                }
             )
         }
 
@@ -120,7 +129,13 @@ fun Navigation() {
                         popUpTo(0) { inclusive = true }
                     }
                 },
-                vm = viewModel { TeamSelectionViewModel(teamsRepository) }
+                vm = viewModel {
+                    TeamSelectionViewModel(
+                        fetchTeamsUseCase = FetchTeamsUseCase(teamsRepository),
+                        selectTeamUseCase = SelectTeamUseCase(teamsRepository)
+
+                    )
+                }
             )
         }
 
