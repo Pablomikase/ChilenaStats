@@ -5,7 +5,6 @@ import io.pdaa.chilenastats.data.datasources.local.TeamsLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.TeamsRemoteDataSource
 import io.pdaa.chilenastats.data.models.database.asUiModel
 import io.pdaa.chilenastats.domain.TeamUi
-import io.pdaa.chilenastats.domain.asDBModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
@@ -34,7 +33,7 @@ class TeamRepository(
     suspend fun selectTeam(selectedTeam: TeamUi) {
         localDataSource.insertTeams(
             listOf(
-                selectedTeam.copy(isSelected = selectedTeam.isSelected.not()).asDBModel()
+                selectedTeam.copy(isSelected = selectedTeam.isSelected.not())
             )
         )
     }

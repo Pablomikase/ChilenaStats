@@ -2,11 +2,9 @@ package io.pdaa.chilenastats.data.repositories
 
 import io.pdaa.chilenastats.data.datasources.local.LeaguesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.LeaguesRemoteDataSource
-import io.pdaa.chilenastats.data.models.database.asUiModel
-import io.pdaa.chilenastats.domain.asDBModel
+import io.pdaa.chilenastats.domain.LeagueUi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 class LeaguesRepository(
@@ -14,17 +12,17 @@ class LeaguesRepository(
     private val localDataSource: LeaguesLocalDataSource
 ) {
 
-    val leagues: Flow<List<io.pdaa.chilenastats.domain.LeagueUi>> = localDataSource.leagues.onEach { localLeagues ->
+    val leagues: Flow<List<LeagueUi>> = localDataSource.leagues.onEach { localLeagues ->
         if (localLeagues.isEmpty()) {
             val remoteLeagues = remoteDataSource.fetchLeagues()
             localDataSource.insertLeagues(remoteLeagues)
         }
-    }.filterNotNull().map { leagues -> leagues.map { it.asUiModel() } }
+    }.filterNotNull()
 
-    suspend fun selectLeague(selectedLeague: io.pdaa.chilenastats.domain.LeagueUi) {
+    suspend fun selectLeague(selectedLeague: LeagueUi) {
         localDataSource.insertLeagues(
             listOf(
-                selectedLeague.copy(isSelected = selectedLeague.isSelected.not()).asDBModel()
+                selectedLeague.copy(isSelected = selectedLeague.isSelected.not())
             )
         )
     }

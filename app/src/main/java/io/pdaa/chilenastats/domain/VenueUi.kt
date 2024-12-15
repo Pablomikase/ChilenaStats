@@ -4,12 +4,12 @@ import io.pdaa.chilenastats.data.models.database.VenueDB
 
 data class VenueUi(
     val id: Int?,
-    val name: String,
-    val city: String,
-    val capacity: Int,
-    val surface: String,
-    val image: String,
-    val address: String
+    val name: String?,
+    val city: String?,
+    val capacity: Int?,
+    val surface: String?,
+    val image: String?,
+    val address: String?
 )
 
 fun VenueUi.asDBModel(): VenueDB {
