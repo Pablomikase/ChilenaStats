@@ -19,4 +19,7 @@ interface TeamsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTeams(teams: List<TeamDB>)
 
+    @Query("SELECT * FROM TeamDB WHERE isSelected = 1")
+    fun getFavoriteTeams(): Flow<List<TeamDB>>
+
 }

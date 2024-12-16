@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import io.pdaa.chilenastats.App
 import io.pdaa.chilenastats.data.datasources.local.CountriesLocalDataSource
+import io.pdaa.chilenastats.data.datasources.local.FixturesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.local.LeaguesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.local.TeamsLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
@@ -67,7 +68,9 @@ fun Navigation() {
     }
     val fixturesRepository = remember {
         FixturesRepository(
-            remoteDataSource = FixturesRemoteDataSource()
+            remoteDataSource = FixturesRemoteDataSource(),
+            teamsLocalDataSource = TeamsLocalDataSource(application.db.teamsDao()),
+            fixturesLocalDataSource = FixturesLocalDataSource(application.db.fixturesDao())
         )
     }
 
@@ -139,12 +142,8 @@ fun Navigation() {
             )
         }
 
-        composable<Dashboard> { backStackEntry ->
-            val dashboardData = backStackEntry.toRoute<Dashboard>()
+        composable<Dashboard> {
             DashboardScreen(
-                countryCode = dashboardData.countryCode,
-                leagueIds = dashboardData.leagueIds,
-                teamId = dashboardData.teamId,
                 vm = viewModel { DashboardViewModel(fixturesRepository) }
             )
         }

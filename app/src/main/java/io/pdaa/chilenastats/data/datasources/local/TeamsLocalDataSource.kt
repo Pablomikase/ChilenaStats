@@ -12,6 +12,8 @@ class TeamsLocalDataSource(private val teamsDao: TeamsDao) {
 
     suspend fun insertTeams(teams: List<TeamUi>) = teamsDao.insertTeams(teams.asDBModel())
 
+    val favoriteTeams: Flow<List<TeamDB>> = teamsDao.getFavoriteTeams()
+
 }
 
 fun TeamUi.asDBModel(): TeamDB {

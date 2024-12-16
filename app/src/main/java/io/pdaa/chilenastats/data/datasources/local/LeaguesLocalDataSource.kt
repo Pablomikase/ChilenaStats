@@ -16,7 +16,7 @@ class LeaguesLocalDataSource(private val leaguesDao: LeaguesDao) {
 
 }
 
-fun LeagueUi.asDBModel(): LeagueDB {
+private fun LeagueUi.asDBModel(): LeagueDB {
     return LeagueDB(
         id = this.id,
         name = this.name,

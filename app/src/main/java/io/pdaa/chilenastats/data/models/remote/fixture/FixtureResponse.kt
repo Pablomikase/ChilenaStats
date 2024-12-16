@@ -1,6 +1,6 @@
 package io.pdaa.chilenastats.data.models.remote.fixture
 
-import io.pdaa.chilenastats.domain.fixture.FixtureResponseUi
+import io.pdaa.chilenastats.domain.fixture.FixtureContainerUi
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,7 +12,7 @@ data class FixtureResponse(
     val teams: TeamsRemote
 )
 
-fun FixtureResponse.asUiModel(): FixtureResponseUi = FixtureResponseUi(
+fun FixtureResponse.asUiModel(): FixtureContainerUi = FixtureContainerUi(
     fixture = fixture.asUiModel(),
     goals = goals.asUiModel(),
     league = league.asUiModel(),

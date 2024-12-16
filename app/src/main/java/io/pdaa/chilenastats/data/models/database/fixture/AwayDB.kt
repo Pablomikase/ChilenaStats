@@ -1,8 +1,8 @@
 package io.pdaa.chilenastats.data.models.database.fixture
 
 data class AwayDB (
-    val id: Int,
-    val logo: String,
-    val name: String,
-    val winner: Boolean?
+    val teamAwayId: Int,
+    val teamAwayLogo: String,
+    val teamAwayName: String,
+    val teamAwayWinner: Boolean?
 )

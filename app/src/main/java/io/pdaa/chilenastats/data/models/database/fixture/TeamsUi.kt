@@ -1,6 +1,10 @@
 package io.pdaa.chilenastats.data.models.database.fixture
 
+import androidx.room.Embedded
+
 data class TeamsDB(
-    val away: AwayDB,
-    val home: HomeDB
+    @Embedded
+    val teamAway: AwayDB,
+    @Embedded
+    val teamHome: HomeDB
 )

@@ -1,7 +1,7 @@
 package io.pdaa.chilenastats.domain.fixture
 
 
-data class FixtureResponseUi(
+data class FixtureContainerUi(
     val fixture: FixtureUi,
     val goals: GoalsUi,
     val league: LeagueUi,

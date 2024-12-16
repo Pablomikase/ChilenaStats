@@ -30,14 +30,11 @@ import io.pdaa.chilenastats.ui.screens.dashboard.components.FixtureCarouselItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
-    vm: DashboardViewModel,
-    countryCode: String,
-    leagueIds: List<Int>,
-    teamId: Int
+    vm: DashboardViewModel
 ) {
 
     val dashboardState = rememberDashboardState()
-    dashboardState.UiReadyToFetchData { vm.onUiReady(teamId) }
+    dashboardState.UiReadyToFetchData { vm.onUiReady() }
 
     Screen {
         Scaffold(
