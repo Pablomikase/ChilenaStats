@@ -11,12 +11,12 @@ import io.pdaa.chilenastats.ui.common.BaseStateHolder
 @OptIn(ExperimentalMaterial3Api::class)
 class LeagueSelectionState(
     val scrollBehavior: TopAppBarScrollBehavior
-):BaseStateHolder {
+) : BaseStateHolder {
 
     @Composable
-    fun UiReadyToFetchData(execute: (List<String>)-> Unit, regionCodes: List<String>) {
-        LaunchedEffect (Unit){
-            execute(regionCodes)
+    fun UiReadyToFetchData(execute: () -> Unit) {
+        LaunchedEffect(Unit) {
+            execute()
         }
     }
 }
@@ -26,4 +26,5 @@ class LeagueSelectionState(
 fun rememberLeagueSelectionState(
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 ) = remember {
-    LeagueSelectionState(scrollBehavior)}
+    LeagueSelectionState(scrollBehavior)
+}

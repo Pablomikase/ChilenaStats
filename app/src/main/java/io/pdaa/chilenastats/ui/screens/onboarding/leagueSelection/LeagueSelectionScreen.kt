@@ -33,15 +33,13 @@ import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCa
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LeagueSelectionScreen(
-    onContinueToTeamSelection: (leagues: List<Int>) -> Unit,
-    selectedCountries: List<String>,
+    onContinueToTeamSelection: () -> Unit,
     vm: LeaguesViewModel
 ) {
 
     val leagueSelectionState = rememberLeagueSelectionState()
     leagueSelectionState.UiReadyToFetchData(
-        execute = { vm.onUiReady(it) },
-        regionCodes = selectedCountries
+        execute = { vm.onUiReady() }
     )
     Screen {
         val screenState by vm.state.collectAsState()
@@ -92,9 +90,7 @@ fun LeagueSelectionScreen(
                     ElevatedButton(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         onClick = {
-                            onContinueToTeamSelection(
-                                vm.filterSelectedLeagues()
-                            )
+                            onContinueToTeamSelection()
                         }) {
                         Text(text = stringResource(R.string.leagues_selector_continue_to_teams_button))
                     }

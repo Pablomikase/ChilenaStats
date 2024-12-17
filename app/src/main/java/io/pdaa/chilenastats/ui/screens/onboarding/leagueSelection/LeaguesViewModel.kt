@@ -28,22 +28,15 @@ class LeaguesViewModel(
         .stateAsResultIn(viewModelScope)
 
 
-    fun onUiReady(countryNames: List<String>) {
+    fun onUiReady() {
         uiReady.value = true
-
     }
 
     fun onLeagueSelected(selectedLeague: io.pdaa.chilenastats.domain.LeagueUi) {
-
         viewModelScope.launch {
             selectLeagueUseCase(selectedLeague)
         }
 
-    }
-
-    fun filterSelectedLeagues(): List<Int> {
-
-        return (state.value as Result.Success).data.filter { it.isSelected }.map { it.id }
     }
 
     fun isAnyLeaguesSelected(): Boolean {

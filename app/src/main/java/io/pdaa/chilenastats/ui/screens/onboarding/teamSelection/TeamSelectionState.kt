@@ -14,12 +14,10 @@ class TeamSelectionState(val scrollBehavior: TopAppBarScrollBehavior) : BaseStat
 
     @Composable
     fun UiReadyToFetchData(
-        execute: (countries: List<String>, leagueIds: List<Int>) -> Unit,
-        countries: List<String>,
-        leagueIds: List<Int>
+        execute: () -> Unit,
     ) {
         LaunchedEffect(Unit) {
-            execute(countries, leagueIds)
+            execute()
         }
     }
 

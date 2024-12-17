@@ -31,19 +31,15 @@ import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.TeamSelector
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TeamSelectionScreen(
-    countries: List<String>,
-    leagueIds: List<Int>,
     vm: TeamSelectionViewModel,
-    onSkipAndGoToDashboard: (Int) -> Unit
+    onSkipAndGoToDashboard: () -> Unit
 ) {
 
     val teamSelectionState = rememberTeamSelectionState()
     teamSelectionState.UiReadyToFetchData(
-        execute = { selectedCountries, selectedLeagueIds ->
+        execute = {
             vm.onUiReady()
-        },
-        countries = countries,
-        leagueIds = leagueIds
+        }
     )
     Screen {
         Screen {
@@ -97,7 +93,7 @@ fun TeamSelectionScreen(
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
                                 .padding(bottom = 8.dp), onClick = {
-                                onSkipAndGoToDashboard(vm.getSelectedTeamId())
+                                onSkipAndGoToDashboard()
                             }) {
                             Text(text = stringResource(R.string.onboarding_skip_button))
                         }

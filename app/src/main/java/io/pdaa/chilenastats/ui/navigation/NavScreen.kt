@@ -9,20 +9,11 @@ object Login
 object CountrySelector
 
 @Serializable
-data class LeaguesSelector(
-    val countryNames: List<String>
-)
+object LeaguesSelector
 
 @Serializable
-data class TeamsSelector(
-    val countries: List<String> = emptyList(),
-    val leagueIds: List<Int> = emptyList()
-)
+object TeamsSelector
 
 @Serializable
-data class Dashboard(
-    val countryCode: String,
-    val leagueIds: List<Int> = emptyList(),
-    val teamId: Int
-)
+object Dashboard
 

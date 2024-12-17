@@ -40,9 +40,4 @@ class TeamSelectionViewModel(
     fun isAnyTeamsSelected(): Boolean {
         return (state.value as Result.Success).data.any { it.isSelected }
     }
-
-    fun getSelectedTeamId(): Int {
-        return (state.value as Result.Success).data.first { it.isSelected }.id
-
-    }
 }

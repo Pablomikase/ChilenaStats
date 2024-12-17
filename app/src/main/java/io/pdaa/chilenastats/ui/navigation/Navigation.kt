@@ -7,7 +7,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import io.pdaa.chilenastats.App
 import io.pdaa.chilenastats.data.datasources.local.CountriesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.local.FixturesLocalDataSource
@@ -74,7 +73,7 @@ fun Navigation() {
         )
     }
 
-    NavHost(navController = navController, startDestination = Login) {
+    NavHost(navController = navController, startDestination = LeaguesSelector) {
         composable<Login> {
             LoginScreen(
                 continueToOnBoarding = {
@@ -89,24 +88,19 @@ fun Navigation() {
             CountrySelectionScreen(
                 vm = viewModel { CountrySelectionViewModel(countriesRepository) },
                 onContinueToLeagues = { countryNames ->
-                    navController.navigate(LeaguesSelector(countryNames = countryNames))
+                    navController.navigate(LeaguesSelector)
                 }
             )
         }
 
 
-        composable<LeaguesSelector> { backStackEntry ->
-            val countries = backStackEntry.toRoute<LeaguesSelector>()
+        composable<LeaguesSelector> {
             LeagueSelectionScreen(
-                onContinueToTeamSelection = { leagues ->
+                onContinueToTeamSelection = {
                     navController.navigate(
-                        TeamsSelector(
-                            countries = countries.countryNames,
-                            leagueIds = leagues
-                        )
+                        TeamsSelector
                     )
                 },
-                selectedCountries = countries.countryNames,
                 vm = viewModel {
                     LeaguesViewModel(
                         fetchLeaguesUseCase = FetchLeaguesUseCase(leaguesRepository),
@@ -116,18 +110,11 @@ fun Navigation() {
             )
         }
 
-        composable<TeamsSelector> { backStackEntry ->
-            val teamsSelector = backStackEntry.toRoute<TeamsSelector>()
+        composable<TeamsSelector> {
             TeamSelectionScreen(
-                countries = teamsSelector.countries,
-                leagueIds = teamsSelector.leagueIds,
-                onSkipAndGoToDashboard = { selectedTeamId: Int ->
+                onSkipAndGoToDashboard = {
                     navController.navigate(
-                        Dashboard(
-                            countryCode = teamsSelector.countries.first(),
-                            leagueIds = teamsSelector.leagueIds,
-                            teamId = selectedTeamId
-                        )
+                        Dashboard
                     ) {
                         popUpTo(0) { inclusive = true }
                     }
@@ -136,7 +123,6 @@ fun Navigation() {
                     TeamSelectionViewModel(
                         fetchTeamsUseCase = FetchTeamsUseCase(teamsRepository),
                         selectTeamUseCase = SelectTeamUseCase(teamsRepository)
-
                     )
                 }
             )
