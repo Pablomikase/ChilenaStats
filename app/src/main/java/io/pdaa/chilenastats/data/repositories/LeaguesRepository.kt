@@ -2,9 +2,9 @@ package io.pdaa.chilenastats.data.repositories
 
 import io.pdaa.chilenastats.data.datasources.local.LeaguesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.LeaguesRemoteDataSource
+
 import io.pdaa.chilenastats.domain.LeagueUi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
 
 class LeaguesRepository(
@@ -17,12 +17,12 @@ class LeaguesRepository(
             val remoteLeagues = remoteDataSource.fetchLeagues()
             localDataSource.insertLeagues(remoteLeagues)
         }
-    }.filterNotNull()
+    }
 
     suspend fun selectLeague(selectedLeague: LeagueUi) {
         localDataSource.insertLeagues(
             listOf(
-                selectedLeague.copy(isSelected = selectedLeague.isSelected.not())
+                selectedLeague.copy(isFavourite = selectedLeague.isFavourite.not())
             )
         )
     }

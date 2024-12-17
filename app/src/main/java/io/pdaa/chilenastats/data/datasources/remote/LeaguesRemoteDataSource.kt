@@ -20,5 +20,5 @@ private fun LeagueRemoteResponse.asUiModel(): LeagueUi = LeagueUi(
     type = league.type,
     country = country.asUiModel(),
     season = null,
-    isSelected = false
+    isFavourite = false
 )

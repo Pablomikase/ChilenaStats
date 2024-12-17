@@ -22,7 +22,7 @@ private fun LeagueUi.asDBModel(): LeagueDB {
         name = this.name,
         type = this.type,
         logo = this.logo,
-        isSelected = this.isSelected,
+        isFavourite = this.isFavourite,
         country = this.country.asDbModel(),
         season = this.season
     )

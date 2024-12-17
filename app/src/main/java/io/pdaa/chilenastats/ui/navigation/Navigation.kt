@@ -62,7 +62,12 @@ fun Navigation() {
         TeamRepository(
             remoteDataSource = TeamsRemoteDataSource(),
             localDataSource = TeamsLocalDataSource(application.db.teamsDao()),
-            countryRepository = CountriesLocalDataSource(application.db.countriesDao())
+            regionDataSource = RegionDataSource(
+                app = application,
+                locationDataSource = LocationDataSource(application)
+            ),
+            countryLocalDataSource = CountriesLocalDataSource(application.db.countriesDao()),
+            countriesRemoteDataSource = CountriesRemoteDataSource()
         )
     }
     val fixturesRepository = remember {
@@ -87,7 +92,7 @@ fun Navigation() {
         composable<CountrySelector> {
             CountrySelectionScreen(
                 vm = viewModel { CountrySelectionViewModel(countriesRepository) },
-                onContinueToLeagues = { countryNames ->
+                onContinueToLeagues = {
                     navController.navigate(LeaguesSelector)
                 }
             )

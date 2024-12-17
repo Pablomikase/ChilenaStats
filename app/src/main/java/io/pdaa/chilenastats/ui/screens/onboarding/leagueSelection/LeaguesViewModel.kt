@@ -3,6 +3,7 @@ package io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.pdaa.chilenastats.Result
+import io.pdaa.chilenastats.domain.LeagueUi
 import io.pdaa.chilenastats.stateAsResultIn
 import io.pdaa.chilenastats.usecases.FetchLeaguesUseCase
 import io.pdaa.chilenastats.usecases.SelectLeagueUseCase
@@ -22,7 +23,7 @@ class LeaguesViewModel(
     private val uiReady = MutableStateFlow(false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val state: StateFlow<Result<List<io.pdaa.chilenastats.domain.LeagueUi>>> = uiReady
+    val state: StateFlow<Result<List<LeagueUi>>> = uiReady
         .filter { it }
         .flatMapLatest { fetchLeaguesUseCase() }
         .stateAsResultIn(viewModelScope)
@@ -32,15 +33,14 @@ class LeaguesViewModel(
         uiReady.value = true
     }
 
-    fun onLeagueSelected(selectedLeague: io.pdaa.chilenastats.domain.LeagueUi) {
+    fun onLeagueSelected(selectedLeague: LeagueUi) {
         viewModelScope.launch {
             selectLeagueUseCase(selectedLeague)
         }
-
     }
 
     fun isAnyLeaguesSelected(): Boolean {
-        return (state.value as Result.Success).data.any { it.isSelected }
+        return (state.value as Result.Success).data.any { it.isFavourite }
     }
 
 }

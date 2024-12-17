@@ -64,11 +64,14 @@ fun LeagueSelectionScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     contentPadding = contentPadding
                 ) {
-                    items(leagues) { item ->
+                    items(leagues) { league ->
                         OnboardingCardSelector(
-                            elementUi = item,
-                            onSelectorClicked = { vm.onLeagueSelected(it) },
-                            isSelected = item.isSelected
+
+                            onSelectorClicked = { vm.onLeagueSelected(league) },
+                            isSelected = league.isFavourite,
+                            imageUrl = league.logo,
+                            title = league.name,
+                            subtitle = league.type
                         )
                     }
                 }

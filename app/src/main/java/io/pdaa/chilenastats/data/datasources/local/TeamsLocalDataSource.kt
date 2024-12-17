@@ -2,9 +2,11 @@ package io.pdaa.chilenastats.data.datasources.local
 
 import io.pdaa.chilenastats.data.datasources.database.dao.TeamsDao
 import io.pdaa.chilenastats.data.models.database.TeamDB
+import io.pdaa.chilenastats.data.models.database.asUiModel
 import io.pdaa.chilenastats.domain.TeamUi
 import io.pdaa.chilenastats.domain.asDBModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class TeamsLocalDataSource(private val teamsDao: TeamsDao) {
 
@@ -12,7 +14,7 @@ class TeamsLocalDataSource(private val teamsDao: TeamsDao) {
 
     suspend fun insertTeams(teams: List<TeamUi>) = teamsDao.insertTeams(teams.asDBModel())
 
-    val favoriteTeams: Flow<List<TeamDB>> = teamsDao.getFavoriteTeams()
+    val favoriteTeams: Flow<List<TeamUi>> = teamsDao.getFavoriteTeams().map { teams -> teams.map { it.asUiModel() } }
 
 }
 

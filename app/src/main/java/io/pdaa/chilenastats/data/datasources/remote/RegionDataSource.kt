@@ -5,7 +5,7 @@ import android.location.Geocoder
 import android.location.Location
 import io.pdaa.chilenastats.ui.common.getFromLocationCompat
 
-const val DEFAULT_REGION = "US"
+const val DEFAULT_REGION = "ES"
 
 class RegionDataSource(app: Application, private val locationDataSource: LocationDataSource) {
 

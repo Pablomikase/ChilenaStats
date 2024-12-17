@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,10 +29,12 @@ import io.pdaa.chilenastats.domain.TeamUi
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun <T> OnboardingCardSelector(
+fun OnboardingCardSelector(
     modifier: Modifier = Modifier,
-    elementUi: T,
-    onSelectorClicked: (T) -> Unit,
+    imageUrl:String,
+    title: String,
+    subtitle: String,
+    onSelectorClicked: () -> Unit,
     isSelected: Boolean,
 ) {
     Box(modifier = modifier.width(132.dp)
@@ -43,32 +46,25 @@ fun <T> OnboardingCardSelector(
             modifier = modifier
                 .fillMaxSize()
                 .combinedClickable(enabled = true) {
-                    onSelectorClicked(elementUi)
+                    onSelectorClicked()
                 }
                 .padding(8.dp)
                 .align(Alignment.TopEnd),
             horizontalAlignment = CenterHorizontally,
         ) {
+            val imageShape = RoundedCornerShape(8.dp)
             AsyncImage(
-                model = when (elementUi) {
-                    is io.pdaa.chilenastats.domain.LeagueUi -> elementUi.logo
-                    is TeamUi -> elementUi.logo
-                    else -> ""
-                },
-                contentDescription = when (elementUi) {
-                    is io.pdaa.chilenastats.domain.LeagueUi -> elementUi.name
-                    is TeamUi -> elementUi.logo
-                    else -> ""
-                },
+                model = imageUrl,
+                contentDescription = title,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(2.dp)
                     .aspectRatio(1f)
-                    .clip(CircleShape)
+                    .clip(imageShape)
                     .border(
                         width = 1.dp,
                         color = MaterialTheme.colorScheme.primary,
-                        shape = CircleShape
+                        shape = imageShape
                     )
 
                     .background(Color.White)
@@ -76,22 +72,14 @@ fun <T> OnboardingCardSelector(
                 contentScale = ContentScale.Fit,
             )
             Text(
-                text = when (elementUi) {
-                    is io.pdaa.chilenastats.domain.LeagueUi -> elementUi.name
-                    is TeamUi -> elementUi.name
-                    else -> ""
-                },
+                text = title,
                 style = MaterialTheme.typography.titleSmall,
                 modifier = Modifier.padding(horizontal = 8.dp),
                 textAlign = TextAlign.Center,
                 maxLines = 2
             )
             Text(
-                text = when (elementUi) {
-                    is io.pdaa.chilenastats.domain.LeagueUi -> elementUi.type
-                    is TeamUi -> elementUi.country
-                    else -> ""
-                },
+                text = subtitle,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
                 textAlign = TextAlign.Center,

@@ -14,7 +14,7 @@ data class LeagueDB(
     @Embedded()
     val country: CountryDB,
     val season: String? = null,
-    val isSelected: Boolean
+    val isFavourite: Boolean
 )
 
 fun LeagueDB.asUiModel() = io.pdaa.chilenastats.domain.LeagueUi(
@@ -22,7 +22,7 @@ fun LeagueDB.asUiModel() = io.pdaa.chilenastats.domain.LeagueUi(
     logo = logo,
     name = name,
     type = type,
-    isSelected = isSelected,
+    isFavourite = isFavourite,
     country = country.asUiModel(),
     season = season
 )

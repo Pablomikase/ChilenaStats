@@ -3,6 +3,7 @@ package io.pdaa.chilenastats.usecases
 import io.pdaa.chilenastats.data.repositories.LeaguesRepository
 import io.pdaa.chilenastats.domain.LeagueUi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
 
 
 class FetchLeaguesUseCase(private val leaguesRepository: LeaguesRepository) {

@@ -16,6 +16,6 @@ fun LeagueRemoteResponse.asDbModel(): LeagueDB = LeagueDB(
     type = league.type,
     country = country.asDbModel(),
     season = null,
-    isSelected = false
+    isFavourite = false
 )
 
