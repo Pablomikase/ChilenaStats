@@ -31,6 +31,7 @@ import io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection.LeaguesViewMod
 import io.pdaa.chilenastats.ui.screens.onboarding.login.LoginScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.teamSelection.TeamSelectionScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.teamSelection.TeamSelectionViewModel
+import io.pdaa.chilenastats.usecases.FetchFixturesFromFavouriteTeamsUseCase
 import io.pdaa.chilenastats.usecases.FetchLeaguesUseCase
 import io.pdaa.chilenastats.usecases.FetchTeamsUseCase
 import io.pdaa.chilenastats.usecases.SelectLeagueUseCase
@@ -135,7 +136,12 @@ fun Navigation() {
 
         composable<Dashboard> {
             DashboardScreen(
-                vm = viewModel { DashboardViewModel(fixturesRepository) }
+                vm = viewModel { DashboardViewModel(
+                    fetchFixturesFromFavouriteTeamsUseCase = FetchFixturesFromFavouriteTeamsUseCase(
+                        fixturesRepository = fixturesRepository,
+                        teamsRepository = teamsRepository
+                        )
+                ) }
             )
         }
 

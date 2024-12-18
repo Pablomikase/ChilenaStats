@@ -10,7 +10,6 @@ import io.pdaa.chilenastats.domain.TeamUi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
@@ -59,21 +58,13 @@ class TeamRepository(
 
 
     suspend fun selectTeam(selectedTeam: TeamUi) {
-        localDataSource.favoriteTeams.onEach { previousSelectedTeams ->
-            previousSelectedTeams.first().let { previousSelectedTeam ->
-                localDataSource.insertTeams(
-                    listOf(
-                        previousSelectedTeam.copy(isSelected = selectedTeam.isSelected.not())
-                    )
-                )
-            }
-
-        }
         localDataSource.insertTeams(
             listOf(
                 selectedTeam.copy(isSelected = selectedTeam.isSelected.not())
             ),
         )
     }
+
+    val favouriteTeams: Flow<List<TeamUi>> = localDataSource.favoriteTeams
 
 }

@@ -22,11 +22,19 @@ class FixturesRepository(
     ) { localTeams, localFixtures ->
         localTeams to localFixtures
     }.onEach { (localTeams, localFixtures) ->
-        if(localFixtures.isEmpty()){
+        if (localFixtures.isEmpty()) {
             val remoteFixtures = remoteDataSource.fetchFixturesByTeam(localTeams.first().id)
-            fixturesLocalDataSource.insertFixtures(remoteFixtures)
+            fixturesLocalDataSource.insertFixtures(remoteFixtures, localTeams.first().id)
         }
     }.filterNotNull().map { (_, localFixtures) -> localFixtures }
+
+    fun fixturesByTeam(teamId: Int): Flow<List<FixtureContainerUi>> =
+        fixturesLocalDataSource.getFixturesByTeam(teamId).onEach { localFixtures ->
+            if (localFixtures.isEmpty()) {
+                val remoteFixtures = remoteDataSource.fetchFixturesByTeam(teamId)
+                fixturesLocalDataSource.insertFixtures(remoteFixtures, teamId)
+            }
+        }
 
 }
 

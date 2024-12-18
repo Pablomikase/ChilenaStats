@@ -9,6 +9,7 @@ data class FixtureContainerDB(
 
     @PrimaryKey(autoGenerate = true)
     val fixtureContainerId: Int = 0,
+    val teamOwnerId: Int,
     @Embedded
     val fixture: FixtureDB,
     @Embedded

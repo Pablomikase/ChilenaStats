@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PeriodsRemote(
-    val first: Int,
-    val second: Int
+    val first: Int?,
+    val second: Int?
 )
 
 fun PeriodsRemote.asUiModel(): PeriodsUi = PeriodsUi(

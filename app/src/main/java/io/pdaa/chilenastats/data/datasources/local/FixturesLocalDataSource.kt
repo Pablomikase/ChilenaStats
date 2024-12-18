@@ -38,8 +38,15 @@ class FixturesLocalDataSource(private val fixturesDao: FixturesDao) {
 
     val fixtures: Flow<List<FixtureContainerUi>> = fixturesDao.getFixtures().map { it.asUiModel() }
 
-    val insertFixtures: suspend (fixtures: List<FixtureContainerUi>) -> Unit =
-        { fixtures -> fixturesDao.insertFixtures(fixtures.asDBModel()) }
+    suspend fun insertFixtures(fixtures: List<FixtureContainerUi>, teamOwnerId: Int) {
+        fixturesDao.insertFixtures(fixtures.asDBModel(teamOwnerId))
+    }
+
+    fun getFixturesByTeam(teamId: Int): Flow<List<FixtureContainerUi>> {
+        return fixturesDao.getFixturesByTeam(teamId).map {
+            it.asUiModel()
+        }
+    }
 
 }
 
@@ -145,9 +152,10 @@ private fun HomeDB.asUiModel() = HomeUi(
 )
 
 //From UI to DB
-private fun List<FixtureContainerUi>.asDBModel(): List<FixtureContainerDB> = map { it.asDBModel() }
+private fun List<FixtureContainerUi>.asDBModel(teamOwnerId: Int): List<FixtureContainerDB> = map { it.asDBModel(teamOwnerId) }
 
-private fun FixtureContainerUi.asDBModel(): FixtureContainerDB = FixtureContainerDB(
+private fun FixtureContainerUi.asDBModel(teamOwnerId: Int): FixtureContainerDB = FixtureContainerDB(
+    teamOwnerId = teamOwnerId,
     fixture = this.fixture.asDBModel(),
     league = this.league.asDBModel(),
     goals = this.goals.asDBModel(),

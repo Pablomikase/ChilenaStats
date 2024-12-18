@@ -16,4 +16,14 @@ interface FixturesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFixtures(fixtures: List<FixtureContainerDB>)
 
+    @Query(
+        """
+            SELECT * 
+FROM FixtureContainerDB 
+WHERE teamOwnerId = :teamId
+ORDER BY date DESC
+        """
+    )
+    fun getFixturesByTeam(teamId: Int): Flow<List<FixtureContainerDB>>
+
 }
