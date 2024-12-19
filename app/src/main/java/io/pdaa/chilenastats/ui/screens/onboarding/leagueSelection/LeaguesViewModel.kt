@@ -7,6 +7,7 @@ import io.pdaa.chilenastats.domain.LeagueUi
 import io.pdaa.chilenastats.stateAsResultIn
 import io.pdaa.chilenastats.usecases.FetchLeaguesUseCase
 import io.pdaa.chilenastats.usecases.SelectLeagueUseCase
+import io.pdaa.chilenastats.usecases.UserIsLoggedInUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 class LeaguesViewModel(
     private val fetchLeaguesUseCase: FetchLeaguesUseCase,
     private val selectLeagueUseCase: SelectLeagueUseCase,
+    private val userIsLoggedInUseCase: UserIsLoggedInUseCase
 ) : ViewModel() {
 
 
@@ -27,7 +29,6 @@ class LeaguesViewModel(
         .filter { it }
         .flatMapLatest { fetchLeaguesUseCase() }
         .stateAsResultIn(viewModelScope)
-
 
     fun onUiReady() {
         uiReady.value = true

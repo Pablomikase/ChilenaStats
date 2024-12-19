@@ -67,4 +67,6 @@ class TeamRepository(
 
     val favouriteTeams: Flow<List<TeamUi>> = localDataSource.favoriteTeams
 
+    val areLocalTeamsEmpty = localDataSource.isEmpty
+
 }

@@ -34,6 +34,11 @@ android {
         val footballApiHost = properties.getProperty("FOOTBAL_API_HOST")
         buildConfigField("String", "FOOTBAL_API_HOST", footballApiHost)
 
+        val addsApplicationId = properties.getProperty("ADDS_APPLICATION_ID")
+        buildConfigField("String", "ADDS_APPLICATION_ID", addsApplicationId)
+
+        val dashboardBannerId = properties.getProperty("DASHBOARD_BANNER_ID")
+        buildConfigField("String", "DASHBOARD_BANNER_ID", dashboardBannerId)
     }
 
     buildTypes {
@@ -80,6 +85,9 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+
+    implementation(libs.play.services.ads)
+    implementation(libs.ui)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

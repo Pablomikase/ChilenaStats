@@ -20,12 +20,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import io.pdaa.chilenastats.BuildConfig
 import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.ui.common.BaseScaffold
 import io.pdaa.chilenastats.ui.screens.Screen
+import io.pdaa.chilenastats.ui.screens.common.adds.BannerAdView
 import io.pdaa.chilenastats.ui.screens.dashboard.components.FixtureCarouselItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -82,14 +85,30 @@ fun DashboardScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(450.dp)
+                                .height(122.dp)
                                 .padding(16.dp)
+                                .clip(MaterialTheme.shapes.medium)
                                 .background(MaterialTheme.colorScheme.inversePrimary)
+
                         ) {
                             Text(
-                                modifier = Modifier.align(Alignment.Center),
-                                text = "Publicidad aqui¡"
+                                modifier = Modifier.align(Alignment.TopStart)
+                                    .padding(4.dp)
+                                ,
+                                text = stringResource(R.string.add_time_thanks_for_support),
+                                style = MaterialTheme.typography.bodySmall,
                             )
+
+                            Box(
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .align(Alignment.Center)
+                            ){
+                                BannerAdView(
+                                    addUnitIdentifier = BuildConfig.DASHBOARD_BANNER_ID/*"ca-app-pub-1318428563885787/3866603174"*/
+                                )
+                            }
+
                         }
 
                     }
@@ -97,53 +116,6 @@ fun DashboardScreen(
                 }
 
             }
-
-
-
-/*
-            Column(
-                modifier = Modifier
-                    .padding(paddingValues = contentPadding)
-                    .verticalScroll(dashboardState.screenScrollState)
-            ) {
-
-                val carouselState = rememberCarouselState { state.fixtures.size }
-                HorizontalMultiBrowseCarousel(
-                    state = carouselState,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(221.dp),
-                    preferredItemWidth = 250.dp,
-                    itemSpacing = 8.dp,
-                    contentPadding = PaddingValues(16.dp)
-                ) { itemIndex: Int ->
-                    FixtureCarouselItem(
-                        modifier = Modifier
-                            .height(205.dp)
-                            .fillMaxWidth()
-                            .maskClip(
-                                MaterialTheme.shapes.extraLarge
-                            ),
-                        fixtureResponseUi = state.fixtures[itemIndex]
-                    )
-
-                }
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(450.dp)
-                        .padding(16.dp)
-                        .background(MaterialTheme.colorScheme.inversePrimary)
-                ) {
-                    Text(
-                        modifier = Modifier.align(Alignment.Center),
-                        text = "Publicidad aqui¡"
-                    )
-                }
-
-            }
-*/
         }
     }
 

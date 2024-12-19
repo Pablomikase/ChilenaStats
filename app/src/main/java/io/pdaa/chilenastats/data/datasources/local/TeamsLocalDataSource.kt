@@ -16,6 +16,8 @@ class TeamsLocalDataSource(private val teamsDao: TeamsDao) {
 
     val favoriteTeams: Flow<List<TeamUi>> = teamsDao.getFavoriteTeams().map { teams -> teams.map { it.asUiModel() } }
 
+    val  isEmpty: Flow<Boolean> = teamsDao.countTeams().map { it == 0 }
+
 }
 
 fun TeamUi.asDBModel(): TeamDB {

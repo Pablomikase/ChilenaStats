@@ -34,6 +34,7 @@ import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCa
 @Composable
 fun LeagueSelectionScreen(
     onContinueToTeamSelection: () -> Unit,
+    onContinueToDashboard:() -> Unit,
     vm: LeaguesViewModel
 ) {
 

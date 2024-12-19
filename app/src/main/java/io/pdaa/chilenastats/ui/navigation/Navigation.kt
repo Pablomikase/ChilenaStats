@@ -36,6 +36,7 @@ import io.pdaa.chilenastats.usecases.FetchLeaguesUseCase
 import io.pdaa.chilenastats.usecases.FetchTeamsUseCase
 import io.pdaa.chilenastats.usecases.SelectLeagueUseCase
 import io.pdaa.chilenastats.usecases.SelectTeamUseCase
+import io.pdaa.chilenastats.usecases.UserIsLoggedInUseCase
 
 @Composable
 fun Navigation() {
@@ -107,10 +108,18 @@ fun Navigation() {
                         TeamsSelector
                     )
                 },
+                onContinueToDashboard = {
+                    navController.navigate(
+                        Dashboard
+                    ) {
+                        popUpTo(0) { inclusive = true }
+                    }
+                },
                 vm = viewModel {
                     LeaguesViewModel(
                         fetchLeaguesUseCase = FetchLeaguesUseCase(leaguesRepository),
-                        selectLeagueUseCase = SelectLeagueUseCase(leaguesRepository)
+                        selectLeagueUseCase = SelectLeagueUseCase(leaguesRepository),
+                        userIsLoggedInUseCase = UserIsLoggedInUseCase(teamsRepository)
                     )
                 }
             )
@@ -136,12 +145,14 @@ fun Navigation() {
 
         composable<Dashboard> {
             DashboardScreen(
-                vm = viewModel { DashboardViewModel(
-                    fetchFixturesFromFavouriteTeamsUseCase = FetchFixturesFromFavouriteTeamsUseCase(
-                        fixturesRepository = fixturesRepository,
-                        teamsRepository = teamsRepository
+                vm = viewModel {
+                    DashboardViewModel(
+                        fetchFixturesFromFavouriteTeamsUseCase = FetchFixturesFromFavouriteTeamsUseCase(
+                            fixturesRepository = fixturesRepository,
+                            teamsRepository = teamsRepository
                         )
-                ) }
+                    )
+                }
             )
         }
 
