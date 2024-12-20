@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -49,7 +50,7 @@ fun LeagueSelectionScreen(
             state = screenState,
             topBar = {
                 TopAppBar(
-                    title = { Text(text = stringResource(R.string.leagues_selection_main_title)) },
+                    title = { Text(text = stringResource(R.string.leagues_selection_main_title), style = MaterialTheme.typography.titleLarge) },
                     scrollBehavior = leagueSelectionState.scrollBehavior
                 )
             },

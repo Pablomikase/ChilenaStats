@@ -1,34 +1,27 @@
 package io.pdaa.chilenastats.ui.screens.dashboard
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.pdaa.chilenastats.BuildConfig
-import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.ui.common.BaseScaffold
 import io.pdaa.chilenastats.ui.screens.Screen
 import io.pdaa.chilenastats.ui.screens.common.adds.BannerAdView
+import io.pdaa.chilenastats.ui.screens.common.adds.Logo
 import io.pdaa.chilenastats.ui.screens.dashboard.components.FixtureCarouselItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +40,7 @@ fun DashboardScreen(
             modifier = Modifier.nestedScroll(dashboardState.scrollBehavior.nestedScrollConnection),
             topBar = {
                 TopAppBar(
-                    title = { Text(stringResource(R.string.dashboard_main_title)) },
+                    title = { Logo() },
                     scrollBehavior = dashboardState.scrollBehavior
                 )
             }
@@ -82,34 +75,9 @@ fun DashboardScreen(
 
                         }
 
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(122.dp)
-                                .padding(16.dp)
-                                .clip(MaterialTheme.shapes.medium)
-                                .background(MaterialTheme.colorScheme.inversePrimary)
-
-                        ) {
-                            Text(
-                                modifier = Modifier.align(Alignment.TopStart)
-                                    .padding(4.dp)
-                                ,
-                                text = stringResource(R.string.add_time_thanks_for_support),
-                                style = MaterialTheme.typography.bodySmall,
-                            )
-
-                            Box(
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .align(Alignment.Center)
-                            ){
-                                BannerAdView(
-                                    addUnitIdentifier = BuildConfig.DASHBOARD_BANNER_ID/*"ca-app-pub-1318428563885787/3866603174"*/
-                                )
-                            }
-
-                        }
+                        BannerAdView(
+                            addUnitIdentifier = BuildConfig.DASHBOARD_BANNER_ID
+                        )
 
                     }
 
