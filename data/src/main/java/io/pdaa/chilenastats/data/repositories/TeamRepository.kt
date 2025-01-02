@@ -5,7 +5,6 @@ import io.pdaa.chilenastats.data.datasources.local.TeamsLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
 import io.pdaa.chilenastats.data.datasources.remote.RegionDataSource
 import io.pdaa.chilenastats.data.datasources.remote.TeamsRemoteDataSource
-import io.pdaa.chilenastats.framework.models.database.asUiModel
 import io.pdaa.chilenastats.domain.TeamUi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -29,9 +28,9 @@ class TeamRepository(
     }.onEach { (localTeams, localCountries) ->
 
         if (localTeams.isEmpty() && localCountries.isNotEmpty()) {
-            val selectedCountry = localCountries.first { it.countryIsSelected }
+            val selectedCountry = localCountries.first { it.isSelected }
             val remoteTeams =
-                remoteDataSource.fetchTeamsByCountryName(selectedCountry.countryName)
+                remoteDataSource.fetchTeamsByCountryName(selectedCountry.name)
             localDataSource.insertTeams(remoteTeams)
             return@onEach
         }
@@ -54,7 +53,7 @@ class TeamRepository(
         }
 
     }.filterNotNull()
-        .map { (teams, _) -> teams.filter { it.national == false }.map { it.asUiModel() } }
+        .map { (teams, _) -> teams.filter { it.national == false } }
 
 
     suspend fun selectTeam(selectedTeam: TeamUi) {

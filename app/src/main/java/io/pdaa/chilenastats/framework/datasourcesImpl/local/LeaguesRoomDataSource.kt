@@ -3,7 +3,7 @@ package io.pdaa.chilenastats.framework.datasourcesImpl.local
 import io.pdaa.chilenastats.data.datasources.local.LeaguesLocalDataSource
 import io.pdaa.chilenastats.domain.CountryUi
 import io.pdaa.chilenastats.framework.models.database.LeagueDB
-import io.pdaa.chilenastats.framework.models.database.asUiModel
+
 import io.pdaa.chilenastats.domain.LeagueUi
 import io.pdaa.chilenastats.framework.database.dao.LeaguesDao
 import io.pdaa.chilenastats.framework.models.database.CountryDB
@@ -41,3 +41,13 @@ private fun CountryUi.asDbModel(): CountryDB = CountryDB(
 
 private fun List<CountryUi>.asDbModel(): List<CountryDB> =
     this.map { it.asDbModel() }
+
+private fun LeagueDB.asUiModel() = LeagueUi(
+    id = id,
+    logo = logo,
+    name = name,
+    type = type,
+    isFavourite = isFavourite,
+    country = country.asUiModel(),
+    season = season
+)

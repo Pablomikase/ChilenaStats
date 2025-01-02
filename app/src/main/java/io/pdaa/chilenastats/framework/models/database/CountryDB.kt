@@ -2,7 +2,6 @@ package io.pdaa.chilenastats.framework.models.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import io.pdaa.chilenastats.domain.CountryUi
 
 @Entity
 data class CountryDB (
@@ -14,9 +13,3 @@ data class CountryDB (
 
 )
 
-fun CountryDB.asUiModel() = CountryUi(
-    code = countryCode,
-    flag = countryFlag,
-    name = countryName,
-    isSelected = countryIsSelected
-)

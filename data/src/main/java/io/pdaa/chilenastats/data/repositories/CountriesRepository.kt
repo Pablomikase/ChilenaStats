@@ -3,7 +3,6 @@ package io.pdaa.chilenastats.data.repositories
 import io.pdaa.chilenastats.data.datasources.local.CountriesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
 import io.pdaa.chilenastats.data.datasources.remote.RegionDataSource
-import io.pdaa.chilenastats.framework.models.database.asUiModel
 import io.pdaa.chilenastats.domain.CountryUi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
@@ -25,7 +24,7 @@ class CountriesRepository(
             localDataSource.insertCountries(remoteCountries)
         }
     }.filterNotNull()
-        .map { countries -> countries.map { it.asUiModel() }.sortedByDescending { it.isSelected } }
+        .map { countries -> countries.sortedByDescending { it.isSelected } }
 
     suspend fun selectCountry(selectedCountry: CountryUi) {
         localDataSource.insertCountries(

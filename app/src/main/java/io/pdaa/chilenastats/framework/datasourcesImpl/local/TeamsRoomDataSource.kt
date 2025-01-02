@@ -2,7 +2,6 @@ package io.pdaa.chilenastats.framework.datasourcesImpl.local
 
 import io.pdaa.chilenastats.data.datasources.local.TeamsLocalDataSource
 import io.pdaa.chilenastats.framework.models.database.TeamDB
-import io.pdaa.chilenastats.framework.models.database.asUiModel
 import io.pdaa.chilenastats.domain.TeamUi
 import io.pdaa.chilenastats.domain.VenueUi
 import io.pdaa.chilenastats.framework.database.dao.TeamsDao
@@ -12,7 +11,7 @@ import kotlinx.coroutines.flow.map
 
 class TeamsRoomDataSource(private val teamsDao: TeamsDao) : TeamsLocalDataSource {
 
-    override val teams: Flow<List<TeamDB>> = teamsDao.getTeams()
+    override val teams: Flow<List<TeamUi>> = teamsDao.getTeams().map { it.asUiModel() }
 
     override suspend fun insertTeams(teams: List<TeamUi>) = teamsDao.insertTeams(teams.asDBModel())
 
@@ -51,3 +50,26 @@ private fun VenueUi.asDBModel(): VenueDB = VenueDB(
 
 @JvmName("asDBModelFromVenueUi")
 private fun List<VenueUi>.asDBModel(): List<VenueDB> = this.map { it.asDBModel() }
+
+fun TeamDB.asUiModel() = TeamUi(
+    id = id,
+    name = name,
+    logo = logo,
+    isSelected = isSelected,
+    country = country,
+    founded = founded,
+    national = national,
+    venue = venue?.asUiModel()
+)
+private fun List<TeamDB>.asUiModel(): List<TeamUi> = map { it.asUiModel() }
+
+fun VenueDB.asUiModel() = VenueUi(
+    id = venueId,
+    name = venueName ?: "",
+    city = venueCity ?: "",
+    capacity = venueCapacity ?: 0,
+    surface = venueSurface ?: "",
+    image = venueImage ?: "",
+    address = venueAddress ?: ""
+)
+

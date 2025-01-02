@@ -1,6 +1,6 @@
 package io.pdaa.chilenastats.data.datasources.remote
 
-import android.location.Location
+import io.pdaa.chilenastats.domain.location.Location
 
 interface LocationDataSource {
     suspend fun findLastLocation(): Location?

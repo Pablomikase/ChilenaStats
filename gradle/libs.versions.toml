@@ -20,6 +20,7 @@ uiTextGoogleFonts = "1.7.5"
 roomKtx = "2.6.1"
 ksp = "2.0.0-1.0.21"
 jetbrainsKotlinJvm = "2.0.0"
+coroutines = "1.8.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,6 +50,8 @@ androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomKtx" }
 ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref ="coroutines" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref ="coroutines" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
