@@ -30,7 +30,7 @@ object FreeFootballDataClient {
         .client(okHttpClient)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
-        .create<FreeFootballDataService>()
+        .create<FootballDataService>()
 
 }
 fun buildHeaders(chain: Interceptor.Chain): okhttp3.Response {

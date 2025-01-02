@@ -8,11 +8,17 @@ import io.pdaa.chilenastats.domain.asDbModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class LeaguesLocalDataSource(private val leaguesDao: LeaguesDao) {
+interface LeaguesLocalDataSource {
+    val leagues: Flow<List<LeagueUi>>
 
-    val leagues: Flow<List<LeagueUi>> = leaguesDao.getLeagues().map { leagues -> leagues.map { it.asUiModel() } }
+    suspend fun insertLeagues(leagues: List<LeagueUi>)
+}
 
-    suspend fun insertLeagues(leagues: List<LeagueUi>) = leaguesDao.insertLeagues(leagues.asDBModel())
+class LeaguesRoomDataSource(private val leaguesDao: LeaguesDao) : LeaguesLocalDataSource {
+
+    override val leagues: Flow<List<LeagueUi>> = leaguesDao.getLeagues().map { leagues -> leagues.map { it.asUiModel() } }
+
+    override suspend fun insertLeagues(leagues: List<LeagueUi>) = leaguesDao.insertLeagues(leagues.asDBModel())
 
 }
 

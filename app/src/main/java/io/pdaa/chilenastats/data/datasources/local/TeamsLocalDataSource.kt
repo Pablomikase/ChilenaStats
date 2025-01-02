@@ -8,15 +8,22 @@ import io.pdaa.chilenastats.domain.asDBModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class TeamsLocalDataSource(private val teamsDao: TeamsDao) {
+interface TeamsLocalDataSource {
+    val teams: Flow<List<TeamDB>>
+    val favoriteTeams: Flow<List<TeamUi>>
+    val  isEmpty: Flow<Boolean>
+    suspend fun insertTeams(teams: List<TeamUi>)
+}
 
-    val teams: Flow<List<TeamDB>> = teamsDao.getTeams()
+class TeamsRoomDataSource(private val teamsDao: TeamsDao) : TeamsLocalDataSource {
 
-    suspend fun insertTeams(teams: List<TeamUi>) = teamsDao.insertTeams(teams.asDBModel())
+    override val teams: Flow<List<TeamDB>> = teamsDao.getTeams()
 
-    val favoriteTeams: Flow<List<TeamUi>> = teamsDao.getFavoriteTeams().map { teams -> teams.map { it.asUiModel() } }
+    override suspend fun insertTeams(teams: List<TeamUi>) = teamsDao.insertTeams(teams.asDBModel())
 
-    val  isEmpty: Flow<Boolean> = teamsDao.countTeams().map { it == 0 }
+    override val favoriteTeams: Flow<List<TeamUi>> = teamsDao.getFavoriteTeams().map { teams -> teams.map { it.asUiModel() } }
+
+    override val  isEmpty: Flow<Boolean> = teamsDao.countTeams().map { it == 0 }
 
 }
 

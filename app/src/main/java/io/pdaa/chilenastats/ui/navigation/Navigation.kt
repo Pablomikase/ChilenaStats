@@ -1,5 +1,6 @@
 package io.pdaa.chilenastats.ui.navigation
 
+import android.location.Geocoder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -7,17 +8,19 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.location.LocationServices
 import io.pdaa.chilenastats.App
-import io.pdaa.chilenastats.data.datasources.local.CountriesLocalDataSource
-import io.pdaa.chilenastats.data.datasources.local.FixturesLocalDataSource
-import io.pdaa.chilenastats.data.datasources.local.LeaguesLocalDataSource
-import io.pdaa.chilenastats.data.datasources.local.TeamsLocalDataSource
-import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
-import io.pdaa.chilenastats.data.datasources.remote.FixturesRemoteDataSource
-import io.pdaa.chilenastats.data.datasources.remote.LeaguesRemoteDataSource
-import io.pdaa.chilenastats.data.datasources.remote.LocationDataSource
-import io.pdaa.chilenastats.data.datasources.remote.RegionDataSource
-import io.pdaa.chilenastats.data.datasources.remote.TeamsRemoteDataSource
+import io.pdaa.chilenastats.data.FreeFootballDataClient
+import io.pdaa.chilenastats.data.datasources.local.CountriesRoomDataSource
+import io.pdaa.chilenastats.data.datasources.local.FixturesRoomDataSource
+import io.pdaa.chilenastats.data.datasources.local.LeaguesRoomDataSource
+import io.pdaa.chilenastats.data.datasources.local.TeamsRoomDataSource
+import io.pdaa.chilenastats.data.datasources.remote.CountriesServerDataSource
+import io.pdaa.chilenastats.data.datasources.remote.FixturesServerDataSource
+import io.pdaa.chilenastats.data.datasources.remote.GeocoderRegionSource
+import io.pdaa.chilenastats.data.datasources.remote.LeaguesServerDataSource
+import io.pdaa.chilenastats.data.datasources.remote.PlayServicesLocationDataSource
+import io.pdaa.chilenastats.data.datasources.remote.TeamsServerDataSource
 import io.pdaa.chilenastats.data.repositories.CountriesRepository
 import io.pdaa.chilenastats.data.repositories.FixturesRepository
 import io.pdaa.chilenastats.data.repositories.LeaguesRepository
@@ -44,39 +47,39 @@ fun Navigation() {
     val application = LocalContext.current.applicationContext as App
     val countriesRepository = remember {
         CountriesRepository(
-            regionDataSource = RegionDataSource(
-                app = application,
-                locationDataSource = LocationDataSource(application)
+            regionDataSource = GeocoderRegionSource(
+                geocoder = Geocoder(application),
+                locationDataSource = PlayServicesLocationDataSource(LocationServices.getFusedLocationProviderClient(application))
             ),
-            remoteDataSource = CountriesRemoteDataSource(),
-            localDataSource = CountriesLocalDataSource(application.db.countriesDao())
+            remoteDataSource = CountriesServerDataSource(FreeFootballDataClient.instance),
+            localDataSource = CountriesRoomDataSource(application.db.countriesDao())
         )
     }
 
     val leaguesRepository = remember {
         LeaguesRepository(
-            remoteDataSource = LeaguesRemoteDataSource(),
-            localDataSource = LeaguesLocalDataSource(application.db.leaguesDao())
+            remoteDataSource = LeaguesServerDataSource(FreeFootballDataClient.instance),
+            localDataSource = LeaguesRoomDataSource(application.db.leaguesDao())
         )
     }
 
     val teamsRepository = remember {
         TeamRepository(
-            remoteDataSource = TeamsRemoteDataSource(),
-            localDataSource = TeamsLocalDataSource(application.db.teamsDao()),
-            regionDataSource = RegionDataSource(
-                app = application,
-                locationDataSource = LocationDataSource(application)
+            remoteDataSource = TeamsServerDataSource(FreeFootballDataClient.instance),
+            localDataSource = TeamsRoomDataSource(application.db.teamsDao()),
+            regionDataSource = GeocoderRegionSource(
+                geocoder = Geocoder(application),
+                locationDataSource = PlayServicesLocationDataSource(LocationServices.getFusedLocationProviderClient(application))
             ),
-            countryLocalDataSource = CountriesLocalDataSource(application.db.countriesDao()),
-            countriesRemoteDataSource = CountriesRemoteDataSource()
+            countryLocalDataSource = CountriesRoomDataSource(application.db.countriesDao()),
+            countriesRemoteDataSource = CountriesServerDataSource(FreeFootballDataClient.instance)
         )
     }
     val fixturesRepository = remember {
         FixturesRepository(
-            remoteDataSource = FixturesRemoteDataSource(),
-            teamsLocalDataSource = TeamsLocalDataSource(application.db.teamsDao()),
-            fixturesLocalDataSource = FixturesLocalDataSource(application.db.fixturesDao())
+            remoteDataSource = FixturesServerDataSource(FreeFootballDataClient.instance),
+            teamsLocalDataSource = TeamsRoomDataSource(application.db.teamsDao()),
+            fixturesLocalDataSource = FixturesRoomDataSource(application.db.fixturesDao())
         )
     }
 

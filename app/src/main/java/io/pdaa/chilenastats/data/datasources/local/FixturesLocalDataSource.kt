@@ -34,15 +34,22 @@ import io.pdaa.chilenastats.domain.fixture.VenueUi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class FixturesLocalDataSource(private val fixturesDao: FixturesDao) {
+interface FixturesLocalDataSource {
+    val fixtures: Flow<List<FixtureContainerUi>>
 
-    val fixtures: Flow<List<FixtureContainerUi>> = fixturesDao.getFixtures().map { it.asUiModel() }
+    suspend fun insertFixtures(fixtures: List<FixtureContainerUi>, teamOwnerId: Int)
+    fun getFixturesByTeam(teamId: Int): Flow<List<FixtureContainerUi>>
+}
 
-    suspend fun insertFixtures(fixtures: List<FixtureContainerUi>, teamOwnerId: Int) {
+class FixturesRoomDataSource(private val fixturesDao: FixturesDao) : FixturesLocalDataSource {
+
+    override val fixtures: Flow<List<FixtureContainerUi>> = fixturesDao.getFixtures().map { it.asUiModel() }
+
+    override suspend fun insertFixtures(fixtures: List<FixtureContainerUi>, teamOwnerId: Int) {
         fixturesDao.insertFixtures(fixtures.asDBModel(teamOwnerId))
     }
 
-    fun getFixturesByTeam(teamId: Int): Flow<List<FixtureContainerUi>> {
+    override fun getFixturesByTeam(teamId: Int): Flow<List<FixtureContainerUi>> {
         return fixturesDao.getFixturesByTeam(teamId).map {
             it.asUiModel()
         }

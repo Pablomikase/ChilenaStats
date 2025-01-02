@@ -1,13 +1,17 @@
 package io.pdaa.chilenastats.data.datasources.remote
 
-import io.pdaa.chilenastats.data.FreeFootballDataClient
+import io.pdaa.chilenastats.data.FootballDataService
 import io.pdaa.chilenastats.data.models.remote.TeamRemoteResponse
 import io.pdaa.chilenastats.data.models.remote.asUiModel
 import io.pdaa.chilenastats.domain.TeamUi
 
-class TeamsRemoteDataSource {
-    suspend fun fetchTeamsByCountryName(countryName: String): List<TeamUi> =
-        FreeFootballDataClient.instance.fetchTeamsByCountryName(countryName)
+interface TeamsRemoteDataSource {
+    suspend fun fetchTeamsByCountryName(countryName: String): List<TeamUi>
+}
+
+class TeamsServerDataSource(private val footballDataService: FootballDataService) : TeamsRemoteDataSource {
+    override suspend fun fetchTeamsByCountryName(countryName: String): List<TeamUi> =
+        footballDataService.fetchTeamsByCountryName(countryName)
             .response.map { it.asUiModel()}
 
 }

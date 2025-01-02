@@ -4,12 +4,19 @@ import io.pdaa.chilenastats.data.datasources.database.dao.CountriesDao
 import io.pdaa.chilenastats.data.models.database.CountryDB
 import kotlinx.coroutines.flow.Flow
 
-class CountriesLocalDataSource(private val countriesDao: CountriesDao) {
+interface CountriesLocalDataSource {
+    val countries : Flow<List<CountryDB>>
+    val userCountry: Flow<CountryDB>
 
-    val countries : Flow<List<CountryDB>> = countriesDao.getCountries()
+    suspend fun insertCountries(countries: List<CountryDB>)
+}
 
-    val userCountry: Flow<CountryDB> = countriesDao.getUserCountry()
+class CountriesRoomDataSource(private val countriesDao: CountriesDao) : CountriesLocalDataSource {
 
-    suspend fun insertCountries(countries: List<CountryDB>) = countriesDao.insertCountries(countries)
+    override val countries : Flow<List<CountryDB>> = countriesDao.getCountries()
+
+    override val userCountry: Flow<CountryDB> = countriesDao.getUserCountry()
+
+    override suspend fun insertCountries(countries: List<CountryDB>) = countriesDao.insertCountries(countries)
 
 }

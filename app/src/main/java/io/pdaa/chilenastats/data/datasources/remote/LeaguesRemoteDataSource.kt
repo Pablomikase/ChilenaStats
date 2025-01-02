@@ -1,14 +1,18 @@
 package io.pdaa.chilenastats.data.datasources.remote
 
-import io.pdaa.chilenastats.data.FreeFootballDataClient
+import io.pdaa.chilenastats.data.FootballDataService
 import io.pdaa.chilenastats.data.models.remote.LeagueRemoteResponse
 import io.pdaa.chilenastats.data.models.remote.asUiModel
 import io.pdaa.chilenastats.domain.LeagueUi
 
-class LeaguesRemoteDataSource {
+interface LeaguesRemoteDataSource {
+    suspend fun fetchLeagues(): List<LeagueUi>
+}
 
-    suspend fun fetchLeagues(): List<LeagueUi> =
-        FreeFootballDataClient.instance.fetchLeagues()
+class LeaguesServerDataSource(private val footballDataService: FootballDataService) : LeaguesRemoteDataSource {
+
+    override suspend fun fetchLeagues(): List<LeagueUi> =
+        footballDataService.fetchLeagues()
             .response.map { it.asUiModel() }
 
 }

@@ -1,13 +1,17 @@
 package io.pdaa.chilenastats.data.datasources.remote
 
-import io.pdaa.chilenastats.data.FreeFootballDataClient
+import io.pdaa.chilenastats.data.FootballDataService
 import io.pdaa.chilenastats.data.models.database.CountryDB
 import io.pdaa.chilenastats.data.models.remote.asDbModel
 
-class CountriesRemoteDataSource {
+interface CountriesRemoteDataSource {
+    suspend fun fetchCountries(): List<CountryDB>
+}
 
-    suspend fun fetchCountries(): List<CountryDB> =
-        FreeFootballDataClient.instance.fetchCountries()
+class CountriesServerDataSource(private val footballDataService: FootballDataService) : CountriesRemoteDataSource {
+
+    override suspend fun fetchCountries(): List<CountryDB> =
+        footballDataService.fetchCountries()
             .response
             .map {
                 it.asDbModel()
