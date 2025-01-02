@@ -40,13 +40,13 @@ class TeamRepository(
             val remoteCountries = countriesRemoteDataSource.fetchCountries()
             countryLocalDataSource.insertCountries(remoteCountries)
             val lastRegion = regionDataSource.findLastRegion()
-            remoteCountries.find { it.countryCode == lastRegion }?.let { country ->
+            remoteCountries.find { it.code == lastRegion }?.let { country ->
                 countryLocalDataSource.insertCountries(
-                    listOf(country.copy(countryIsSelected = true))
+                    listOf(country.copy(isSelected = true))
                 )
                 if (localTeams.isEmpty()) {
                     val remoteTeams =
-                        remoteDataSource.fetchTeamsByCountryName(country.countryName)
+                        remoteDataSource.fetchTeamsByCountryName(country.name)
                     localDataSource.insertTeams(remoteTeams)
                 }
             }

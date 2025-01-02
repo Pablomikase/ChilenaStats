@@ -5,7 +5,6 @@ import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
 import io.pdaa.chilenastats.data.datasources.remote.RegionDataSource
 import io.pdaa.chilenastats.framework.models.database.asUiModel
 import io.pdaa.chilenastats.domain.CountryUi
-import io.pdaa.chilenastats.domain.asDbModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -21,8 +20,8 @@ class CountriesRepository(
         if (localCountries.isEmpty()) {
             val lastRegion = regionDataSource.findLastRegion()
             val remoteCountries = remoteDataSource.fetchCountries()
-                .sortedByDescending { it.countryCode == lastRegion }
-                .map { it.copy(countryIsSelected = it.countryCode == lastRegion) }
+                .sortedByDescending { it.code == lastRegion }
+                .map { it.copy(isSelected = it.code == lastRegion) }
             localDataSource.insertCountries(remoteCountries)
         }
     }.filterNotNull()
@@ -31,7 +30,7 @@ class CountriesRepository(
     suspend fun selectCountry(selectedCountry: CountryUi) {
         localDataSource.insertCountries(
             listOf(
-                selectedCountry.copy(isSelected = selectedCountry.isSelected.not()).asDbModel()
+                selectedCountry.copy(isSelected = selectedCountry.isSelected.not())
             )
         )
     }

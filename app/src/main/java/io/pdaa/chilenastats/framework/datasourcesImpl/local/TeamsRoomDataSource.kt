@@ -4,8 +4,9 @@ import io.pdaa.chilenastats.data.datasources.local.TeamsLocalDataSource
 import io.pdaa.chilenastats.framework.models.database.TeamDB
 import io.pdaa.chilenastats.framework.models.database.asUiModel
 import io.pdaa.chilenastats.domain.TeamUi
-import io.pdaa.chilenastats.domain.asDBModel
+import io.pdaa.chilenastats.domain.VenueUi
 import io.pdaa.chilenastats.framework.database.dao.TeamsDao
+import io.pdaa.chilenastats.framework.models.database.VenueDB
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -15,13 +16,14 @@ class TeamsRoomDataSource(private val teamsDao: TeamsDao) : TeamsLocalDataSource
 
     override suspend fun insertTeams(teams: List<TeamUi>) = teamsDao.insertTeams(teams.asDBModel())
 
-    override val favoriteTeams: Flow<List<TeamUi>> = teamsDao.getFavoriteTeams().map { teams -> teams.map { it.asUiModel() } }
+    override val favoriteTeams: Flow<List<TeamUi>> =
+        teamsDao.getFavoriteTeams().map { teams -> teams.map { it.asUiModel() } }
 
-    override val  isEmpty: Flow<Boolean> = teamsDao.countTeams().map { it == 0 }
+    override val isEmpty: Flow<Boolean> = teamsDao.countTeams().map { it == 0 }
 
 }
 
-fun TeamUi.asDBModel(): TeamDB {
+private fun TeamUi.asDBModel(): TeamDB {
     return TeamDB(
         id = this.id,
         name = this.name,
@@ -34,4 +36,18 @@ fun TeamUi.asDBModel(): TeamDB {
     )
 }
 
+@JvmName("asDBModelFromTeamUi")
 private fun List<TeamUi>.asDBModel() = map { it.asDBModel() }
+
+private fun VenueUi.asDBModel(): VenueDB = VenueDB(
+    venueId = id ?: 0,
+    venueName = name,
+    venueAddress = address,
+    venueCity = city,
+    venueCapacity = capacity,
+    venueSurface = surface,
+    venueImage = image
+)
+
+@JvmName("asDBModelFromVenueUi")
+private fun List<VenueUi>.asDBModel(): List<VenueDB> = this.map { it.asDBModel() }

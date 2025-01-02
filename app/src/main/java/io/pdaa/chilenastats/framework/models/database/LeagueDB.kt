@@ -3,6 +3,7 @@ package io.pdaa.chilenastats.framework.models.database
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import io.pdaa.chilenastats.domain.LeagueUi
 
 @Entity
 data class LeagueDB(
@@ -17,7 +18,7 @@ data class LeagueDB(
     val isFavourite: Boolean
 )
 
-fun LeagueDB.asUiModel() = io.pdaa.chilenastats.domain.LeagueUi(
+fun LeagueDB.asUiModel() = LeagueUi(
     id = id,
     logo = logo,
     name = name,

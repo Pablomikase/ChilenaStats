@@ -1,11 +1,12 @@
 package io.pdaa.chilenastats.framework.datasourcesImpl.local
 
 import io.pdaa.chilenastats.data.datasources.local.LeaguesLocalDataSource
+import io.pdaa.chilenastats.domain.CountryUi
 import io.pdaa.chilenastats.framework.models.database.LeagueDB
 import io.pdaa.chilenastats.framework.models.database.asUiModel
 import io.pdaa.chilenastats.domain.LeagueUi
-import io.pdaa.chilenastats.domain.asDbModel
 import io.pdaa.chilenastats.framework.database.dao.LeaguesDao
+import io.pdaa.chilenastats.framework.models.database.CountryDB
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -30,3 +31,13 @@ private fun LeagueUi.asDBModel(): LeagueDB {
 }
 
 private fun List<LeagueUi>.asDBModel() = map { it.asDBModel() }
+
+private fun CountryUi.asDbModel(): CountryDB = CountryDB(
+    countryName = name,
+    countryCode = code,
+    countryFlag = flag,
+    countryIsSelected = isSelected
+)
+
+private fun List<CountryUi>.asDbModel(): List<CountryDB> =
+    this.map { it.asDbModel() }
