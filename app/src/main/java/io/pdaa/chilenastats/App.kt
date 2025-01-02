@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
-import io.pdaa.chilenastats.data.datasources.database.FootballDatabase
+import io.pdaa.chilenastats.framework.database.FootballDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

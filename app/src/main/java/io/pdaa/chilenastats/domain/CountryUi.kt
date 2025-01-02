@@ -1,6 +1,6 @@
 package io.pdaa.chilenastats.domain
 
-import io.pdaa.chilenastats.data.models.database.CountryDB
+import io.pdaa.chilenastats.framework.models.database.CountryDB
 
 data class CountryUi(
     val code: String?,

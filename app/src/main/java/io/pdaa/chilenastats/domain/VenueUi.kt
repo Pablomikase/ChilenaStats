@@ -1,6 +1,6 @@
 package io.pdaa.chilenastats.domain
 
-import io.pdaa.chilenastats.data.models.database.VenueDB
+import io.pdaa.chilenastats.framework.models.database.VenueDB
 
 data class VenueUi(
     val id: Int?,

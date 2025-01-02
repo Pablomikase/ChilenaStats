@@ -5,7 +5,7 @@ import io.pdaa.chilenastats.data.datasources.local.TeamsLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
 import io.pdaa.chilenastats.data.datasources.remote.RegionDataSource
 import io.pdaa.chilenastats.data.datasources.remote.TeamsRemoteDataSource
-import io.pdaa.chilenastats.data.models.database.asUiModel
+import io.pdaa.chilenastats.framework.models.database.asUiModel
 import io.pdaa.chilenastats.domain.TeamUi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

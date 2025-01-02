@@ -3,7 +3,7 @@ package io.pdaa.chilenastats.data.repositories
 import io.pdaa.chilenastats.data.datasources.local.CountriesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
 import io.pdaa.chilenastats.data.datasources.remote.RegionDataSource
-import io.pdaa.chilenastats.data.models.database.asUiModel
+import io.pdaa.chilenastats.framework.models.database.asUiModel
 import io.pdaa.chilenastats.domain.CountryUi
 import io.pdaa.chilenastats.domain.asDbModel
 import kotlinx.coroutines.flow.Flow
