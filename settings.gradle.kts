@@ -23,3 +23,4 @@ rootProject.name = "ChilenaStats"
 include(":app")
 include(":domain")
 include(":data")
+include(":usecases")

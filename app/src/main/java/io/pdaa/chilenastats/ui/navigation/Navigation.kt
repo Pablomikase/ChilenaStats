@@ -10,21 +10,21 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.location.LocationServices
 import io.pdaa.chilenastats.App
-import io.pdaa.chilenastats.framework.server.FreeFootballDataClient
-import io.pdaa.chilenastats.framework.datasourcesImpl.local.CountriesRoomDataSource
-import io.pdaa.chilenastats.framework.datasourcesImpl.local.LeaguesRoomDataSource
-import io.pdaa.chilenastats.framework.datasourcesImpl.local.TeamsRoomDataSource
-import io.pdaa.chilenastats.framework.datasourcesImpl.remote.CountriesServerDataSource
-import io.pdaa.chilenastats.framework.datasourcesImpl.remote.FixturesServerDataSource
-import io.pdaa.chilenastats.framework.datasourcesImpl.sensors.GeocoderRegionSource
-import io.pdaa.chilenastats.framework.datasourcesImpl.remote.LeaguesServerDataSource
-import io.pdaa.chilenastats.framework.datasourcesImpl.sensors.PlayServicesLocationDataSource
-import io.pdaa.chilenastats.framework.datasourcesImpl.remote.TeamsServerDataSource
 import io.pdaa.chilenastats.data.repositories.CountriesRepository
 import io.pdaa.chilenastats.data.repositories.FixturesRepository
 import io.pdaa.chilenastats.data.repositories.LeaguesRepository
 import io.pdaa.chilenastats.data.repositories.TeamRepository
+import io.pdaa.chilenastats.framework.datasourcesImpl.local.CountriesRoomDataSource
 import io.pdaa.chilenastats.framework.datasourcesImpl.local.FixturesRoomDataSource
+import io.pdaa.chilenastats.framework.datasourcesImpl.local.LeaguesRoomDataSource
+import io.pdaa.chilenastats.framework.datasourcesImpl.local.TeamsRoomDataSource
+import io.pdaa.chilenastats.framework.datasourcesImpl.remote.CountriesServerDataSource
+import io.pdaa.chilenastats.framework.datasourcesImpl.remote.FixturesServerDataSource
+import io.pdaa.chilenastats.framework.datasourcesImpl.remote.LeaguesServerDataSource
+import io.pdaa.chilenastats.framework.datasourcesImpl.remote.TeamsServerDataSource
+import io.pdaa.chilenastats.framework.datasourcesImpl.sensors.GeocoderRegionSource
+import io.pdaa.chilenastats.framework.datasourcesImpl.sensors.PlayServicesLocationDataSource
+import io.pdaa.chilenastats.framework.server.FreeFootballDataClient
 import io.pdaa.chilenastats.ui.screens.dashboard.DashboardScreen
 import io.pdaa.chilenastats.ui.screens.dashboard.DashboardViewModel
 import io.pdaa.chilenastats.ui.screens.onboarding.countrySelection.CountrySelectionScreen
@@ -120,9 +120,15 @@ fun Navigation() {
                 },
                 vm = viewModel {
                     LeaguesViewModel(
-                        fetchLeaguesUseCase = FetchLeaguesUseCase(leaguesRepository),
-                        selectLeagueUseCase = SelectLeagueUseCase(leaguesRepository),
-                        userIsLoggedInUseCase = UserIsLoggedInUseCase(teamsRepository)
+                        fetchLeaguesUseCase = FetchLeaguesUseCase(
+                            leaguesRepository
+                        ),
+                        selectLeagueUseCase = SelectLeagueUseCase(
+                            leaguesRepository
+                        ),
+                        userIsLoggedInUseCase = UserIsLoggedInUseCase(
+                            teamsRepository
+                        )
                     )
                 }
             )
@@ -139,8 +145,12 @@ fun Navigation() {
                 },
                 vm = viewModel {
                     TeamSelectionViewModel(
-                        fetchTeamsUseCase = FetchTeamsUseCase(teamsRepository),
-                        selectTeamUseCase = SelectTeamUseCase(teamsRepository)
+                        fetchTeamsUseCase = FetchTeamsUseCase(
+                            teamsRepository
+                        ),
+                        selectTeamUseCase = SelectTeamUseCase(
+                            teamsRepository
+                        )
                     )
                 }
             )
