@@ -1,4 +1,5 @@
 pluginManagement {
+    include("build-logic")
     repositories {
         google {
             content {

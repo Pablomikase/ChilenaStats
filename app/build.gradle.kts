@@ -93,6 +93,10 @@ dependencies {
     implementation(libs.play.services.ads)
     implementation(libs.ui)
 
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.compose)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
