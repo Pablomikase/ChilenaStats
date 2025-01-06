@@ -1,8 +1,7 @@
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    id("pdaa.android.application")
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.ksp)
@@ -11,6 +10,8 @@ plugins {
 android {
     namespace = "io.pdaa.chilenastats"
     compileSdk = 34
+
+
 
     defaultConfig {
         applicationId = "io.pdaa.chilenastats"

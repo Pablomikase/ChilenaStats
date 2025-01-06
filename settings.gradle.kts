@@ -1,5 +1,5 @@
 pluginManagement {
-    include("build-logic")
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -21,6 +21,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ChilenaStats"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":domain")
 include(":data")
