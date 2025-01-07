@@ -1,21 +1,25 @@
 package io.pdaa.chilenastats
 
 import android.app.Application
-import androidx.room.Room
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
-import io.pdaa.chilenastats.framework.database.FootballDatabase
+import io.pdaa.chilenastats.di.appModule
+import io.pdaa.chilenastats.di.dataSourceModule
+import io.pdaa.chilenastats.di.repositoryModule
+import io.pdaa.chilenastats.di.useCaseModule
+import io.pdaa.chilenastats.di.viewModelModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 class App : Application() {
-    lateinit var db: FootballDatabase
+
     override fun onCreate() {
         super.onCreate()
-        //Data base setup
-        db = Room.databaseBuilder(applicationContext, FootballDatabase::class.java, "football.db")
-            .build()
         //addMob setup
         CoroutineScope(Dispatchers.IO).launch {
             MobileAds.initialize(this@App)
@@ -27,5 +31,20 @@ class App : Application() {
                 RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
             MobileAds.setRequestConfiguration(configuration)
         }
+
+        startKoin {
+            androidLogger(Level.DEBUG)
+            androidContext(this@App)
+            modules(
+                listOf(
+                    appModule,
+                    dataSourceModule,
+                    repositoryModule,
+                    useCaseModule,
+                    viewModelModule
+                    )
+            )
+        }
     }
 }
+
