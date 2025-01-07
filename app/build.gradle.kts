@@ -2,9 +2,11 @@ import java.util.Properties
 
 plugins {
     id("pdaa.android.application")
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlinxSerialization)
+    id("pdaa.android.application.compose")
+    id("pdaa.android.room")
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlinxSerialization)
+
 }
 
 android {
