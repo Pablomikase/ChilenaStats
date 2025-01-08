@@ -5,6 +5,7 @@ import android.location.Geocoder
 import androidx.room.Room
 import com.google.android.gms.location.LocationServices
 import io.pdaa.chilenastats.data.datasources.local.CountriesLocalDataSource
+import io.pdaa.chilenastats.data.datasources.local.FixturesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.local.LeaguesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.local.TeamsLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
@@ -47,7 +48,7 @@ val dataSourceModule = module {
     factoryOf(::CountriesRoomDataSource) bind CountriesLocalDataSource::class
     factoryOf(::LeaguesRoomDataSource) bind LeaguesLocalDataSource::class
     factoryOf(::TeamsRoomDataSource) bind TeamsLocalDataSource::class
-    factoryOf(::FixturesRoomDataSource) bind FixturesRoomDataSource::class
+    factoryOf(::FixturesRoomDataSource) bind FixturesLocalDataSource::class
     factoryOf(::CountriesServerDataSource) bind CountriesRemoteDataSource::class
     factoryOf(::LeaguesServerDataSource) bind LeaguesRemoteDataSource::class
     factoryOf(::TeamsServerDataSource) bind TeamsRemoteDataSource::class
