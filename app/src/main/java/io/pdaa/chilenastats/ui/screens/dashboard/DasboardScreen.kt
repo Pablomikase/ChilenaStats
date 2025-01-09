@@ -49,7 +49,10 @@ fun DashboardScreen(
             LazyColumn(
                 contentPadding = contentPadding,
             ) {
-                items(dashboardItems) { teamFixture ->
+                items(
+                    items = dashboardItems,
+                    key = {it.second.hashCode()}
+                    ) { teamFixture ->
                     Column {
                         val fixtures = teamFixture.second
                         val carouselState = rememberCarouselState { fixtures.size }
