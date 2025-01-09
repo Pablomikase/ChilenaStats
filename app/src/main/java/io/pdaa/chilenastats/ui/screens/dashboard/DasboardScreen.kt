@@ -45,7 +45,6 @@ fun DashboardScreen(
                 )
             }
         ) { contentPadding, dashboardItems ->
-            //val state by vm.state.collectAsState()
 
             LazyColumn(
                 contentPadding = contentPadding,

@@ -59,7 +59,7 @@ private fun FixtureContainerDB.asUiModel(): FixtureContainerUi = FixtureContaine
     league = this.league.asUiModel(),
     goals = this.goals.asUiModel(),
     score = this.score.asUiModel(),
-    teams = this.teams.asUiModel(),
+    teams = this.teams.asUiModel()
 )
 
 private fun LeagueDB.asUiModel() = LeagueUi(

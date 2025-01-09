@@ -8,6 +8,5 @@ import kotlinx.coroutines.flow.Flow
 class FetchFixturesFromFavouriteTeamsUseCase(
     private val fixturesRepository: FixturesRepository,
     ) {
-
     operator fun invoke(): Flow<List<Pair<TeamUi, List<FixtureContainerUi>>>> = fixturesRepository.fixturesFromFavouriteTeams()
 }
