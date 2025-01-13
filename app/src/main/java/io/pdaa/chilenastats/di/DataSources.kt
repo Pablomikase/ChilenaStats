@@ -62,23 +62,4 @@ val dataSourceModule = module {
     factoryOf(::GeocoderRegionSource) bind RegionDataSource::class
     factory { Geocoder(get()) }
 
-
-    /*single { CountriesRoomDataSource(get()) }
-    single { LeaguesRoomDataSource(get()) }
-    single { TeamsRoomDataSource(get()) }
-    single { FixturesRoomDataSource(get()) }
-
-    single { CountriesServerDataSource(FreeFootballDataClient.instance) }
-    single { LeaguesServerDataSource(FreeFootballDataClient.instance) }
-    single { TeamsServerDataSource(FreeFootballDataClient.instance) }
-    single { FixturesServerDataSource(FreeFootballDataClient.instance) }
-
-    single {
-        GeocoderRegionSource(
-            geocoder = Geocoder(get()),
-            locationDataSource = PlayServicesLocationDataSource(
-                LocationServices.getFusedLocationProviderClient(get())
-            )
-        )
-    }*/
 }

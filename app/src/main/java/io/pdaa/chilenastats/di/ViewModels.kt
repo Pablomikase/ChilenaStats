@@ -13,23 +13,4 @@ val viewModelModule = module {
     viewModelOf(::TeamSelectionViewModel)
     viewModelOf(::DashboardViewModel)
 
-    /*viewModel { CountrySelectionViewModel(get()) }
-    viewModel {
-        LeaguesViewModel(
-            fetchLeaguesUseCase = get(),
-            selectLeagueUseCase = get(),
-            userIsLoggedInUseCase = get()
-        )
-    }
-    viewModel {
-        TeamSelectionViewModel(
-            fetchTeamsUseCase = get(),
-            selectTeamUseCase = get()
-        )
-    }
-    viewModel {
-        DashboardViewModel(
-            fetchFixturesFromFavouriteTeamsUseCase = get()
-        )
-    }*/
 }

@@ -14,36 +14,4 @@ val repositoryModule = module {
     factoryOf(::LeaguesRepository)
     factoryOf(::TeamRepository)
 
-    /*single {
-        CountriesRepository(
-            regionDataSource = get(),
-            remoteDataSource = get(),
-            localDataSource = get()
-        )
-    }
-
-    single {
-        FixturesRepository(
-            remoteDataSource = get(),
-            teamsLocalDataSource = get(),
-            fixturesLocalDataSource = get()
-        )
-    }
-
-    single {
-        LeaguesRepository(
-            remoteDataSource = get(),
-            localDataSource = get()
-        )
-    }
-
-    single{
-        TeamRepository(
-            remoteDataSource = get(),
-            localDataSource = get(),
-            regionDataSource = get(),
-            countryLocalDataSource = get(),
-            countriesRemoteDataSource = get()
-        )
-    }*/
 }
