@@ -13,3 +13,9 @@ kotlin {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
     }
 }
+
+dependencies{
+    //Test
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.kotlin)
+}

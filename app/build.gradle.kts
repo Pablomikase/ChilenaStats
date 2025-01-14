@@ -92,17 +92,20 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.logging.interceptor)
+    //Room
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
-
+    //add mob
     implementation(libs.play.services.ads)
     implementation(libs.ui)
-
+    //koin
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
-
+    //Test
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.kotlin)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

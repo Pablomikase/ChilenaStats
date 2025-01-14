@@ -24,6 +24,7 @@ coroutines = "1.8.1"
 koin-bom = "3.5.6"
 androidTools = "31.2.2"
 okhttp = "4.12.0"
+mockitoKotlin = "5.3.1"
 
 
 [libraries]
@@ -60,6 +61,7 @@ kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin-bom" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
 koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }

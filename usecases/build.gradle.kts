@@ -18,4 +18,8 @@ dependencies{
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(libs.kotlinx.coroutines.core)
+
+    //Test
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.kotlin)
 }
