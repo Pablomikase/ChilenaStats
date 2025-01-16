@@ -15,13 +15,15 @@ fun sampleCountry(id: Int) = CountryUi(
 )
 
 fun sampleLeagues(vararg Ids: Int) = Ids.map {
-    LeagueUi(
-        id = it,
-        name = "name$it",
-        isFavourite = it % 2 == 0,
-        country = sampleCountry(it),
-        type = "type$it",
-        logo = "logo$it",
-        season = "season$it"
-    )
+    sampleLeague(it)
 }
+
+fun sampleLeague(id: Int) = LeagueUi(
+    id = id,
+    name = "name$id",
+    isFavourite = id % 2 == 0,
+    country = sampleCountry(id),
+    type = "type$id",
+    logo = "logo$id",
+    season = "season$id"
+)

@@ -12,12 +12,13 @@ class LeaguesRepository(
     private val localDataSource: LeaguesLocalDataSource
 ) {
 
-    val leagues: Flow<List<LeagueUi>> = localDataSource.leagues.onEach { localLeagues ->
-        if (localLeagues.isEmpty()) {
-            val remoteLeagues = remoteDataSource.fetchLeagues()
-            localDataSource.insertLeagues(remoteLeagues)
+    val leagues: Flow<List<LeagueUi>>
+        get() = localDataSource.leagues.onEach { localLeagues ->
+            if (localLeagues.isEmpty()) {
+                val remoteLeagues = remoteDataSource.fetchLeagues()
+                localDataSource.insertLeagues(remoteLeagues)
+            }
         }
-    }
 
     suspend fun selectLeague(selectedLeague: LeagueUi) {
         localDataSource.insertLeagues(

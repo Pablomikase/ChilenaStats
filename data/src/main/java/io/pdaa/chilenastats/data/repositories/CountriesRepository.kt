@@ -15,16 +15,17 @@ class CountriesRepository(
     private val localDataSource: CountriesLocalDataSource
 ) {
 
-    val countries: Flow<List<CountryUi>> = localDataSource.countries.onEach { localCountries ->
-        if (localCountries.isEmpty()) {
-            val lastRegion = regionDataSource.findLastRegion()
-            val remoteCountries = remoteDataSource.fetchCountries()
-                .sortedByDescending { it.code == lastRegion }
-                .map { it.copy(isSelected = it.code == lastRegion) }
-            localDataSource.insertCountries(remoteCountries)
-        }
-    }.filterNotNull()
-        .map { countries -> countries.sortedByDescending { it.isSelected } }
+    val countries: Flow<List<CountryUi>>
+        get() = localDataSource.countries.onEach { localCountries ->
+            if (localCountries.isEmpty()) {
+                val lastRegion = regionDataSource.findLastRegion()
+                val remoteCountries = remoteDataSource.fetchCountries()
+                    .sortedByDescending { it.code == lastRegion }
+                    .map { it.copy(isSelected = it.code == lastRegion) }
+                localDataSource.insertCountries(remoteCountries)
+            }
+        }.filterNotNull()
+            .map { countries -> countries.sortedByDescending { it.isSelected } }
 
     suspend fun selectCountry(selectedCountry: CountryUi) {
         localDataSource.insertCountries(
