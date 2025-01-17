@@ -28,15 +28,14 @@ class FixturesRepository(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun fixturesFromFavouriteTeams(): Flow<List<Pair<TeamUi, List<FixtureContainerUi>>>> {
-        return teamsRepository.favoriteTeams // Obtiene los equipos favoritos
+        return teamsRepository.favoriteTeams
             .flatMapLatest { favouriteTeams ->
-                // Para cada equipo favorito, obtén sus fixtures
                 combine(favouriteTeams.map { team ->
                     fixturesByTeam(team.id).map { fixtures ->
                         team to fixtures // Combina el equipo con sus fixtures
                     }
                 }) { teamWithFixturesArray ->
-                    teamWithFixturesArray.toList() // Convierte el array de resultados a una lista
+                    teamWithFixturesArray.toList()
                 }
             }
     }
