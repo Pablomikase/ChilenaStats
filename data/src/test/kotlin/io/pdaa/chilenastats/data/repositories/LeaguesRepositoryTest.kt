@@ -2,9 +2,9 @@ package io.pdaa.chilenastats.data.repositories
 
 import io.pdaa.chilenastats.data.datasources.local.LeaguesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.LeaguesRemoteDataSource
-import io.pdaa.chilenastats.data.repositories.helper.sampleLeague
-import io.pdaa.chilenastats.data.repositories.helper.sampleLeagues
 import io.pdaa.chilenastats.domain.LeagueUi
+import io.pdaa.chilenastats.sampledata.sampleLeague
+import io.pdaa.chilenastats.sampledata.sampleLeagues
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf

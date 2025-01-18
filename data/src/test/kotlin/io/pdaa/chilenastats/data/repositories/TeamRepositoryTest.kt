@@ -5,8 +5,8 @@ import io.pdaa.chilenastats.data.datasources.local.TeamsLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
 import io.pdaa.chilenastats.data.datasources.remote.RegionDataSource
 import io.pdaa.chilenastats.data.datasources.remote.TeamsRemoteDataSource
-import io.pdaa.chilenastats.data.repositories.helper.sampleCountries
-import io.pdaa.chilenastats.data.repositories.helper.sampleTeams
+import io.pdaa.chilenastats.sampledata.sampleCountries
+import io.pdaa.chilenastats.sampledata.sampleTeams
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf

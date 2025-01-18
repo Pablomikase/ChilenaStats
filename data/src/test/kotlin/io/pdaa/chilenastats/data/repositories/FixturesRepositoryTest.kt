@@ -3,8 +3,9 @@ package io.pdaa.chilenastats.data.repositories
 import io.pdaa.chilenastats.data.datasources.local.FixturesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.local.TeamsLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.FixturesRemoteDataSource
-import io.pdaa.chilenastats.data.repositories.helper.sampleFixtureContainer
-import io.pdaa.chilenastats.data.repositories.helper.sampleTeams
+
+import io.pdaa.chilenastats.sampledata.sampleTeams
+import io.pdaa.chilenastats.sampledata.sampleFixtureContainer
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf

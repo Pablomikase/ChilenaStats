@@ -1,6 +1,7 @@
 package io.pdaa.chilenastats.usecases
 
 import io.pdaa.chilenastats.data.repositories.LeaguesRepository
+import io.pdaa.chilenastats.sampledata.sampleLeague
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.mockito.kotlin.mock

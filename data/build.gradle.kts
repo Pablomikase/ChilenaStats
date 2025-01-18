@@ -21,4 +21,5 @@ dependencies{
     //Test
     testImplementation(libs.junit)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(project(":test:unit"))
 }

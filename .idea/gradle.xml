@@ -27,6 +27,8 @@
             <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/test" />
+            <option value="$PROJECT_DIR$/test/unit" />
             <option value="$PROJECT_DIR$/usecases" />
           </set>
         </option>

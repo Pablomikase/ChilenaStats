@@ -3,8 +3,8 @@ package io.pdaa.chilenastats.data.repositories
 import io.pdaa.chilenastats.data.datasources.local.CountriesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
 import io.pdaa.chilenastats.data.datasources.remote.RegionDataSource
-import io.pdaa.chilenastats.data.repositories.helper.sampleCountries
-import io.pdaa.chilenastats.data.repositories.helper.sampleCountry
+import io.pdaa.chilenastats.sampledata.sampleCountries
+import io.pdaa.chilenastats.sampledata.sampleCountry
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
