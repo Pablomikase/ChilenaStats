@@ -31,7 +31,6 @@ fun DashboardScreen(
 ) {
 
     val dashboardState = rememberDashboardState()
-    dashboardState.UiReadyToFetchData { vm.onUiReady() }
 
     Screen {
         val newState by vm.newState.collectAsState()
