@@ -6,7 +6,6 @@ import io.pdaa.chilenastats.sampledata.sampleLeagues
 import io.pdaa.chilenastats.testRules.CoroutineTestRule
 import io.pdaa.chilenastats.usecases.FetchLeaguesUseCase
 import io.pdaa.chilenastats.usecases.SelectLeagueUseCase
-import io.pdaa.chilenastats.usecases.UserIsLoggedInUseCase
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -31,8 +30,6 @@ class LeaguesViewModelTest {
     lateinit var fetchLeaguesUseCase: FetchLeaguesUseCase
     @Mock
     lateinit var selectLeagueUseCase: SelectLeagueUseCase
-    @Mock
-    lateinit var userIsLoggedInUseCase: UserIsLoggedInUseCase
 
     private lateinit var leaguesViewModel: LeaguesViewModel
 
@@ -42,12 +39,11 @@ class LeaguesViewModelTest {
     fun setUp() {
         whenever(fetchLeaguesUseCase()).thenReturn(flowOf(leagues))
         leaguesViewModel = LeaguesViewModel(
-            fetchLeaguesUseCase, selectLeagueUseCase, userIsLoggedInUseCase
+            fetchLeaguesUseCase, selectLeagueUseCase
         )
     }
 
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `Leagues are not requested when the ui is not ready`() = runTest {
         leaguesViewModel.state.test {
@@ -77,12 +73,33 @@ class LeaguesViewModelTest {
 
             verify(selectLeagueUseCase).invoke(leagues[0])
         }
-
-
-
     }
 
+    @Test
+    fun `The method isAnyLeagueSelected returns true when there is a league selected`() = runTest {
+        leaguesViewModel.state.test {
+            assertEquals(Result.Loading, awaitItem())
+            assertEquals(Result.Success(leagues), awaitItem())
+        }
+        //Pair leagues generated are set as favourite
+        assertEquals(true, leaguesViewModel.isAnyLeaguesSelected())
+    }
 
+    @Test
+    fun `The method isAnyLeagueSelected returns false when there is not any league selected`() = runTest {
+        val leaguesUnselected = sampleLeagues(1,2,3,4,5).map { it.copy(isFavourite = false) }
+        whenever(fetchLeaguesUseCase()).thenReturn(flowOf(leaguesUnselected))
+        val unselectedLeaguesViewModel = LeaguesViewModel(
+            fetchLeaguesUseCase, selectLeagueUseCase
+        )
+
+        unselectedLeaguesViewModel.state.test {
+            assertEquals(Result.Loading, awaitItem())
+            assertEquals(Result.Success(leaguesUnselected), awaitItem())
+        }
+        //Pair leagues generated are set as favourite
+        assertEquals(false, leaguesViewModel.isAnyLeaguesSelected())
+    }
 
 
 

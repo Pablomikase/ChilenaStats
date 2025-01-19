@@ -87,13 +87,6 @@ fun Navigation() {
                         TeamsSelector
                     )
                 },
-                onContinueToDashboard = {
-                    navController.navigate(
-                        Dashboard
-                    ) {
-                        popUpTo(0) { inclusive = true }
-                    }
-                },
                 vm = viewModel
             )
         }
