@@ -35,14 +35,11 @@ import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCa
 @Composable
 fun LeagueSelectionScreen(
     onContinueToTeamSelection: () -> Unit,
-    onContinueToDashboard:() -> Unit,
     vm: LeaguesViewModel
 ) {
 
     val leagueSelectionState = rememberLeagueSelectionState()
-    leagueSelectionState.UiReadyToFetchData(
-        execute = { vm.onUiReady() }
-    )
+
     Screen {
         val screenState by vm.state.collectAsState()
         val isTablet = leagueSelectionState.isTablet()

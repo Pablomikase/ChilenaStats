@@ -9,7 +9,6 @@ import io.pdaa.chilenastats.usecases.SelectLeagueUseCase
 import io.pdaa.chilenastats.usecases.UserIsLoggedInUseCase
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
@@ -18,7 +17,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.whenever
@@ -38,8 +36,11 @@ class LeaguesViewModelTest {
 
     private lateinit var leaguesViewModel: LeaguesViewModel
 
+    private val leagues = sampleLeagues(1,2,3,4,5)
+
     @Before
     fun setUp() {
+        whenever(fetchLeaguesUseCase()).thenReturn(flowOf(leagues))
         leaguesViewModel = LeaguesViewModel(
             fetchLeaguesUseCase, selectLeagueUseCase, userIsLoggedInUseCase
         )
@@ -49,25 +50,38 @@ class LeaguesViewModelTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `Leagues are not requested when the ui is not ready`() = runTest {
-        leaguesViewModel.state.first()
-        runCurrent()
-
-        verify(fetchLeaguesUseCase, never()).invoke()
+        leaguesViewModel.state.test {
+            assertEquals(Result.Loading, awaitItem())
+            cancelAndConsumeRemainingEvents()
+        }
     }
 
     @Test
     fun `Leagues are requested when the ui is ready`() = runTest {
-
-        val leagues = sampleLeagues(1,2,3,4,5)
-        whenever(fetchLeaguesUseCase()).thenReturn(flowOf(leagues))
-        leaguesViewModel.onUiReady()
-        leaguesViewModel.state.first()
 
         leaguesViewModel.state.test {
             assertEquals(Result.Loading, awaitItem())
             assertEquals(Result.Success(leagues), awaitItem())
         }
     }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `League is selected as favourite when clicked`() = runTest {
+        leaguesViewModel.state.test {
+            assertEquals(Result.Loading, awaitItem())
+            assertEquals(Result.Success(leagues), awaitItem())
+
+            leaguesViewModel.onLeagueSelected(leagues[0])
+            runCurrent()
+
+            verify(selectLeagueUseCase).invoke(leagues[0])
+        }
+
+
+
+    }
+
 
 
 
