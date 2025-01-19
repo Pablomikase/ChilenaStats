@@ -37,11 +37,6 @@ fun TeamSelectionScreen(
 ) {
 
     val teamSelectionState = rememberTeamSelectionState()
-    teamSelectionState.UiReadyToFetchData(
-        execute = {
-            vm.onUiReady()
-        }
-    )
     Screen {
         Screen {
             val screenState by vm.state.collectAsState()
