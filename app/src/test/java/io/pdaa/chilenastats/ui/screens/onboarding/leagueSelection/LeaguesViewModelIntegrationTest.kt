@@ -2,7 +2,7 @@ package io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection
 
 import app.cash.turbine.test
 import io.pdaa.chilenastats.Result
-import io.pdaa.chilenastats.buildLeaguesRepositoryWith
+import io.pdaa.chilenastats.fakes.buildLeaguesRepositoryWith
 import io.pdaa.chilenastats.domain.LeagueUi
 import io.pdaa.chilenastats.sampledata.sampleLeagues
 import io.pdaa.chilenastats.testRules.CoroutineTestRule

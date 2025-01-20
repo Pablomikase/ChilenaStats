@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats
+package io.pdaa.chilenastats.fakes
 
 import io.pdaa.chilenastats.data.datasources.local.LeaguesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.remote.LeaguesRemoteDataSource

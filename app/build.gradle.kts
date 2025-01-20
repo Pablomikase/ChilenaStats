@@ -66,6 +66,8 @@ android {
     }
 }
 
+gradle.startParameter.excludedTaskNames.addAll(listOf(":build-logic:convention"))
+
 dependencies {
 
     implementation(project(":domain"))
