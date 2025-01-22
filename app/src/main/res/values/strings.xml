@@ -12,7 +12,7 @@
     <string name="leagues_selection_main_title">Choose Your Favorite Football Leagues</string>
     <string name="leagues_selector_continue_to_teams_button">Continue to teams</string>
     <string name="dashboard_main_title">GoalPulse</string>
-    <string name="error">En error occurred</string>
+    <string name="error">An error occurred</string>
     <string name="add_time_thanks_for_support">📢 Ad time! Thanks for your support!</string>
     <string name="addmob_app_id">${ADDS_APPLICATION_ID}</string>
 </resources>

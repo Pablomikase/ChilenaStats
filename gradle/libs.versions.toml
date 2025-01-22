@@ -25,6 +25,7 @@ koin-bom = "3.5.6"
 androidTools = "31.2.2"
 okhttp = "4.12.0"
 mockitoKotlin = "5.3.1"
+test = "1.6.1"
 
 
 [libraries]
@@ -64,6 +65,8 @@ koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 turbine = { group = "app.cash.turbine", name = "turbine", version = "1.1.0" }
 kotlinx-coroutines-test =  { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+androidx-test-core = { group = "androidx.test", name = "core-ktx", version.ref = "test" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "test" }
 
 
 # Dependencies of the included build-logic

@@ -27,27 +27,49 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.pdaa.chilenastats.R
+import io.pdaa.chilenastats.Result
+import io.pdaa.chilenastats.domain.LeagueUi
 import io.pdaa.chilenastats.ui.common.BaseScaffold
 import io.pdaa.chilenastats.ui.screens.Screen
 import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCardSelector
+
+@Composable
+fun LeagueSelectionScreen(onContinueToTeamSelection: () -> Unit, vm: LeaguesViewModel) {
+
+    val state by vm.state.collectAsState()
+    LeagueSelectionScreen(
+        state = state,
+        onContinueToTeamSelection = onContinueToTeamSelection,
+        onLeagueSelected = vm::onLeagueSelected,
+        isAnyLeaguesSelected = vm::isAnyLeaguesSelected
+    )
+
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LeagueSelectionScreen(
     onContinueToTeamSelection: () -> Unit,
-    vm: LeaguesViewModel
+    state: Result<List<LeagueUi>>,
+    onLeagueSelected: (LeagueUi) -> Unit,
+    isAnyLeaguesSelected: () -> Boolean
 ) {
 
     val leagueSelectionState = rememberLeagueSelectionState()
 
     Screen {
-        val screenState by vm.state.collectAsState()
         val isTablet = leagueSelectionState.isTablet()
         BaseScaffold(
-            state = screenState,
+            state = state,
             topBar = {
                 TopAppBar(
-                    title = { Text(text = stringResource(R.string.leagues_selection_main_title), style = MaterialTheme.typography.titleLarge) },
+                    title = {
+                        Text(
+                            text = stringResource(R.string.leagues_selection_main_title),
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    },
                     scrollBehavior = leagueSelectionState.scrollBehavior
                 )
             },
@@ -66,7 +88,7 @@ fun LeagueSelectionScreen(
                     items(leagues) { league ->
                         OnboardingCardSelector(
 
-                            onSelectorClicked = { vm.onLeagueSelected(league) },
+                            onSelectorClicked = { onLeagueSelected(league) },
                             isSelected = league.isFavourite,
                             imageUrl = league.logo,
                             title = league.name,
@@ -75,7 +97,7 @@ fun LeagueSelectionScreen(
                     }
                 }
 
-                if (vm.isAnyLeaguesSelected()) Column(
+                if (isAnyLeaguesSelected()) Column(
                     modifier = Modifier
                         .padding(contentPadding)
                         .fillMaxWidth()
