@@ -18,24 +18,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import io.pdaa.chilenastats.BuildConfig
+import io.pdaa.chilenastats.Result
+import io.pdaa.chilenastats.domain.TeamUi
+import io.pdaa.chilenastats.domain.fixture.FixtureContainerUi
 import io.pdaa.chilenastats.ui.common.BaseScaffold
 import io.pdaa.chilenastats.ui.screens.Screen
 import io.pdaa.chilenastats.ui.screens.common.adds.BannerAdView
 import io.pdaa.chilenastats.ui.screens.common.adds.Logo
 import io.pdaa.chilenastats.ui.screens.dashboard.components.FixtureCarouselItem
 
+@Composable
+fun DashboardScreen(vm: DashboardViewModel) {
+    val newState by vm.newState.collectAsState()
+    DashboardScreen(newState)
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
-    vm: DashboardViewModel
+    state: Result<List<Pair<TeamUi, List<FixtureContainerUi>>>>
 ) {
 
     val dashboardState = rememberDashboardState()
 
     Screen {
-        val newState by vm.newState.collectAsState()
         BaseScaffold(
-            state = newState,
+            state = state,
             modifier = Modifier.nestedScroll(dashboardState.scrollBehavior.nestedScrollConnection),
             topBar = {
                 TopAppBar(
@@ -81,11 +89,8 @@ fun DashboardScreen(
                         )
 
                     }
-
                 }
-
             }
         }
     }
-
 }
