@@ -23,6 +23,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments["runnerBuilder"] = "io.pdaa.chilenastats.endToEnd.InstrumentationTestRunnerBuilder"
 
         val properties = Properties()
         properties.load(project.rootProject.file("local.properties").readText().byteInputStream())
