@@ -13,19 +13,19 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="whenSuccessState_LeaguesListAreShown()">
+      <SelectionState runConfigName="whenSuccessState_ListOfTeamsAreDisplayed()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="whenALeagueIsClicked_ListenerIsCalled()">
+      <SelectionState runConfigName="whenATeamIsSelected_ListenerIsCalled()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="whenAnyLeagueIsSelected_ContinueToTeamsButtonAppears()">
+      <SelectionState runConfigName="whenAnyLeagueIsSelected_ContinueToDashboardButton()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="whenContinueToTeamsButtonIsClicked_ListenerIsCalled()">
+      <SelectionState runConfigName="whenContinueToOnboardingIsSelected_ContinueToDashboardButtonIsCalled()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="LeagueSelectionScreenKtTest">
+      <SelectionState runConfigName="TeamSelectionScreenKtTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

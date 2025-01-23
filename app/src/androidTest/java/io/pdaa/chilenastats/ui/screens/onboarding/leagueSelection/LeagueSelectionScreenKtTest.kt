@@ -4,6 +4,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.test.platform.app.InstrumentationRegistry
+import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.Result
 import io.pdaa.chilenastats.sampledata.sampleLeagues
 import io.pdaa.chilenastats.ui.common.PROGRESS_INDICATOR_TAG
@@ -12,7 +14,7 @@ import org.junit.Rule
 import org.junit.Test
 
 
-class LeagueSelectionScreenKtTest{
+class LeagueSelectionScreenKtTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -31,7 +33,7 @@ class LeagueSelectionScreenKtTest{
     }
 
     @Test
-    fun whenErrorState_showErrorIndicator() : Unit = with(composeTestRule) {
+    fun whenErrorState_showErrorIndicator(): Unit = with(composeTestRule) {
         setContent {
             LeagueSelectionScreen(
                 state = Result.Error(Exception()),
@@ -39,13 +41,14 @@ class LeagueSelectionScreenKtTest{
                 onLeagueSelected = {},
                 isAnyLeaguesSelected = { false })
         }
-        onNodeWithText("An error occurred", ignoreCase = true).assertExists()
+        val errorText = InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.error)
+        onNodeWithText(errorText, ignoreCase = true).assertExists()
     }
 
     @Test
-    fun whenSuccessState_LeaguesListAreShown() : Unit = with(composeTestRule) {
+    fun whenSuccessState_LeaguesListAreShown(): Unit = with(composeTestRule) {
 
-        val sampleLeagues = sampleLeagues(1,2,3,4,5)
+        val sampleLeagues = sampleLeagues(1, 2, 3, 4, 5)
 
         setContent {
             LeagueSelectionScreen(
@@ -59,29 +62,29 @@ class LeagueSelectionScreenKtTest{
     }
 
     @Test
-    fun whenALeagueIsClicked_ListenerIsCalled():Unit = with(composeTestRule) {
-        val sampleLeagues = sampleLeagues(1,2,3,4,5).map { it.copy(isFavourite = false )}
+    fun whenALeagueIsClicked_ListenerIsCalled(): Unit = with(composeTestRule) {
+        val sampleLeagues = sampleLeagues(1, 2, 3, 4, 5).map { it.copy(isFavourite = false) }
 
-        var selectedLeagueId : Int = -1
+        var selectedLeagueId: Int = -1
 
         setContent {
             LeagueSelectionScreen(
                 state = Result.Success(sampleLeagues),
                 onContinueToTeamSelection = {},
-                onLeagueSelected = {selectedLeagueId = it.id},
+                onLeagueSelected = { selectedLeagueId = it.id },
                 isAnyLeaguesSelected = { false })
         }
 
         onNodeWithText(sampleLeagues[0].name, ignoreCase = true).performClick()
 
-        assertEquals(1,selectedLeagueId )
+        assertEquals(1, selectedLeagueId)
     }
 
 
     @Test
-    fun whenAnyLeagueIsSelected_ContinueToTeamsButtonAppears() : Unit = with(composeTestRule){
+    fun whenAnyLeagueIsSelected_ContinueToTeamsButtonAppears(): Unit = with(composeTestRule) {
         //each pair league is set as selected
-        val sampleLeagues = sampleLeagues(1,2,3,4,5)
+        val sampleLeagues = sampleLeagues(1, 2, 3, 4, 5)
 
         setContent {
             LeagueSelectionScreen(
@@ -91,22 +94,26 @@ class LeagueSelectionScreenKtTest{
                 isAnyLeaguesSelected = { true })
 
         }
-        onNodeWithText("Continue to teams").assertExists()
+        val continueButtonText =
+            InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.leagues_selector_continue_to_teams_button)
+        onNodeWithText(continueButtonText).assertExists()
 
     }
 
     @Test
     fun whenContinueToTeamsButtonIsClicked_ListenerIsCalled(): Unit = with(composeTestRule) {
-        val sampleLeagues = sampleLeagues(1,2,3,4,5)
+        val sampleLeagues = sampleLeagues(1, 2, 3, 4, 5)
         var isButtonClicked = false
         setContent {
             LeagueSelectionScreen(
                 state = Result.Success(sampleLeagues),
-                onContinueToTeamSelection = {isButtonClicked = true},
+                onContinueToTeamSelection = { isButtonClicked = true },
                 onLeagueSelected = {},
                 isAnyLeaguesSelected = { true })
         }
-        onNodeWithText("Continue to teams").performClick()
+        val continueButtonText =
+            InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.leagues_selector_continue_to_teams_button)
+        onNodeWithText(continueButtonText).performClick()
         assertEquals(true, isButtonClicked)
 
     }
