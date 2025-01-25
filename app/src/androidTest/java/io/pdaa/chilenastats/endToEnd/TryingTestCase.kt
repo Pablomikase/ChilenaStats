@@ -37,9 +37,11 @@ class TryingTestCase {
         setContent {
             LeagueSelectionScreen(
                 onContinueToTeamSelection = {},
-                state = Result.Loading,
+                leaguesListState = Result.Loading,
                 onLeagueSelected = {},
                 isAnyLeaguesSelected = {false},
+                searchBarState = "",
+                onSearchBarStateChanged = {},
             )
         }
         onNodeWithTag(PROGRESS_INDICATOR_TAG).assertExists()

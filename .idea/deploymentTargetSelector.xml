@@ -13,7 +13,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="whenApplicationStarts_userSeesLeagues()">
+      <SelectionState runConfigName="LeagueSelectionScreenKtTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
