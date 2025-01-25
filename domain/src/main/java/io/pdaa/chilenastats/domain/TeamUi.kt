@@ -9,6 +9,16 @@ data class TeamUi(
     val isSelected: Boolean,
     val country: String,
     val venue: VenueUi?,
-)
+){
+    fun doesMatchSearch(searchText: String): Boolean {
+        val matchingCombination: List<String> = listOf(
+            name,
+            country
+        )
+        return matchingCombination.any {
+            it.contains(searchText, ignoreCase = true)
+        }
+    }
+}
 
 

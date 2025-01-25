@@ -50,6 +50,7 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Medium_Tablet_API_28" value="120" />
+                  <entry key="New_Device_API_33" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>

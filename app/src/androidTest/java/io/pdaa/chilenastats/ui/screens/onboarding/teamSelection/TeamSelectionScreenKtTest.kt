@@ -26,7 +26,9 @@ class TeamSelectionScreenKtTest {
                 screenState = Result.Loading,
                 onSkipAndGoToDashboard = {},
                 onTeamSelected = {},
-                isAnyTeamSelected = { false },
+                isAnyTeamSelected = false,
+                searchBarState = "",
+                onSearchBarStateChanged = {},
             )
         }
         onNodeWithTag(PROGRESS_INDICATOR_TAG).assertExists()
@@ -40,7 +42,9 @@ class TeamSelectionScreenKtTest {
                 screenState = Result.Error(Exception()),
                 onSkipAndGoToDashboard = {},
                 onTeamSelected = {},
-                isAnyTeamSelected = { false },
+                isAnyTeamSelected = false,
+                searchBarState = "",
+                onSearchBarStateChanged = {},
             )
         }
         val errorText =
@@ -58,7 +62,10 @@ class TeamSelectionScreenKtTest {
                 screenState = Result.Success(sampleTeams),
                 onSkipAndGoToDashboard = {},
                 onTeamSelected = {},
-                isAnyTeamSelected = { false })
+                isAnyTeamSelected = false,
+                searchBarState = "",
+                onSearchBarStateChanged = {},
+            )
         }
         onNodeWithText(sampleTeams[0].name, ignoreCase = true).assertExists()
     }
@@ -72,7 +79,10 @@ class TeamSelectionScreenKtTest {
                 screenState = Result.Success(sampleTeams),
                 onSkipAndGoToDashboard = {},
                 onTeamSelected = { selectedTeam = it.id },
-                isAnyTeamSelected = { false })
+                isAnyTeamSelected = false,
+                searchBarState = "",
+                onSearchBarStateChanged = {},
+            )
         }
 
         onNodeWithText(sampleTeams.first().name, ignoreCase = true).performClick()
@@ -87,7 +97,10 @@ class TeamSelectionScreenKtTest {
                 screenState = Result.Success(sampleTeams),
                 onSkipAndGoToDashboard = {},
                 onTeamSelected = {},
-                isAnyTeamSelected = { true })
+                isAnyTeamSelected = true,
+                searchBarState = "",
+                onSearchBarStateChanged = {},
+            )
         }
         val continueButtonText =
             InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.onboarding_skip_button)
@@ -102,9 +115,12 @@ class TeamSelectionScreenKtTest {
             setContent {
                 TeamSelectionScreen(
                     screenState = Result.Success(sampleTeams),
-                    onSkipAndGoToDashboard = {isButtonCalled = true},
+                    onSkipAndGoToDashboard = { isButtonCalled = true },
                     onTeamSelected = {},
-                    isAnyTeamSelected = { true })
+                    isAnyTeamSelected = true,
+                    searchBarState = "",
+                    onSearchBarStateChanged = {},
+                )
             }
             val continueButtonText =
                 InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.onboarding_skip_button)

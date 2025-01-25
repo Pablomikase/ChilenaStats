@@ -9,9 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -36,12 +40,17 @@ fun TeamSelectionScreen(
     vm: TeamSelectionViewModel,
     onSkipAndGoToDashboard: () -> Unit
 ) {
-    val screenState by vm.state.collectAsState()
+    val screenState by vm.teamsState.collectAsState()
+    val searchBarState by vm.searchText.collectAsState()
+    val isAnyTeamSelected by vm.isAnyTeamSelected.collectAsState(false)
+
     TeamSelectionScreen(
         screenState = screenState,
         onSkipAndGoToDashboard = onSkipAndGoToDashboard,
         onTeamSelected = vm::onTeamSelected,
-        isAnyTeamSelected = vm::isAnyTeamsSelected
+        isAnyTeamSelected = isAnyTeamSelected,
+        searchBarState = searchBarState,
+        onSearchBarStateChanged = vm::onSearchBarStateChanged
     )
 
 }
@@ -53,7 +62,9 @@ fun TeamSelectionScreen(
     screenState: Result<List<TeamUi>>,
     onSkipAndGoToDashboard: () -> Unit,
     onTeamSelected: (TeamUi) -> Unit,
-    isAnyTeamSelected: () -> Boolean,
+    isAnyTeamSelected: Boolean,
+    searchBarState: String,
+    onSearchBarStateChanged: (String) -> Unit,
 ) {
 
     val teamSelectionState = rememberTeamSelectionState()
@@ -77,49 +88,64 @@ fun TeamSelectionScreen(
             }
         ) { contentPadding, teamsList ->
 
-            Box {
+            Column(
+                modifier = Modifier.padding(contentPadding)
+            ) {
+                Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
 
-                LazyVerticalGrid(
-                    modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
-                    columns = GridCells.Adaptive(minSize = if (isTablet) 150.dp else 120.dp),
-                    horizontalArrangement = Arrangement.spacedBy(if (isTablet) 16.dp else 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    contentPadding = contentPadding
-                ) {
-                    items(teamsList) { item ->
-                        TeamSelector(
-                            team = item,
-                            onSelectorClicked = { onTeamSelected(it) },
-                            isSelected = item.isSelected
-                        )
-
-                    }
+                    OutlinedTextField(
+                        value = searchBarState,
+                        onValueChange = onSearchBarStateChanged,
+                        modifier = Modifier.fillMaxWidth(),
+                        label = { Text(stringResource(R.string.teams_selector_search_label)) },
+                        placeholder = { Text(stringResource(R.string.teams_selector_search_placeholder)) },
+                        leadingIcon = { Icon(Icons.Default.Search, stringResource(R.string.search_icon)) },)
                 }
 
-                if (isAnyTeamSelected()) Column(
-                    modifier = Modifier
-                        .padding(contentPadding)
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.Transparent,
-                                    Color(teamSelectionState.getSystemBarColor())
+                Box {
+
+                    LazyVerticalGrid(
+                        modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
+                        columns = GridCells.Adaptive(minSize = if (isTablet) 150.dp else 120.dp),
+                        horizontalArrangement = Arrangement.spacedBy(if (isTablet) 16.dp else 8.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        /*contentPadding = contentPadding*/
+                    ) {
+                        items(teamsList) { item ->
+                            TeamSelector(
+                                team = item,
+                                onSelectorClicked = { onTeamSelected(it) },
+                                isSelected = item.isSelected
+                            )
+
+                        }
+                    }
+
+                    if (isAnyTeamSelected) Column(
+                        modifier = Modifier
+                            .padding(contentPadding)
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                            .background(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        Color.Transparent,
+                                        Color(teamSelectionState.getSystemBarColor())
+                                    )
                                 )
                             )
-                        )
-                ) {
-                    ElevatedButton(
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(bottom = 8.dp), onClick = {
-                            onSkipAndGoToDashboard()
-                        }) {
-                        Text(text = stringResource(R.string.onboarding_skip_button))
+                    ) {
+                        ElevatedButton(
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(bottom = 8.dp), onClick = {
+                                onSkipAndGoToDashboard()
+                            }) {
+                            Text(text = stringResource(R.string.onboarding_skip_button))
+                        }
                     }
-                }
 
+                }
             }
 
         }

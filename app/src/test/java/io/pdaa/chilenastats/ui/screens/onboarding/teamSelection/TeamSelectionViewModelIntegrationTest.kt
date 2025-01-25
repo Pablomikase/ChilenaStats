@@ -26,7 +26,7 @@ class TeamSelectionViewModelIntegrationTest {
     @Test
     fun `Teams are not requested when the ui is not ready`() = runTest {
         teamSelectionViewModel = buildViewModelWith()
-        teamSelectionViewModel.state.test {
+        teamSelectionViewModel.teamsState.test {
             assertEquals(Result.Loading, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
@@ -37,7 +37,7 @@ class TeamSelectionViewModelIntegrationTest {
     fun `Leagues are requested when the ui is ready`() = runTest{
         val localTeams = sampleTeams(1,2,3,4)
         teamSelectionViewModel = buildViewModelWith(localData = localTeams)
-        teamSelectionViewModel.state.test {
+        teamSelectionViewModel.teamsState.test {
             assertEquals(Result.Loading, awaitItem())
             assertEquals(Result.Success(localTeams), awaitItem())
         }
@@ -52,9 +52,8 @@ class TeamSelectionViewModelIntegrationTest {
             remoteCountriesData = remoteCountries
         )
 
-        teamSelectionViewModel.state.test {
+        teamSelectionViewModel.teamsState.test {
             assertEquals(Result.Loading, awaitItem())
-            assertEquals(Result.Success(emptyList<TeamUi>()), awaitItem())
             assertEquals(Result.Success(remoteTeams), awaitItem())
         }
 

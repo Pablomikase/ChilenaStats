@@ -39,7 +39,7 @@ class TryingTestCase {
                 onContinueToTeamSelection = {},
                 leaguesListState = Result.Loading,
                 onLeagueSelected = {},
-                isAnyLeaguesSelected = {false},
+                isAnyLeaguesSelected = false,
                 searchBarState = "",
                 onSearchBarStateChanged = {},
             )

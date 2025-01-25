@@ -18,4 +18,6 @@
     <string name="leagues_selector_search_placeholder">Search leagues…</string>
     <string name="search_icon">Search</string>
     <string name="leagues_selector_search_label">Find a League</string>
+    <string name="teams_selector_search_label">Team name</string>
+    <string name="teams_selector_search_placeholder">Search teams by name…</string>
 </resources>
