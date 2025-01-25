@@ -45,7 +45,7 @@ class LeaguesViewModel(
             if(text.isBlank()) {
                 leagues
             } else {
-                leagues.filter { it.name.contains(text, ignoreCase = true) }
+                leagues.filter { it.doesMatchSearch(text) }
             }
         }
         .onEach { _isSearching.update { false } }
