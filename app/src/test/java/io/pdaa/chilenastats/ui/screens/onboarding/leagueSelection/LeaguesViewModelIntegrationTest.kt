@@ -26,7 +26,7 @@ class LeaguesViewModelIntegrationTest{
     @Test
     fun `Leagues are not requested when the ui is not ready`() = runTest {
         leaguesViewModel = buildViewModelWith()
-        leaguesViewModel.state.test {
+        leaguesViewModel.leaguesState.test {
             assertEquals(Result.Loading, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
@@ -36,7 +36,7 @@ class LeaguesViewModelIntegrationTest{
     fun `Leagues are requested when the ui is ready from local data source`() = runTest {
         val remoteLeagues = sampleLeagues(1,2,3,4,5)
         leaguesViewModel = buildViewModelWith(localData = remoteLeagues)
-        leaguesViewModel.state.test {
+        leaguesViewModel.leaguesState.test {
             assertEquals(Result.Loading, awaitItem())
             assertEquals(Result.Success(remoteLeagues), awaitItem())
         }
@@ -46,7 +46,7 @@ class LeaguesViewModelIntegrationTest{
     fun `Leagues are requested from remote data source when local is empty`() = runTest {
         val remoteLeagues = sampleLeagues(1,2,3,4,5)
         leaguesViewModel = buildViewModelWith(localData = emptyList(), remoteData = remoteLeagues)
-        leaguesViewModel.state.test {
+        leaguesViewModel.leaguesState.test {
             assertEquals(Result.Loading, awaitItem())
             assertEquals(Result.Success(emptyList<LeagueUi>()), awaitItem())
             assertEquals(Result.Success(remoteLeagues), awaitItem())
@@ -58,7 +58,7 @@ class LeaguesViewModelIntegrationTest{
     fun `A League is selected as favourite when clicked`() = runTest {
         val leagues = sampleLeagues(1,2,3,4,5).map { it.copy(isFavourite = false) }
         leaguesViewModel = buildViewModelWith(localData = leagues)
-        leaguesViewModel.state.test {
+        leaguesViewModel.leaguesState.test {
             assertEquals(Result.Loading, awaitItem())
             assertEquals(Result.Success(leagues), awaitItem())
 

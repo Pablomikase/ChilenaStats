@@ -23,10 +23,12 @@ class LeagueSelectionScreenKtTest {
     fun whenLoadingState_showProgressIndicator(): Unit = with(composeTestRule) {
         setContent {
             LeagueSelectionScreen(
-                state = Result.Loading,
+                leaguesListState = Result.Loading,
                 onContinueToTeamSelection = {},
                 onLeagueSelected = {},
-                isAnyLeaguesSelected = { false }
+                isAnyLeaguesSelected = { false },
+                searchBarState = "",
+                onSearchBarStateChanged = {}
             )
         }
         onNodeWithTag(PROGRESS_INDICATOR_TAG).assertExists()
@@ -36,10 +38,13 @@ class LeagueSelectionScreenKtTest {
     fun whenErrorState_showErrorIndicator(): Unit = with(composeTestRule) {
         setContent {
             LeagueSelectionScreen(
-                state = Result.Error(Exception()),
+                leaguesListState = Result.Error(Exception()),
                 onContinueToTeamSelection = {},
                 onLeagueSelected = {},
-                isAnyLeaguesSelected = { false })
+                isAnyLeaguesSelected = { false },
+                searchBarState = "",
+                onSearchBarStateChanged = {}
+            )
         }
         val errorText = InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.error)
         onNodeWithText(errorText, ignoreCase = true).assertExists()
@@ -52,10 +57,13 @@ class LeagueSelectionScreenKtTest {
 
         setContent {
             LeagueSelectionScreen(
-                state = Result.Success(sampleLeagues),
+                leaguesListState = Result.Success(sampleLeagues),
                 onContinueToTeamSelection = {},
                 onLeagueSelected = {},
-                isAnyLeaguesSelected = { false })
+                isAnyLeaguesSelected = { false },
+                searchBarState = "",
+                onSearchBarStateChanged = {}
+            )
         }
 
         onNodeWithText(sampleLeagues[0].name, ignoreCase = true).assertExists()
@@ -69,10 +77,13 @@ class LeagueSelectionScreenKtTest {
 
         setContent {
             LeagueSelectionScreen(
-                state = Result.Success(sampleLeagues),
+                leaguesListState = Result.Success(sampleLeagues),
                 onContinueToTeamSelection = {},
                 onLeagueSelected = { selectedLeagueId = it.id },
-                isAnyLeaguesSelected = { false })
+                isAnyLeaguesSelected = { false },
+                searchBarState = "",
+                onSearchBarStateChanged = {}
+                )
         }
 
         onNodeWithText(sampleLeagues[0].name, ignoreCase = true).performClick()
@@ -88,10 +99,13 @@ class LeagueSelectionScreenKtTest {
 
         setContent {
             LeagueSelectionScreen(
-                state = Result.Success(sampleLeagues),
+                leaguesListState = Result.Success(sampleLeagues),
                 onContinueToTeamSelection = {},
                 onLeagueSelected = {},
-                isAnyLeaguesSelected = { true })
+                isAnyLeaguesSelected = { true },
+                searchBarState = "",
+                onSearchBarStateChanged = {}
+                )
 
         }
         val continueButtonText =
@@ -106,10 +120,13 @@ class LeagueSelectionScreenKtTest {
         var isButtonClicked = false
         setContent {
             LeagueSelectionScreen(
-                state = Result.Success(sampleLeagues),
+                leaguesListState = Result.Success(sampleLeagues),
                 onContinueToTeamSelection = { isButtonClicked = true },
                 onLeagueSelected = {},
-                isAnyLeaguesSelected = { true })
+                isAnyLeaguesSelected = { true },
+                searchBarState = "",
+                onSearchBarStateChanged = {}
+                )
         }
         val continueButtonText =
             InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.leagues_selector_continue_to_teams_button)

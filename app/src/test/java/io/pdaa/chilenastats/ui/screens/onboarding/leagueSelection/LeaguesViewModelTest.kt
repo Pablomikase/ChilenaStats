@@ -46,7 +46,7 @@ class LeaguesViewModelTest {
 
     @Test
     fun `Leagues are not requested when the ui is not ready`() = runTest {
-        leaguesViewModel.state.test {
+        leaguesViewModel.leaguesState.test {
             assertEquals(Result.Loading, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
@@ -55,7 +55,7 @@ class LeaguesViewModelTest {
     @Test
     fun `Leagues are requested when the ui is ready`() = runTest {
 
-        leaguesViewModel.state.test {
+        leaguesViewModel.leaguesState.test {
             assertEquals(Result.Loading, awaitItem())
             assertEquals(Result.Success(leagues), awaitItem())
         }
@@ -64,7 +64,7 @@ class LeaguesViewModelTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `League is selected as favourite when clicked`() = runTest {
-        leaguesViewModel.state.test {
+        leaguesViewModel.leaguesState.test {
             assertEquals(Result.Loading, awaitItem())
             assertEquals(Result.Success(leagues), awaitItem())
 
@@ -77,7 +77,7 @@ class LeaguesViewModelTest {
 
     @Test
     fun `The method isAnyLeagueSelected returns true when there is a league selected`() = runTest {
-        leaguesViewModel.state.test {
+        leaguesViewModel.leaguesState.test {
             assertEquals(Result.Loading, awaitItem())
             assertEquals(Result.Success(leagues), awaitItem())
         }
@@ -93,7 +93,7 @@ class LeaguesViewModelTest {
             fetchLeaguesUseCase, selectLeagueUseCase
         )
 
-        unselectedLeaguesViewModel.state.test {
+        unselectedLeaguesViewModel.leaguesState.test {
             assertEquals(Result.Loading, awaitItem())
             assertEquals(Result.Success(leaguesUnselected), awaitItem())
         }

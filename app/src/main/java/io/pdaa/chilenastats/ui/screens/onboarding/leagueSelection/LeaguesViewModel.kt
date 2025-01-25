@@ -8,7 +8,14 @@ import io.pdaa.chilenastats.ifSuccess
 import io.pdaa.chilenastats.stateAsResultIn
 import io.pdaa.chilenastats.usecases.FetchLeaguesUseCase
 import io.pdaa.chilenastats.usecases.SelectLeagueUseCase
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LeaguesViewModel(
@@ -18,8 +25,33 @@ class LeaguesViewModel(
 
 
 
-    val state: StateFlow<Result<List<LeagueUi>>> = fetchLeaguesUseCase()
+    val leaguesState: StateFlow<Result<List<LeagueUi>>> = fetchLeaguesUseCase()
         .stateAsResultIn(viewModelScope)
+
+    val leagues = fetchLeaguesUseCase()
+
+    private val _searchText = MutableStateFlow("")
+    val searchText = _searchText.asStateFlow()
+
+    private val _isSearching = MutableStateFlow(false)
+    val isSearching = _isSearching.asStateFlow()
+
+    @OptIn(FlowPreview::class)
+    val newState: StateFlow<Result<List<LeagueUi>>> = searchText
+        .debounce(1000L)
+        .onEach { _isSearching.update { true } }
+        .combine(leagues) { text, leagues ->
+            if(text.isBlank()) {
+                leagues
+            } else {
+                leagues.filter { it.name.contains(text, ignoreCase = true) }
+            }
+        }
+        .onEach { _isSearching.update { false } }
+        .stateAsResultIn(
+            viewModelScope
+        )
+
 
     fun onLeagueSelected(selectedLeague: LeagueUi) {
         viewModelScope.launch {
@@ -29,10 +61,14 @@ class LeaguesViewModel(
 
     fun isAnyLeaguesSelected(): Boolean {
         var result = false
-        state.value.ifSuccess { leagues ->
+        leaguesState.value.ifSuccess { leagues ->
             result = leagues.any { it.isFavourite }
         }
         return result
+    }
+
+    fun onSearchBarStateChanged(inputText: String) {
+        _searchText.value = inputText
     }
 
 }

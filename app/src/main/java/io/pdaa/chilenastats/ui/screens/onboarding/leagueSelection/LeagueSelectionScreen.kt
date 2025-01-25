@@ -11,9 +11,13 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -36,12 +40,15 @@ import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCa
 @Composable
 fun LeagueSelectionScreen(onContinueToTeamSelection: () -> Unit, vm: LeaguesViewModel) {
 
-    val state by vm.state.collectAsState()
+    val state by vm.newState.collectAsState()
+    val searchBarState by vm.searchText.collectAsState()
     LeagueSelectionScreen(
-        state = state,
+        leaguesListState = state,
         onContinueToTeamSelection = onContinueToTeamSelection,
         onLeagueSelected = vm::onLeagueSelected,
-        isAnyLeaguesSelected = vm::isAnyLeaguesSelected
+        isAnyLeaguesSelected = vm::isAnyLeaguesSelected,
+        searchBarState = searchBarState,
+        onSearchBarStateChanged = vm::onSearchBarStateChanged
     )
 
 }
@@ -51,9 +58,11 @@ fun LeagueSelectionScreen(onContinueToTeamSelection: () -> Unit, vm: LeaguesView
 @Composable
 fun LeagueSelectionScreen(
     onContinueToTeamSelection: () -> Unit,
-    state: Result<List<LeagueUi>>,
+    leaguesListState: Result<List<LeagueUi>>,
     onLeagueSelected: (LeagueUi) -> Unit,
-    isAnyLeaguesSelected: () -> Boolean
+    isAnyLeaguesSelected: () -> Boolean,
+    searchBarState: String,
+    onSearchBarStateChanged: (String) -> Unit
 ) {
 
     val leagueSelectionState = rememberLeagueSelectionState()
@@ -61,8 +70,9 @@ fun LeagueSelectionScreen(
     Screen {
         val isTablet = leagueSelectionState.isTablet()
         BaseScaffold(
-            state = state,
+            state = leaguesListState,
             topBar = {
+
                 TopAppBar(
                     title = {
                         Text(
@@ -72,56 +82,83 @@ fun LeagueSelectionScreen(
                     },
                     scrollBehavior = leagueSelectionState.scrollBehavior
                 )
+
             },
             modifier = Modifier.nestedScroll(leagueSelectionState.scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing
         ) { contentPadding, leagues ->
 
-            Box {
-                LazyVerticalGrid(
-                    modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
-                    columns = GridCells.Adaptive(minSize = if (isTablet) 150.dp else 120.dp),
-                    horizontalArrangement = Arrangement.spacedBy(if (isTablet) 16.dp else 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    contentPadding = contentPadding
-                ) {
-                    items(leagues) { league ->
-                        OnboardingCardSelector(
+            Column(
+                modifier = Modifier.padding(contentPadding)
+            ) {
 
-                            onSelectorClicked = { onLeagueSelected(league) },
-                            isSelected = league.isFavourite,
-                            imageUrl = league.logo,
-                            title = league.name,
-                            subtitle = league.type
-                        )
-                    }
+                Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = searchBarState,
+                        onValueChange = onSearchBarStateChanged,
+                        label = { Text(stringResource(R.string.leagues_selector_search_label)) },
+                        placeholder = { Text(stringResource(R.string.leagues_selector_search_placeholder)) },
+                        leadingIcon = { Icon(Icons.Default.Search, stringResource(R.string.search_icon)) },
+
+                    )
+
                 }
 
-                if (isAnyLeaguesSelected()) Column(
-                    modifier = Modifier
-                        .padding(contentPadding)
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.Transparent,
-                                    Color(leagueSelectionState.getSystemBarColor())
+                Box {
+                    LazyVerticalGrid(
+                        modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
+                        columns = GridCells.Adaptive(minSize = if (isTablet) 150.dp else 120.dp),
+                        horizontalArrangement = Arrangement.spacedBy(if (isTablet) 16.dp else 8.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        /*contentPadding = contentPadding*/
+                    ) {
+                        items(leagues) { league ->
+                            OnboardingCardSelector(
+
+                                onSelectorClicked = { onLeagueSelected(league) },
+                                isSelected = league.isFavourite,
+                                imageUrl = league.logo,
+                                title = league.name,
+                                subtitle = league.type
+                            )
+                        }
+                    }
+
+                    if (isAnyLeaguesSelected()) Column(
+                        modifier = Modifier
+                            .padding(contentPadding)
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                            .background(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        Color.Transparent,
+                                        Color(leagueSelectionState.getSystemBarColor())
+                                    )
                                 )
                             )
-                        )
-                ) {
-                    ElevatedButton(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        onClick = {
-                            onContinueToTeamSelection()
-                        }) {
-                        Text(text = stringResource(R.string.leagues_selector_continue_to_teams_button))
+                    ) {
+                        ElevatedButton(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            onClick = {
+                                onContinueToTeamSelection()
+                            }) {
+                            Text(text = stringResource(R.string.leagues_selector_continue_to_teams_button))
+                        }
                     }
+
+
                 }
+
+
 
 
             }
+
+
+
 
         }
     }

@@ -15,4 +15,7 @@
     <string name="error">An error occurred</string>
     <string name="add_time_thanks_for_support">📢 Ad time! Thanks for your support!</string>
     <string name="addmob_app_id">${ADDS_APPLICATION_ID}</string>
+    <string name="leagues_selector_search_placeholder">Search leagues…</string>
+    <string name="search_icon">Search</string>
+    <string name="leagues_selector_search_label">Find a League</string>
 </resources>
