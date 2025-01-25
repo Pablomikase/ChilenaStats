@@ -4,16 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.pdaa.chilenastats.Result
 import io.pdaa.chilenastats.domain.LeagueUi
-import io.pdaa.chilenastats.ifSuccess
 import io.pdaa.chilenastats.stateAsResultIn
 import io.pdaa.chilenastats.usecases.FetchLeaguesUseCase
 import io.pdaa.chilenastats.usecases.SelectLeagueUseCase
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -23,12 +24,7 @@ class LeaguesViewModel(
     private val selectLeagueUseCase: SelectLeagueUseCase
 ) : ViewModel() {
 
-
-
-    val leaguesState: StateFlow<Result<List<LeagueUi>>> = fetchLeaguesUseCase()
-        .stateAsResultIn(viewModelScope)
-
-    val leagues = fetchLeaguesUseCase()
+    val leagues: Flow<List<LeagueUi>> = fetchLeaguesUseCase()
 
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
@@ -36,8 +32,13 @@ class LeaguesViewModel(
     private val _isSearching = MutableStateFlow(false)
     val isSearching = _isSearching.asStateFlow()
 
+    val isAnyLeagueSelected: Flow<Boolean>  = leagues
+        .map { leagues ->
+            leagues.any { it.isFavourite }
+        }
+
     @OptIn(FlowPreview::class)
-    val newState: StateFlow<Result<List<LeagueUi>>> = searchText
+    val leaguesState: StateFlow<Result<List<LeagueUi>>> = searchText
         .debounce(1000L)
         .onEach { _isSearching.update { true } }
         .combine(leagues) { text, leagues ->
@@ -57,14 +58,6 @@ class LeaguesViewModel(
         viewModelScope.launch {
             selectLeagueUseCase(selectedLeague)
         }
-    }
-
-    fun isAnyLeaguesSelected(): Boolean {
-        var result = false
-        leaguesState.value.ifSuccess { leagues ->
-            result = leagues.any { it.isFavourite }
-        }
-        return result
     }
 
     fun onSearchBarStateChanged(inputText: String) {

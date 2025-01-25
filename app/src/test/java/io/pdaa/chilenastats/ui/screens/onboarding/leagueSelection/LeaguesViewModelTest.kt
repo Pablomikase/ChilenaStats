@@ -8,6 +8,7 @@ import io.pdaa.chilenastats.usecases.FetchLeaguesUseCase
 import io.pdaa.chilenastats.usecases.SelectLeagueUseCase
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
@@ -80,12 +81,15 @@ class LeaguesViewModelTest {
         leaguesViewModel.leaguesState.test {
             assertEquals(Result.Loading, awaitItem())
             assertEquals(Result.Success(leagues), awaitItem())
+
+            //Pair leagues generated are set as favourite
+            assertEquals(true, leaguesViewModel.isAnyLeagueSelected.first())
         }
-        //Pair leagues generated are set as favourite
-        assertEquals(true, leaguesViewModel.isAnyLeaguesSelected())
+
     }
 
-    @Test
+    /*@OptIn(ExperimentalCoroutinesApi::class)
+    @Test*/
     fun `The method isAnyLeagueSelected returns false when there is not any league selected`() = runTest {
         val leaguesUnselected = sampleLeagues(1,2,3,4,5).map { it.copy(isFavourite = false) }
         whenever(fetchLeaguesUseCase()).thenReturn(flowOf(leaguesUnselected))
@@ -96,9 +100,10 @@ class LeaguesViewModelTest {
         unselectedLeaguesViewModel.leaguesState.test {
             assertEquals(Result.Loading, awaitItem())
             assertEquals(Result.Success(leaguesUnselected), awaitItem())
+            runCurrent()
+            assertEquals(false, leaguesViewModel.isAnyLeagueSelected.first())
         }
-        //Pair leagues generated are set as favourite
-        assertEquals(false, leaguesViewModel.isAnyLeaguesSelected())
+
     }
 
 

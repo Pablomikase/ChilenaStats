@@ -40,13 +40,14 @@ import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCa
 @Composable
 fun LeagueSelectionScreen(onContinueToTeamSelection: () -> Unit, vm: LeaguesViewModel) {
 
-    val state by vm.newState.collectAsState()
+    val state by vm.leaguesState.collectAsState()
     val searchBarState by vm.searchText.collectAsState()
+    val isAnyLeaguesSelected by vm.isAnyLeagueSelected.collectAsState(false)
     LeagueSelectionScreen(
         leaguesListState = state,
         onContinueToTeamSelection = onContinueToTeamSelection,
         onLeagueSelected = vm::onLeagueSelected,
-        isAnyLeaguesSelected = vm::isAnyLeaguesSelected,
+        isAnyLeaguesSelected = isAnyLeaguesSelected,
         searchBarState = searchBarState,
         onSearchBarStateChanged = vm::onSearchBarStateChanged
     )
@@ -60,7 +61,7 @@ fun LeagueSelectionScreen(
     onContinueToTeamSelection: () -> Unit,
     leaguesListState: Result<List<LeagueUi>>,
     onLeagueSelected: (LeagueUi) -> Unit,
-    isAnyLeaguesSelected: () -> Boolean,
+    isAnyLeaguesSelected: Boolean,
     searchBarState: String,
     onSearchBarStateChanged: (String) -> Unit
 ) {
@@ -126,7 +127,7 @@ fun LeagueSelectionScreen(
                         }
                     }
 
-                    if (isAnyLeaguesSelected()) Column(
+                    if (isAnyLeaguesSelected) Column(
                         modifier = Modifier
                             .padding(contentPadding)
                             .fillMaxWidth()
