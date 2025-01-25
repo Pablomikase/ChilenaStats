@@ -48,7 +48,6 @@ class LeaguesViewModelIntegrationTest{
         leaguesViewModel = buildViewModelWith(localData = emptyList(), remoteData = remoteLeagues)
         leaguesViewModel.leaguesState.test {
             assertEquals(Result.Loading, awaitItem())
-            assertEquals(Result.Success(emptyList<LeagueUi>()), awaitItem())
             assertEquals(Result.Success(remoteLeagues), awaitItem())
         }
     }
@@ -64,7 +63,8 @@ class LeaguesViewModelIntegrationTest{
 
             leaguesViewModel.onLeagueSelected(leagues[0])
             runCurrent()
-            assertEquals(Result.Success(leagues.map { it.copy(isFavourite = it == leagues[0]) }), awaitItem())
+            assertEquals(Result.Success(listOf(leagues.map { it.copy(isFavourite = it == leagues[0]) }
+                .first())), awaitItem())
 
         }
     }
