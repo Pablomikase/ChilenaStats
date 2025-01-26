@@ -101,12 +101,17 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
+
+    //lottie
+    implementation(libs.lottie)
+
     //UnitTest
     testImplementation(libs.junit)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
     testImplementation(project(":test:unit"))
+
 
     //Instrumented Test
     androidTestImplementation(project(":test:unit"))

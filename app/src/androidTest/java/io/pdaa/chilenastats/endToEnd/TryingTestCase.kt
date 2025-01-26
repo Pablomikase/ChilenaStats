@@ -42,6 +42,7 @@ class TryingTestCase {
                 isAnyLeaguesSelected = false,
                 searchBarState = "",
                 onSearchBarStateChanged = {},
+                isSearching = false,
             )
         }
         onNodeWithTag(PROGRESS_INDICATOR_TAG).assertExists()

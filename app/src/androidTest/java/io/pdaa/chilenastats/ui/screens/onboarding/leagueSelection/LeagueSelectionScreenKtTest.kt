@@ -23,13 +23,14 @@ class LeagueSelectionScreenKtTest {
     fun whenLoadingState_showProgressIndicator(): Unit = with(composeTestRule) {
         setContent {
             LeagueSelectionScreen(
-                leaguesListState = Result.Loading,
                 onContinueToTeamSelection = {},
+                leaguesListState = Result.Loading,
                 onLeagueSelected = {},
                 isAnyLeaguesSelected = false,
                 searchBarState = "",
-                onSearchBarStateChanged = {}
-            )
+                onSearchBarStateChanged = {},
+
+                )
         }
         onNodeWithTag(PROGRESS_INDICATOR_TAG).assertExists()
     }
@@ -38,12 +39,12 @@ class LeagueSelectionScreenKtTest {
     fun whenErrorState_showErrorIndicator(): Unit = with(composeTestRule) {
         setContent {
             LeagueSelectionScreen(
-                leaguesListState = Result.Error(Exception()),
                 onContinueToTeamSelection = {},
+                leaguesListState = Result.Error(Exception()),
                 onLeagueSelected = {},
                 isAnyLeaguesSelected = false,
                 searchBarState = "",
-                onSearchBarStateChanged = {}
+                onSearchBarStateChanged = {},
             )
         }
         val errorText =
@@ -58,12 +59,12 @@ class LeagueSelectionScreenKtTest {
 
         setContent {
             LeagueSelectionScreen(
-                leaguesListState = Result.Success(sampleLeagues),
                 onContinueToTeamSelection = {},
+                leaguesListState = Result.Success(sampleLeagues),
                 onLeagueSelected = {},
                 isAnyLeaguesSelected = false,
                 searchBarState = "",
-                onSearchBarStateChanged = {}
+                onSearchBarStateChanged = {},
             )
         }
 
@@ -78,12 +79,12 @@ class LeagueSelectionScreenKtTest {
 
         setContent {
             LeagueSelectionScreen(
-                leaguesListState = Result.Success(sampleLeagues),
                 onContinueToTeamSelection = {},
+                leaguesListState = Result.Success(sampleLeagues),
                 onLeagueSelected = { selectedLeagueId = it.id },
                 isAnyLeaguesSelected = false,
                 searchBarState = "",
-                onSearchBarStateChanged = {}
+                onSearchBarStateChanged = {},
             )
         }
 
@@ -100,12 +101,12 @@ class LeagueSelectionScreenKtTest {
 
         setContent {
             LeagueSelectionScreen(
-                leaguesListState = Result.Success(sampleLeagues),
                 onContinueToTeamSelection = {},
+                leaguesListState = Result.Success(sampleLeagues),
                 onLeagueSelected = {},
                 isAnyLeaguesSelected = true,
                 searchBarState = "",
-                onSearchBarStateChanged = {}
+                onSearchBarStateChanged = {},
             )
 
         }
@@ -121,12 +122,12 @@ class LeagueSelectionScreenKtTest {
         var isButtonClicked = false
         setContent {
             LeagueSelectionScreen(
-                leaguesListState = Result.Success(sampleLeagues),
                 onContinueToTeamSelection = { isButtonClicked = true },
+                leaguesListState = Result.Success(sampleLeagues),
                 onLeagueSelected = {},
                 isAnyLeaguesSelected = true,
                 searchBarState = "",
-                onSearchBarStateChanged = {}
+                onSearchBarStateChanged = {},
             )
         }
         val continueButtonText =
