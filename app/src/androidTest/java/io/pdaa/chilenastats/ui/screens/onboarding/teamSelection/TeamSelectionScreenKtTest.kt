@@ -72,7 +72,7 @@ class TeamSelectionScreenKtTest {
 
     @Test
     fun whenATeamIsSelected_ListenerIsCalled(): Unit = with(composeTestRule) {
-        val sampleTeams = sampleTeams(1, 2, 3, 4, 5).map { it.copy(isSelected = false) }
+        val sampleTeams = sampleTeams(1, 2, 3, 4, 5).map { it.copy(isFavourite = false) }
         var selectedTeam = -1
         setContent {
             TeamSelectionScreen(

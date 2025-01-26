@@ -36,7 +36,7 @@ fun sampleTeam(id: Int) = TeamUi(
     logo = "logo$id",
     country = "country $id",
     national = false,
-    isSelected = id == 1,
+    isFavourite = id == 1,
     founded = 144,
     venue = sampleVenue(id)
 )

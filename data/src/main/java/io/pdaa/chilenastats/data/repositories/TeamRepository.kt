@@ -60,7 +60,7 @@ class TeamRepository(
     suspend fun selectTeam(selectedTeam: TeamUi) {
         localDataSource.insertTeams(
             listOf(
-                selectedTeam.copy(isSelected = selectedTeam.isSelected.not())
+                selectedTeam.copy(isFavourite = selectedTeam.isFavourite.not())
             ),
         )
     }

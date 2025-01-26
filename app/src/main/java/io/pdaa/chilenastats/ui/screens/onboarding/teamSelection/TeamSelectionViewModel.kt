@@ -34,7 +34,7 @@ class TeamSelectionViewModel(
 
     val isAnyTeamSelected: Flow<Boolean> = teams
         .map { leagues ->
-            leagues.any { it.isSelected }
+            leagues.any { it.isFavourite }
         }
 
     @OptIn(FlowPreview::class)

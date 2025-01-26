@@ -90,7 +90,7 @@ class TeamSelectionViewModelTest{
     //@Test
     fun `the method isAnyTeamSelected returns false when there is no team selected`() = runTest {
 
-        val teamsUnselected = sampleTeams(1,2,3,4,5).map { it.copy(isSelected = false) }
+        val teamsUnselected = sampleTeams(1,2,3,4,5).map { it.copy(isFavourite = false) }
         whenever(fetchTeamsUseCase()).thenReturn(flowOf(teamsUnselected))
         val unselectedTeamSelectionViewModel = TeamSelectionViewModel(fetchTeamsUseCase, selectTeamUseCase)
         unselectedTeamSelectionViewModel.teamsState.test {

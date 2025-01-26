@@ -41,7 +41,7 @@ class FakeTeamsLocalDataSource : TeamsLocalDataSource {
         get() = inMemoryTeams
 
     override val favoriteTeams: Flow<List<TeamUi>>
-        get() = inMemoryTeams.map { teamUis -> teamUis.filter { it.isSelected } }
+        get() = inMemoryTeams.map { teamUis -> teamUis.filter { it.isFavourite } }
 
     override val isEmpty: Flow<Boolean>
         get() = inMemoryTeams.map { teamUis -> teamUis.isEmpty() }

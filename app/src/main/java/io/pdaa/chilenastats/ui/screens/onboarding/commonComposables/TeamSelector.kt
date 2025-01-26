@@ -109,7 +109,7 @@ private fun TeamSelectorPreview() {
             name = "Colo Colo",
             country = "Chile",
             logo = "https://upload.wikimedia.org/wikipedia/commons/4/4e/Colo-Colo_2020.png",
-            isSelected = true,
+            isFavourite = true,
             founded = 1915,
             national = true,
             venue = null

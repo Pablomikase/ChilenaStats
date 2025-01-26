@@ -6,7 +6,7 @@ data class TeamUi(
     val logo: String,
     val founded: Int?,
     val national: Boolean?,
-    val isSelected: Boolean,
+    val isFavourite: Boolean,
     val country: String,
     val venue: VenueUi?,
 ){

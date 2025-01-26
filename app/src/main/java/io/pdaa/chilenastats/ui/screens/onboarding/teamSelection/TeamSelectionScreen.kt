@@ -115,7 +115,7 @@ fun TeamSelectionScreen(
                             TeamSelector(
                                 team = item,
                                 onSelectorClicked = { onTeamSelected(it) },
-                                isSelected = item.isSelected
+                                isSelected = item.isFavourite
                             )
 
                         }
