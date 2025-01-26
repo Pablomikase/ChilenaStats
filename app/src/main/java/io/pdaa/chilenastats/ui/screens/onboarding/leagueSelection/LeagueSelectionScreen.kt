@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -90,7 +91,9 @@ fun LeagueSelectionScreen(
         ) { contentPadding, leagues ->
 
             Column(
-                modifier = Modifier.padding(contentPadding)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding)
             ) {
 
                 Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
@@ -101,13 +104,12 @@ fun LeagueSelectionScreen(
                         onValueChange = onSearchBarStateChanged,
                         label = { Text(stringResource(R.string.leagues_selector_search_label)) },
                         placeholder = { Text(stringResource(R.string.leagues_selector_search_placeholder)) },
-                        leadingIcon = { Icon(Icons.Default.Search, stringResource(R.string.search_icon)) },
-
+                        leadingIcon = { Icon(Icons.Default.Search, stringResource(R.string.search_icon)) }
                     )
-
                 }
-
-                Box {
+                Box (
+                    modifier = Modifier.fillMaxSize()
+                ){
                     LazyVerticalGrid(
                         modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
                         columns = GridCells.Adaptive(minSize = if (isTablet) 150.dp else 120.dp),
@@ -149,18 +151,8 @@ fun LeagueSelectionScreen(
                             Text(text = stringResource(R.string.leagues_selector_continue_to_teams_button))
                         }
                     }
-
-
                 }
-
-
-
-
             }
-
-
-
-
         }
     }
 }
