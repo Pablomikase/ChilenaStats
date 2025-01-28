@@ -1,61 +1,22 @@
 package io.pdaa.chilenastats.data.repositories
 
-import io.pdaa.chilenastats.data.datasources.local.CountriesLocalDataSource
 import io.pdaa.chilenastats.data.datasources.local.TeamsLocalDataSource
-import io.pdaa.chilenastats.data.datasources.remote.CountriesRemoteDataSource
-import io.pdaa.chilenastats.data.datasources.remote.RegionDataSource
 import io.pdaa.chilenastats.data.datasources.remote.TeamsRemoteDataSource
 import io.pdaa.chilenastats.domain.TeamUi
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class TeamRepository(
     private val remoteDataSource: TeamsRemoteDataSource,
     private val localDataSource: TeamsLocalDataSource,
-    private val regionDataSource: RegionDataSource,
-    private val countryLocalDataSource: CountriesLocalDataSource,
-    private val countriesRemoteDataSource: CountriesRemoteDataSource
+    private val leaguesRepository: LeaguesRepository,
+    private val countryRepository: CountriesRepository,
 ) {
 
     val teams: Flow<List<TeamUi>>
-        get() = combine(
-            localDataSource.teams,
-            countryLocalDataSource.countries,
-        ) { localTeams, localCountries ->
-            localTeams to localCountries
-        }.onEach { (localTeams, localCountries) ->
-
-            if (localTeams.isEmpty() && localCountries.isNotEmpty()) {
-                val selectedCountry = localCountries.first { it.isSelected }
-                val remoteTeams =
-                    remoteDataSource.fetchTeamsByCountryName(selectedCountry.name)
-                localDataSource.insertTeams(remoteTeams)
-                return@onEach
-            }
-
-            if (localCountries.isEmpty() && localTeams.isEmpty()) {
-                val remoteCountries = countriesRemoteDataSource.fetchCountries()
-                countryLocalDataSource.insertCountries(remoteCountries)
-                val lastRegion = regionDataSource.findLastRegion()
-                remoteCountries.find { it.code == lastRegion }?.let { country ->
-                    countryLocalDataSource.insertCountries(
-                        listOf(country.copy(isSelected = true))
-                    )
-                    if (localTeams.isEmpty()) {
-                        val remoteTeams =
-                            remoteDataSource.fetchTeamsByCountryName(country.name)
-                        localDataSource.insertTeams(remoteTeams)
-                    }
-                }
-                return@onEach
-            }
-
-        }.filterNotNull()
-            .map { (teams, _) -> teams.filter { it.national == false } }
-
+        get() = localDataSource.teams
 
     suspend fun selectTeam(selectedTeam: TeamUi) {
         localDataSource.insertTeams(
@@ -66,5 +27,25 @@ class TeamRepository(
     }
 
     val areLocalTeamsEmpty = localDataSource.isEmpty
+
+    fun saveTeamsFromFavouriteLeagues(lifeCycleScope : CoroutineScope) {
+        leaguesRepository.leagues.onEach { leagues ->
+            leagues.filter { it.isFavourite }.forEach { favouriteLeague ->
+                val teams = remoteDataSource.fetchTeamsByLeagueId(favouriteLeague.id, 2022)
+                localDataSource.insertTeams(teams)
+            }
+        }.launchIn(lifeCycleScope)
+    }
+
+    fun saveTeamsFromUserCountry(lifeCycleScope: CoroutineScope) {
+        countryRepository.countries.onEach { countries ->
+            val selectedCountry = countries.find { it.isSelected }
+            selectedCountry?.let { country ->
+                val teams = remoteDataSource.fetchTeamsByCountryName(country.name)
+                localDataSource.insertTeams(teams)
+            }
+        }.launchIn(lifeCycleScope)
+
+    }
 
 }

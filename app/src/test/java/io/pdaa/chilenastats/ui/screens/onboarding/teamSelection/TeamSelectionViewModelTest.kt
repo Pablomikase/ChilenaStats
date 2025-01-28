@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import io.pdaa.chilenastats.Result
 import io.pdaa.chilenastats.sampledata.sampleTeams
 import io.pdaa.chilenastats.testRules.CoroutineTestRule
-import io.pdaa.chilenastats.usecases.FetchTeamsUseCase
+import io.pdaa.chilenastats.usecases.teams.FetchTeamsUseCase
 import io.pdaa.chilenastats.usecases.SelectTeamUseCase
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi

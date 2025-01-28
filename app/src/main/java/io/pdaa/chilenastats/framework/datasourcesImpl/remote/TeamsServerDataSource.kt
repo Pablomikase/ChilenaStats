@@ -12,6 +12,11 @@ class TeamsServerDataSource(private val footballDataService: FootballDataService
         footballDataService.fetchTeamsByCountryName(countryName)
             .response.map { it.asUiModel() }
 
+    override suspend fun fetchTeamsByLeagueId(leagueId: Int, season: Int): List<TeamUi> =
+        footballDataService.fetchTeamsByLeagueId(leagueId = leagueId, season = season)
+            .response.map { it.asUiModel() }
+
+
 }
 
 

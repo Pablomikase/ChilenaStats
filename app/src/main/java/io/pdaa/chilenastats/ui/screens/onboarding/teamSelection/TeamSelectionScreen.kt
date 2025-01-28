@@ -1,5 +1,6 @@
 package io.pdaa.chilenastats.ui.screens.onboarding.teamSelection
 
+import android.Manifest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,9 +33,12 @@ import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.Result
 import io.pdaa.chilenastats.domain.TeamUi
 import io.pdaa.chilenastats.ui.common.BaseScaffold
+import io.pdaa.chilenastats.ui.common.PermissionRequestEffect
 import io.pdaa.chilenastats.ui.screens.Screen
 import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.TeamSelector
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TeamSelectionScreen(
     vm: TeamSelectionViewModel,
@@ -43,6 +47,15 @@ fun TeamSelectionScreen(
     val screenState by vm.teamsState.collectAsState()
     val searchBarState by vm.searchText.collectAsState()
     val isAnyTeamSelected by vm.isAnyTeamSelected.collectAsState(false)
+
+    val teamsSelectionState = rememberTeamSelectionState()
+    teamsSelectionState.UiReadyToFetchData {
+        vm.onUiReady()
+    }
+
+    PermissionRequestEffect(permission = Manifest.permission.ACCESS_COARSE_LOCATION) {
+        vm.onLocationPermissionConceded()
+    }
 
     TeamSelectionScreen(
         screenState = screenState,

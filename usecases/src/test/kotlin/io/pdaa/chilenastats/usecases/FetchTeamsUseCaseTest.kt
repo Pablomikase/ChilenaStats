@@ -1,6 +1,7 @@
 package io.pdaa.chilenastats.usecases
 
 import io.pdaa.chilenastats.sampledata.sampleTeams
+import io.pdaa.chilenastats.usecases.teams.FetchTeamsUseCase
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Test
