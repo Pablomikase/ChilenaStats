@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EmptyStateLottie(
+fun EmptyState(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String
@@ -58,5 +58,5 @@ fun EmptyStateLottie(
 @Preview
 @Composable
 private fun EmptyStatePrev() {
-    EmptyStateLottie(title = "No hay datos", subtitle = "No se encontraron datos")
+    EmptyState(title = "No hay datos", subtitle = "No se encontraron datos")
 }

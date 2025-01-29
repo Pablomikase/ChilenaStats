@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
@@ -43,7 +42,7 @@ import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.Result
 import io.pdaa.chilenastats.domain.LeagueUi
 import io.pdaa.chilenastats.ui.common.BaseScaffold
-import io.pdaa.chilenastats.ui.common.EmptyStateLottie
+import io.pdaa.chilenastats.ui.common.EmptyState
 import io.pdaa.chilenastats.ui.common.IndeterminateLinearProgressIndicator
 import io.pdaa.chilenastats.ui.screens.Screen
 import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.OnboardingCardSelector
@@ -116,94 +115,89 @@ fun LeagueSelectionScreen(
                     )
             ) {
 
-                Column(
+
+                OutlinedTextField(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .fillMaxWidth(),
+                    value = searchBarState,
+                    onValueChange = onSearchBarStateChanged,
+                    label = { Text(stringResource(R.string.leagues_selector_search_label)) },
+                    placeholder = { Text(stringResource(R.string.leagues_selector_search_placeholder)) },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Default.Search,
+                            stringResource(R.string.search_icon)
+                        )
+                    }
+                )
+
+                IndeterminateLinearProgressIndicator(
+                    loading = isSearching,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(16.dp)
+                )
+
+
+                Box(
+                    modifier = Modifier.fillMaxSize()
                 ) {
-
-                    OutlinedTextField(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
-                            .fillMaxWidth(),
-                        value = searchBarState,
-                        onValueChange = onSearchBarStateChanged,
-                        label = { Text(stringResource(R.string.leagues_selector_search_label)) },
-                        placeholder = { Text(stringResource(R.string.leagues_selector_search_placeholder)) },
-                        leadingIcon = {
-                            Icon(
-                                Icons.Default.Search,
-                                stringResource(R.string.search_icon)
-                            )
-                        }
-                    )
-
-                    IndeterminateLinearProgressIndicator(
-                        loading = isSearching,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    )
-
-
-                    Box(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        if (leagues.isEmpty()) {
-                            EmptyStateLottie(
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .align(Alignment.Center)
-                                    .fillMaxSize(),
-                                title = stringResource(R.string.empty_state_leagues_title),
-                                subtitle = stringResource(id = R.string.empty_state_leagues_subtitle)
-                            )
-                        }
-
-                        LazyVerticalGrid(
-                            modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
-                            columns = GridCells.Adaptive(minSize = if (isTablet) 150.dp else 120.dp),
-                            horizontalArrangement = Arrangement.spacedBy(if (isTablet) 16.dp else 8.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp),
-                            /*contentPadding = contentPadding*/
-                        ) {
-                            items(leagues) { league ->
-                                OnboardingCardSelector(
-
-                                    onSelectorClicked = { onLeagueSelected(league) },
-                                    isSelected = league.isFavourite,
-                                    imageUrl = league.logo,
-                                    title = league.name,
-                                    subtitle = league.type
-                                )
-                            }
-                        }
-
-                        if (isAnyLeaguesSelected) Column(
+                    if (leagues.isEmpty()) {
+                        EmptyState(
                             modifier = Modifier
-                                .padding(contentPadding)
-                                .fillMaxWidth()
-                                .align(Alignment.BottomCenter)
-                                .background(
-                                    brush = Brush.verticalGradient(
-                                        colors = listOf(
-                                            Color.Transparent,
-                                            Color(leagueSelectionState.getSystemBarColor())
-                                        )
+                                .padding(bottom = contentPadding.calculateBottomPadding() + 32.dp)
+                                .align(Alignment.Center)
+                                .fillMaxSize(),
+                            title = stringResource(R.string.empty_state_leagues_title),
+                            subtitle = stringResource(id = R.string.empty_state_leagues_subtitle)
+                        )
+                    }
+
+                    LazyVerticalGrid(
+                        modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
+                        columns = GridCells.Adaptive(minSize = if (isTablet) 150.dp else 120.dp),
+                        horizontalArrangement = Arrangement.spacedBy(if (isTablet) 16.dp else 8.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        items(leagues) { league ->
+                            OnboardingCardSelector(
+
+                                onSelectorClicked = { onLeagueSelected(league) },
+                                isSelected = league.isFavourite,
+                                imageUrl = league.logo,
+                                title = league.name,
+                                subtitle = league.type
+                            )
+                        }
+                    }
+
+                    if (isAnyLeaguesSelected) Column(
+                        modifier = Modifier
+                            .padding(bottom = contentPadding.calculateBottomPadding())
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                            .background(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        Color.Transparent,
+                                        Color(leagueSelectionState.getSystemBarColor())
                                     )
                                 )
-                        ) {
-                            ElevatedButton(
-                                modifier = Modifier
-                                    .align(Alignment.CenterHorizontally)
-                                    .padding(bottom = 16.dp),
-                                onClick = {
-                                    onContinueToTeamSelection()
-                                }) {
-                                Text(text = stringResource(R.string.leagues_selector_continue_to_teams_button))
-                            }
+                            )
+                    ) {
+                        ElevatedButton(
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(bottom = 16.dp),
+                            onClick = {
+                                onContinueToTeamSelection()
+                            }) {
+                            Text(text = stringResource(R.string.leagues_selector_continue_to_teams_button))
                         }
                     }
                 }
+
             }
         }
     }

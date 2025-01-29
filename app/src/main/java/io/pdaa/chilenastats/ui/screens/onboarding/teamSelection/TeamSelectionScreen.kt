@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
@@ -44,7 +43,7 @@ import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.Result
 import io.pdaa.chilenastats.domain.TeamUi
 import io.pdaa.chilenastats.ui.common.BaseScaffold
-import io.pdaa.chilenastats.ui.common.EmptyStateLottie
+import io.pdaa.chilenastats.ui.common.EmptyState
 import io.pdaa.chilenastats.ui.common.IndeterminateLinearProgressIndicator
 import io.pdaa.chilenastats.ui.common.PermissionRequestEffect
 import io.pdaa.chilenastats.ui.screens.Screen
@@ -154,9 +153,9 @@ fun TeamSelectionScreen(
                 Box(modifier = Modifier.fillMaxSize()) {
 
                     if (teamsList.isEmpty()) {
-                        EmptyStateLottie(
+                        EmptyState(
                             modifier = Modifier
-                                .fillMaxHeight()
+                                .padding(bottom = contentPadding.calculateBottomPadding() + 32.dp)
                                 .align(Alignment.Center)
                                 .fillMaxSize(),
                             title = stringResource(R.string.empty_state_teams_title),
@@ -170,7 +169,6 @@ fun TeamSelectionScreen(
                         columns = GridCells.Adaptive(minSize = if (isTablet) 150.dp else 120.dp),
                         horizontalArrangement = Arrangement.spacedBy(if (isTablet) 16.dp else 8.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp),
-                        /*contentPadding = contentPadding*/
                     ) {
                         items(teamsList) { item ->
                             TeamSelector(
@@ -184,7 +182,7 @@ fun TeamSelectionScreen(
 
                     if (isAnyTeamSelected) Column(
                         modifier = Modifier
-                            .padding(contentPadding)
+                            .padding(bottom = contentPadding.calculateBottomPadding())
                             .fillMaxWidth()
                             .align(Alignment.BottomCenter)
                             .background(
