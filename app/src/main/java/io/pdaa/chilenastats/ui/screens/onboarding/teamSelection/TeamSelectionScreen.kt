@@ -5,8 +5,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -28,11 +38,14 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.Result
 import io.pdaa.chilenastats.domain.TeamUi
 import io.pdaa.chilenastats.ui.common.BaseScaffold
+import io.pdaa.chilenastats.ui.common.EmptyStateLottie
+import io.pdaa.chilenastats.ui.common.IndeterminateLinearProgressIndicator
 import io.pdaa.chilenastats.ui.common.PermissionRequestEffect
 import io.pdaa.chilenastats.ui.screens.Screen
 import io.pdaa.chilenastats.ui.screens.onboarding.commonComposables.TeamSelector
@@ -78,6 +91,7 @@ fun TeamSelectionScreen(
     isAnyTeamSelected: Boolean,
     searchBarState: String,
     onSearchBarStateChanged: (String) -> Unit,
+    isSearching: Boolean = false
 ) {
 
     val teamSelectionState = rememberTeamSelectionState()
@@ -98,24 +112,58 @@ fun TeamSelectionScreen(
                     },
                     scrollBehavior = teamSelectionState.scrollBehavior
                 )
-            }
+            },
+            contentWindowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top)
         ) { contentPadding, teamsList ->
 
             Column(
-                modifier = Modifier.padding(contentPadding)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
+                        top = contentPadding.calculateTopPadding(),
+                        end = contentPadding.calculateEndPadding(LayoutDirection.Ltr),
+                        bottom = contentPadding.calculateBottomPadding() + WindowInsets.ime.asPaddingValues()
+                            .calculateBottomPadding()
+                    )
             ) {
-                Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
 
-                    OutlinedTextField(
-                        value = searchBarState,
-                        onValueChange = onSearchBarStateChanged,
-                        modifier = Modifier.fillMaxWidth(),
-                        label = { Text(stringResource(R.string.teams_selector_search_label)) },
-                        placeholder = { Text(stringResource(R.string.teams_selector_search_placeholder)) },
-                        leadingIcon = { Icon(Icons.Default.Search, stringResource(R.string.search_icon)) },)
-                }
+                OutlinedTextField(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .fillMaxWidth(),
+                    value = searchBarState,
+                    onValueChange = onSearchBarStateChanged,
+                    label = { Text(stringResource(R.string.teams_selector_search_label)) },
+                    placeholder = { Text(stringResource(R.string.teams_selector_search_placeholder)) },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Default.Search,
+                            stringResource(R.string.search_icon)
+                        )
+                    },
+                )
 
-                Box {
+                IndeterminateLinearProgressIndicator(
+                    loading = isSearching,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                )
+
+                Box(modifier = Modifier.fillMaxSize()) {
+
+                    if (teamsList.isEmpty()) {
+                        EmptyStateLottie(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .align(Alignment.Center)
+                                .fillMaxSize(),
+                            title = stringResource(R.string.empty_state_teams_title),
+                            subtitle = stringResource(id = R.string.empty_state_teams_subtitle)
+                        )
+                    }
+
 
                     LazyVerticalGrid(
                         modifier = Modifier.padding(horizontal = if (isTablet) 16.dp else 8.dp),
@@ -151,7 +199,7 @@ fun TeamSelectionScreen(
                         ElevatedButton(
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
-                                .padding(bottom = 8.dp), onClick = {
+                                .padding(bottom = 16.dp), onClick = {
                                 onSkipAndGoToDashboard()
                             }) {
                             Text(text = stringResource(R.string.onboarding_skip_button))

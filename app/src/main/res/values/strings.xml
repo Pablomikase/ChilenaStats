@@ -22,4 +22,6 @@
     <string name="teams_selector_search_placeholder">Search teams by name…</string>
     <string name="empty_state_leagues_title">Oops! We couldn\'t find the league you\'re looking for.</string>
     <string name="empty_state_leagues_subtitle">Try checking the name or explore other available options.</string>
+    <string name="empty_state_teams_title">Oops! We couldn\'t find the team you\'re looking for.</string>
+    <string name="empty_state_teams_subtitle">Try checking the name or explore other available options.</string>
 </resources>

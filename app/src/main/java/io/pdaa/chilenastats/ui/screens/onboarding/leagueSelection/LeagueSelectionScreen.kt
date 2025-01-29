@@ -5,9 +5,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -31,6 +37,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.Result
@@ -93,13 +100,20 @@ fun LeagueSelectionScreen(
 
             },
             modifier = Modifier.nestedScroll(leagueSelectionState.scrollBehavior.nestedScrollConnection),
-            contentWindowInsets = WindowInsets.safeDrawing
+            contentWindowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top)
         ) { contentPadding, leagues ->
+
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(contentPadding)
+                    .padding(
+                        start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
+                        top = contentPadding.calculateTopPadding(),
+                        end = contentPadding.calculateEndPadding(LayoutDirection.Ltr),
+                        bottom = contentPadding.calculateBottomPadding() + WindowInsets.ime.asPaddingValues()
+                            .calculateBottomPadding()
+                    )
             ) {
 
                 Column(
@@ -179,7 +193,9 @@ fun LeagueSelectionScreen(
                                 )
                         ) {
                             ElevatedButton(
-                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                modifier = Modifier
+                                    .align(Alignment.CenterHorizontally)
+                                    .padding(bottom = 16.dp),
                                 onClick = {
                                     onContinueToTeamSelection()
                                 }) {
