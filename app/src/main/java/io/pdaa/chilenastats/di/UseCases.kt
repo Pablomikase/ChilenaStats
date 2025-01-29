@@ -8,6 +8,7 @@ import io.pdaa.chilenastats.usecases.SelectTeamUseCase
 import io.pdaa.chilenastats.usecases.UserIsLoggedInUseCase
 import io.pdaa.chilenastats.usecases.teams.SaveTeamsFromFavouriteLeaguesUseCase
 import io.pdaa.chilenastats.usecases.teams.SaveTeamsFromUserCountryUseCase
+import io.pdaa.chilenastats.usecases.teams.SearchTeamUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -20,4 +21,5 @@ val useCaseModule = module {
     factoryOf(::FetchFixturesFromFavouriteTeamsUseCase)
     factoryOf(::SaveTeamsFromFavouriteLeaguesUseCase)
     factoryOf(::SaveTeamsFromUserCountryUseCase)
+    factoryOf(::SearchTeamUseCase)
 }

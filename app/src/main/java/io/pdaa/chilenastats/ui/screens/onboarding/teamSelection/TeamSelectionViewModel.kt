@@ -9,6 +9,7 @@ import io.pdaa.chilenastats.usecases.SelectTeamUseCase
 import io.pdaa.chilenastats.usecases.teams.FetchTeamsUseCase
 import io.pdaa.chilenastats.usecases.teams.SaveTeamsFromFavouriteLeaguesUseCase
 import io.pdaa.chilenastats.usecases.teams.SaveTeamsFromUserCountryUseCase
+import io.pdaa.chilenastats.usecases.teams.SearchTeamUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +29,7 @@ class TeamSelectionViewModel(
     private val saveTeamsFromFavouriteLeaguesUseCase: SaveTeamsFromFavouriteLeaguesUseCase,
     private val saveTeamsFromUserCountryUseCase: SaveTeamsFromUserCountryUseCase,
     private val selectTeamUseCase: SelectTeamUseCase,
+    private val searchTeamUseCase: SearchTeamUseCase
 ) : ViewModel() {
 
     private val uiReady: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -60,7 +62,9 @@ class TeamSelectionViewModel(
                 if (text.isBlank()) {
                     teams
                 } else {
-                    teams.filter { it.doesMatchSearch(text) }
+                    teams.filter { it.doesMatchSearch(text) }.also {
+                        if(it.isEmpty()) searchTeamUseCase(text)
+                    }
                 }
             }
             .onEach {

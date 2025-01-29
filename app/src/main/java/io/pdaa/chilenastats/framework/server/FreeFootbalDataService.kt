@@ -33,6 +33,9 @@ interface FootballDataService {
         @Query("season") season: Int,
     ): TeamsRemoteResponse
 
+    @GET("teams")
+    suspend fun fetchTeamsByQuery(@Query("search") query: String): TeamsRemoteResponse
+
 
     @GET("fixtures")
     suspend fun fetchFixturesByLeague(@Query("league") leagueId: Int): TeamsRemoteResponse

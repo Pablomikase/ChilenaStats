@@ -16,7 +16,9 @@ class TeamsServerDataSource(private val footballDataService: FootballDataService
         footballDataService.fetchTeamsByLeagueId(leagueId = leagueId, season = season)
             .response.map { it.asUiModel() }
 
-
+    override suspend fun fetchTeamsByQuery(query: String): List<TeamUi> =
+        footballDataService.fetchTeamsByQuery(query)
+            .response.map { it.asUiModel() }
 }
 
 

@@ -59,6 +59,7 @@ fun TeamSelectionScreen(
     val screenState by vm.teamsState.collectAsState()
     val searchBarState by vm.searchText.collectAsState()
     val isAnyTeamSelected by vm.isAnyTeamSelected.collectAsState(false)
+    val isSearching by vm.isSearching.collectAsState()
 
     val teamsSelectionState = rememberTeamSelectionState()
     teamsSelectionState.UiReadyToFetchData {
@@ -75,7 +76,8 @@ fun TeamSelectionScreen(
         onTeamSelected = vm::onTeamSelected,
         isAnyTeamSelected = isAnyTeamSelected,
         searchBarState = searchBarState,
-        onSearchBarStateChanged = vm::onSearchBarStateChanged
+        onSearchBarStateChanged = vm::onSearchBarStateChanged,
+        isSearching = isSearching
     )
 
 }

@@ -45,7 +45,11 @@ class TeamRepository(
                 localDataSource.insertTeams(teams)
             }
         }.launchIn(lifeCycleScope)
+    }
 
+    suspend fun saveTeamsFromSearchRequest(query: String) {
+        val teams = remoteDataSource.fetchTeamsByQuery(query)
+        localDataSource.insertTeams(teams)
     }
 
 }
