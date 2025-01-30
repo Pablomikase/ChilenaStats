@@ -1,5 +1,6 @@
 package io.pdaa.chilenastats.ui.screens.onboarding.teamSelection
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.pdaa.chilenastats.Result
@@ -51,6 +52,8 @@ class TeamSelectionViewModel(
             leagues.any { it.isFavourite }
         }
 
+    private val queriedTeams = mutableListOf<String>()
+
     @OptIn(FlowPreview::class)
     val teamsState: StateFlow<Result<List<TeamUi>>> =
         searchText
@@ -63,7 +66,14 @@ class TeamSelectionViewModel(
                     teams
                 } else {
                     teams.filter { it.doesMatchSearch(text) }.also {
-                        if(it.isEmpty()) searchTeamUseCase(text)
+                        if(it.isEmpty()) {
+
+                            if(!queriedTeams.contains(text)) {
+                                Log.i("TeamSelectionViewModel", "Searching in remote for: $text")
+                                queriedTeams.add(text)
+                                searchTeamUseCase(text)
+                            }
+                        }
                     }
                 }
             }
