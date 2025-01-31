@@ -6,8 +6,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import io.pdaa.chilenastats.ui.screens.dashboard.DashboardScreen
 import io.pdaa.chilenastats.ui.screens.dashboard.DashboardViewModel
-import io.pdaa.chilenastats.ui.screens.onboarding.countrySelection.CountrySelectionScreen
-import io.pdaa.chilenastats.ui.screens.onboarding.countrySelection.CountrySelectionViewModel
 import io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection.LeagueSelectionScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection.LeaguesViewModel
 import io.pdaa.chilenastats.ui.screens.onboarding.login.LoginScreen
@@ -18,66 +16,18 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    /*val application = LocalContext.current.applicationContext as App
-    val countriesRepository = remember {
-        CountriesRepository(
-            regionDataSource = GeocoderRegionSource(
-                geocoder = Geocoder(application),
-                locationDataSource = PlayServicesLocationDataSource(LocationServices.getFusedLocationProviderClient(application))
-            ),
-            remoteDataSource = CountriesServerDataSource(FreeFootballDataClient.instance),
-            localDataSource = CountriesRoomDataSource(application.db.countriesDao())
-        )
-    }
 
-    val leaguesRepository = remember {
-        LeaguesRepository(
-            remoteDataSource = LeaguesServerDataSource(FreeFootballDataClient.instance),
-            localDataSource = LeaguesRoomDataSource(application.db.leaguesDao())
-        )
-    }
-
-    val teamsRepository = remember {
-        TeamRepository(
-            remoteDataSource = TeamsServerDataSource(FreeFootballDataClient.instance),
-            localDataSource = TeamsRoomDataSource(application.db.teamsDao()),
-            regionDataSource = GeocoderRegionSource(
-                geocoder = Geocoder(application),
-                locationDataSource = PlayServicesLocationDataSource(LocationServices.getFusedLocationProviderClient(application))
-            ),
-            countryLocalDataSource = CountriesRoomDataSource(application.db.countriesDao()),
-            countriesRemoteDataSource = CountriesServerDataSource(FreeFootballDataClient.instance)
-        )
-    }
-    val fixturesRepository = remember {
-        FixturesRepository(
-            remoteDataSource = FixturesServerDataSource(FreeFootballDataClient.instance),
-            teamsLocalDataSource = TeamsRoomDataSource(application.db.teamsDao()),
-            fixturesLocalDataSource = FixturesRoomDataSource(application.db.fixturesDao())
-        )
-    }*/
-
-    NavHost(navController = navController, startDestination = LeaguesSelector) {
+    NavHost(navController = navController, startDestination = Login) {
         composable<Login> {
             LoginScreen(
                 continueToOnBoarding = {
-                    navController.navigate(CountrySelector) {
+                    navController.navigate(LeaguesSelector) {
                         popUpTo(Login) { inclusive = true }
                     }
                 },
+                viewModel = koinViewModel()
             )
         }
-
-        composable<CountrySelector> {
-            val viewModel: CountrySelectionViewModel = koinViewModel()
-            CountrySelectionScreen(
-                vm = viewModel,
-                onContinueToLeagues = {
-                    navController.navigate(LeaguesSelector)
-                }
-            )
-        }
-
 
         composable<LeaguesSelector> {
             val viewModel: LeaguesViewModel = koinViewModel()

@@ -23,10 +23,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="io.pdaa.chilenastats" />
+                  <option name="mobileSdkAppId" value="1:407212711838:android:91d0662fd637ee808f008f" />
+                  <option name="projectId" value="goalpulse-82b5a" />
+                  <option name="projectNumber" value="407212711838" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
