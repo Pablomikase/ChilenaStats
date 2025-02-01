@@ -95,6 +95,7 @@ dependencies {
     //Room
     implementation(libs.androidx.room.ktx)
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.auth)
     ksp(libs.androidx.room.compiler)
     //add mob
     implementation(libs.play.services.ads)
@@ -121,6 +122,8 @@ dependencies {
     implementation(libs.firebase.analytics)
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
 
 
     //Instrumented Test

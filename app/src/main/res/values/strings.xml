@@ -24,4 +24,5 @@
     <string name="empty_state_leagues_subtitle">Try checking the name or explore other available options.</string>
     <string name="empty_state_teams_title">Oops! We couldn\'t find the team you\'re looking for.</string>
     <string name="empty_state_teams_subtitle">Try checking the name or explore other available options.</string>
+    <string name="web_client_id">407212711838-v6tmjpnn97ntdusf2edre7f6g8erv3s0.apps.googleusercontent.com</string>
 </resources>

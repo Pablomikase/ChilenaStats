@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "407212711838",
+    "project_id": "goalpulse-82b5a",
+    "storage_bucket": "goalpulse-82b5a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407212711838:android:91d0662fd637ee808f008f",
+        "android_client_info": {
+          "package_name": "io.pdaa.chilenastats"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8P1BJPGV1F053n9mqypDpNGKus_zERes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
