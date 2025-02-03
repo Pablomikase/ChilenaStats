@@ -40,6 +40,9 @@ android {
 
         val dashboardBannerId = properties.getProperty("DASHBOARD_BANNER_ID")
         buildConfigField("String", "DASHBOARD_BANNER_ID", dashboardBannerId)
+
+        val webClientId = properties.getProperty("WEB_CLIENT_ID")
+        buildConfigField("String", "WEB_CLIENT_ID", webClientId)
     }
 
     buildTypes {
@@ -118,12 +121,15 @@ dependencies {
     //Firebase
     // Import the Firebase BoM
     implementation(platform(libs.firebase.bom))
-    // When using the BoM, don't specify versions in Firebase dependencies
+    //analytics
     implementation(libs.firebase.analytics)
-    // Add the dependencies for any other desired Firebase products
-    // https://firebase.google.com/docs/android/setup#available-libraries
+    //authentication
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.googleid)
+
 
 
     //Instrumented Test

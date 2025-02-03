@@ -24,5 +24,12 @@
     <string name="empty_state_leagues_subtitle">Try checking the name or explore other available options.</string>
     <string name="empty_state_teams_title">Oops! We couldn\'t find the team you\'re looking for.</string>
     <string name="empty_state_teams_subtitle">Try checking the name or explore other available options.</string>
-    <string name="web_client_id">407212711838-v6tmjpnn97ntdusf2edre7f6g8erv3s0.apps.googleusercontent.com</string>
+    <string name="no_accounts_error">No Google accounts found on this device</string>
+    <string name="sign_up_with_google">Sign up with Google</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="or">or</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="sign_up_description">Don\'t have an account? Click here to Sign Up!</string>
 </resources>

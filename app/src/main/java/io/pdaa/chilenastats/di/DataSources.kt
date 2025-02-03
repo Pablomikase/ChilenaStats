@@ -26,6 +26,8 @@ import io.pdaa.chilenastats.framework.datasourcesImpl.remote.FixturesServerDataS
 import io.pdaa.chilenastats.framework.datasourcesImpl.sensors.GeocoderRegionSource
 import io.pdaa.chilenastats.framework.datasourcesImpl.sensors.PlayServicesLocationDataSource
 import io.pdaa.chilenastats.framework.server.FreeFootballDataClient
+import io.pdaa.chilenastats.ui.screens.onboarding.login.service.AccountService
+import io.pdaa.chilenastats.ui.screens.onboarding.login.service.AccountServiceImpl
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -36,13 +38,13 @@ val dataSourceModule = module {
     single { Room.databaseBuilder(get(), FootballDatabase::class.java, "football.db").build() }
 
     //Daos
-    factory{get<FootballDatabase>().countriesDao()}
-    factory{ get<FootballDatabase>().leaguesDao() }
-    factory{ get<FootballDatabase>().teamsDao() }
-    factory{ get<FootballDatabase>().fixturesDao() }
+    factory { get<FootballDatabase>().countriesDao() }
+    factory { get<FootballDatabase>().leaguesDao() }
+    factory { get<FootballDatabase>().teamsDao() }
+    factory { get<FootballDatabase>().fixturesDao() }
 
     //Footbal Api client dependency
-    single {FreeFootballDataClient.instance}
+    single { FreeFootballDataClient.instance }
 
     //DataSources
     factoryOf(::CountriesRoomDataSource) bind CountriesLocalDataSource::class
@@ -56,10 +58,13 @@ val dataSourceModule = module {
 
     //Sensors
     factoryOf(::PlayServicesLocationDataSource) bind LocationDataSource::class
-    factory{
+    factory {
         LocationServices.getFusedLocationProviderClient(get<Context>())
     }
     factoryOf(::GeocoderRegionSource) bind RegionDataSource::class
     factory { Geocoder(get()) }
+
+    //Services
+    factory { AccountServiceImpl() } bind AccountService::class
 
 }

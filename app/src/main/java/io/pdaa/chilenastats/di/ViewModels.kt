@@ -14,4 +14,5 @@ val viewModelModule = module {
     viewModelOf(::TeamSelectionViewModel)
     viewModelOf(::DashboardViewModel)
     viewModelOf(::LoginViewModel)
+
 }
