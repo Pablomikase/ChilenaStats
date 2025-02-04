@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.ui.screens.onboarding.login
+package io.pdaa.chilenastats.ui.screens.login
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -42,10 +41,10 @@ import androidx.compose.ui.unit.sp
 import io.pdaa.chilenastats.R
 import io.pdaa.chilenastats.ui.screens.Screen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(
+fun SignInScreen(
     vm: LoginViewModel,
+    onClickSignUp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -182,8 +181,7 @@ fun LoginScreen(
                 )
 
                 TextButton(onClick = {
-                    Log.i("LoginScreen", "Navigating to sign up screen")
-                    //openScreen(SIGN_UP_SCREEN)
+                    onClickSignUp()
                 }) {
                     Text(
                         text = stringResource(R.string.sign_up_description),

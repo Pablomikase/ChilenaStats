@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.ui.screens.onboarding.login
+package io.pdaa.chilenastats.ui.screens.login
 
 
 import android.util.Log
@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
-import io.pdaa.chilenastats.ui.screens.onboarding.login.service.AccountService
+import io.pdaa.chilenastats.ui.screens.login.service.AccountService
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,9 +58,6 @@ class LoginViewModel(
 
     fun onSignInClick(openAndPopUp: (String, String) -> Unit) {
         launchCatching {
-            val hasUser = accountService.hasUser()
-            Log.i("LoginViewModel", "hasUser: $hasUser")
-            val currentUser = accountService.currentUser
             accountService.signInWithEmail(_email.value, _password.value)
             Log.i("LoginViewModel", "signInWithEmailPasswordFinished")
 

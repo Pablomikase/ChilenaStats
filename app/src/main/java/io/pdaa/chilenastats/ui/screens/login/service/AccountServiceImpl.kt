@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.ui.screens.onboarding.login.service
+package io.pdaa.chilenastats.ui.screens.login.service
 
 import com.google.firebase.Firebase
 import com.google.firebase.auth.EmailAuthProvider
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 
-class AccountServiceImpl(): AccountService{
+class AccountServiceImpl(): AccountService {
     override val currentUser: Flow<User?>
         get() = callbackFlow {
             val listener =

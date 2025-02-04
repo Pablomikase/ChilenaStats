@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.ui.screens.onboarding.login
+package io.pdaa.chilenastats.ui.screens.login
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

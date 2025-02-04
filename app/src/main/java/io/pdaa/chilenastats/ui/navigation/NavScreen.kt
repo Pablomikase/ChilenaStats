@@ -8,7 +8,16 @@ const val AUTH_PORT = 9099
 const val FIRESTORE_PORT = 8080
 
 @Serializable
-object Login
+object SplashScreen
+
+@Serializable
+object SignUp
+
+@Serializable
+object SignIn
+
+@Serializable
+object AfterLogin
 
 @Serializable
 object CountrySelector

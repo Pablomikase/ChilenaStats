@@ -26,8 +26,8 @@ import io.pdaa.chilenastats.framework.datasourcesImpl.remote.FixturesServerDataS
 import io.pdaa.chilenastats.framework.datasourcesImpl.sensors.GeocoderRegionSource
 import io.pdaa.chilenastats.framework.datasourcesImpl.sensors.PlayServicesLocationDataSource
 import io.pdaa.chilenastats.framework.server.FreeFootballDataClient
-import io.pdaa.chilenastats.ui.screens.onboarding.login.service.AccountService
-import io.pdaa.chilenastats.ui.screens.onboarding.login.service.AccountServiceImpl
+import io.pdaa.chilenastats.ui.screens.login.service.AccountService
+import io.pdaa.chilenastats.ui.screens.login.service.AccountServiceImpl
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.module

@@ -32,4 +32,6 @@
     <string name="or">or</string>
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="sign_up_description">Don\'t have an account? Click here to Sign Up!</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_up">Sign up</string>
 </resources>

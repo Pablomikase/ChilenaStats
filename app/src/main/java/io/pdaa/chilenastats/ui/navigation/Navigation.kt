@@ -8,7 +8,8 @@ import io.pdaa.chilenastats.ui.screens.dashboard.DashboardScreen
 import io.pdaa.chilenastats.ui.screens.dashboard.DashboardViewModel
 import io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection.LeagueSelectionScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.leagueSelection.LeaguesViewModel
-import io.pdaa.chilenastats.ui.screens.onboarding.login.LoginScreen
+import io.pdaa.chilenastats.ui.screens.login.SignInScreen
+import io.pdaa.chilenastats.ui.screens.login.sign_up.SignUpScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.teamSelection.TeamSelectionScreen
 import io.pdaa.chilenastats.ui.screens.onboarding.teamSelection.TeamSelectionViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -17,13 +18,33 @@ import org.koin.androidx.compose.koinViewModel
 fun Navigation() {
 
 
-
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Login) {
-        composable<Login> {
-            LoginScreen(vm = koinViewModel())
+    NavHost(navController = navController, startDestination = SignIn) {
+
+        composable<SignIn> {
+            SignInScreen(
+                onClickSignUp = {
+                    navController.navigate(SignUp)
+                },
+                vm = koinViewModel()
+            )
         }
+
+        composable<SignUp> {
+            SignUpScreen(
+                onSuccessSignUp = {
+                    navController.navigate(
+                        LeaguesSelector
+                    ) {
+                        launchSingleTop = true
+                        popUpTo(SignIn) { inclusive = true }
+                    }
+                },
+                viewModel = koinViewModel()
+            )
+        }
+
 
         composable<LeaguesSelector> {
             val viewModel: LeaguesViewModel = koinViewModel()

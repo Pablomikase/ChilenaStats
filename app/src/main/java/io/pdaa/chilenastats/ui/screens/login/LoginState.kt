@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.ui.screens.onboarding.login
+package io.pdaa.chilenastats.ui.screens.login
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -19,9 +19,9 @@ class LoginState(
 
     init {
         coroutineScope.launch {
-            snackbarManager.snackbarMessages.filterNotNull().collect { message ->
+            SnackbarManager.snackbarMessages.filterNotNull().collect { message ->
                 snackbarHostState.showSnackbar(message)
-                snackbarManager.clearSnackbarState()
+                SnackbarManager.clearSnackbarState()
             }
         }
     }

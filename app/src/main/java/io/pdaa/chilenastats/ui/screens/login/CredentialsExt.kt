@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.ui.screens.onboarding.login
+package io.pdaa.chilenastats.ui.screens.login
 
 import android.content.Context
 import android.util.Log

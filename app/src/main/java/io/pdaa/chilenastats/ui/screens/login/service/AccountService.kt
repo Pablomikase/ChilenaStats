@@ -1,4 +1,4 @@
-package io.pdaa.chilenastats.ui.screens.onboarding.login.service
+package io.pdaa.chilenastats.ui.screens.login.service
 
 import kotlinx.coroutines.flow.Flow
 
