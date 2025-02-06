@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">GoalPulse</string>
+    <string name="leagues_title">Leagues</string>
+    <string name="back">go back</string>
+    <string name="continue_to_onboarding">Continue to Onboarding</string>
+    <string name="select_leagues">Select leagues</string>
+    <string name="country_selector_main_title">Select Countries of Interest</string>
+    <string name="country_selector_suggested_country">Suggested country</string>
+    <string name="country_selector_continue_to_leagues_button">Continue to Leagues</string>
+    <string name="onboarding_skip_button">Go to Dashboard</string>
+    <string name="team_selector_main_title">Select Your Preferred Team</string>
+    <string name="leagues_selection_main_title">Choose Your Favorite Football Leagues</string>
+    <string name="leagues_selector_continue_to_teams_button">Continue to teams</string>
+    <string name="dashboard_main_title">GoalPulse</string>
+    <string name="error">An error occurred</string>
+    <string name="add_time_thanks_for_support">📢 Ad time! Thanks for your support!</string>
+    <string name="addmob_app_id">${ADDS_APPLICATION_ID}</string>
+    <string name="leagues_selector_search_placeholder">Search leagues…</string>
+    <string name="search_icon">Search</string>
+    <string name="leagues_selector_search_label">Find a League</string>
+    <string name="teams_selector_search_label">Team name</string>
+    <string name="teams_selector_search_placeholder">Search teams by name…</string>
+    <string name="empty_state_leagues_title">Oops! We couldn\'t find the league you\'re looking for.</string>
+    <string name="empty_state_leagues_subtitle">Try checking the name or explore other available options.</string>
+    <string name="empty_state_teams_title">Oops! We couldn\'t find the team you\'re looking for.</string>
+    <string name="empty_state_teams_subtitle">Try checking the name or explore other available options.</string>
+    <string name="no_accounts_error">No Google accounts found on this device</string>
+    <string name="sign_up_with_google">Sign up with Google</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="or">or</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="sign_up_description">Don\'t have an account? Click here to Sign Up!</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_up">Sign up</string>
+</resources>
